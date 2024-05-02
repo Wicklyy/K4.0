@@ -11,7 +11,6 @@ public class BoutonArrondi extends JButton {
     public BoutonArrondi(String text, int rayon) {
         super(text);
         this.rayon = rayon;
-        //setContentAreaFilled(false); // Désactive le remplissage par défaut pour pouvoir personnaliser l'apparence
         setFocusPainted(false); // Désactive la peinture de la bordure lorsque le bouton est focalisé
     }
 
@@ -24,8 +23,7 @@ public class BoutonArrondi extends JButton {
         
         // Créer une forme arrondie
         RoundRectangle2D formeArrondie = new RoundRectangle2D.Float(
-            0, 0, getWidth(), getHeight(), rayon, rayon
-        );
+            0, 0, getWidth(), getHeight(), rayon, rayon);
         
         // Appliquer la forme arrondie comme clip
         g2d.setClip(formeArrondie);
