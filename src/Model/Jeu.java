@@ -100,6 +100,21 @@ public class Jeu {
         return valid;
     }
 
+
+    // 0 -> NOT VALID
+    // 1 -> VALID
+    // 2 -> VALID WITH PENALITY
+    public int add_central_side(int x_central, int y_central, int x_player){
+        Cube cube = players[current_player].getSide(x_player);
+        int valid = move_validity(cube, x_central, y_central);
+        if(valid != 0){
+            players[current_player].removeSide(x_player);
+            principale.set(x_central, y_central, cube);
+        }
+        return valid;
+    }
+    
+
     public boolean End_Game(){
         int count_survivors = 0;
         for(int i = 0;i < nbJoueur; i++ ){
