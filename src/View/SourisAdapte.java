@@ -38,12 +38,16 @@ public class SourisAdapte extends MouseAdapter {
         bouton.setForeground(Color.BLACK);
         
         // Jouer le son dans un thread séparé
-        new Thread(() -> {
-            if (audioClip != null && !audioClip.isRunning()) {
-                audioClip.setFramePosition(0); // Repositionner le clip au début
-                audioClip.start(); // Jouer le son
+        Thread t=new Thread() {
+            public void run(){
+                if (audioClip != null && !audioClip.isRunning()) {
+                    audioClip.setFramePosition(0); // Repositionner le clip au début
+                    audioClip.start(); // Jouer le son
+                }
             }
-        }).start();
+
+        };
+        t.start();
     }
 
     @Override

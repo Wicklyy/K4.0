@@ -140,7 +140,7 @@ public class InterfaceGraphique implements Runnable, Observateur
 		// Créer les boutons avec les icônes d'images
 		FR = new JButton(iconFR);
 		EN = new JButton(iconEN);
-		 
+		
 		// Ajouter des écouteurs d'actions aux boutons
 		FR.addActionListener(new AdaptateurLangues(controle));
 		EN.addActionListener(new AdaptateurLangues(controle)); 
@@ -180,7 +180,11 @@ public class InterfaceGraphique implements Runnable, Observateur
 		Quit.addMouseListener(sourisQuit);
 		Regles.addMouseListener(sourisRegles);
 		FR.addMouseListener(sourisFr);
+		FR.setBorder(BorderFactory.createEmptyBorder());
+		FR.setContentAreaFilled(false);
 		EN.addMouseListener(sourisEn);
+		EN.setBorder(BorderFactory.createEmptyBorder());
+		EN.setContentAreaFilled(false);
 
 		NewGame.addActionListener(new ActionListener(){
 			@Override
