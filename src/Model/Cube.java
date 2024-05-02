@@ -1,5 +1,5 @@
 package Model;
 
 public enum Cube {
-    Noir, Bleu, Blanc, Rouge, Jaune, Vert, Neutre
+    Noir, Bleu, Blanc, Rouge, Jaune, Vert, Neutre, Vide
 }
