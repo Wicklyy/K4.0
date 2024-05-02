@@ -8,7 +8,7 @@ public class Jeu {
     Pyramid principale;
     int current_player;
 
-    Jeu(int nb){
+    public Jeu(int nb){
         nbJoueur = nb;
         players = new Player[nb];
         for(int i = 0;i < nb; i++ ){

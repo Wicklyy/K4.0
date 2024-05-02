@@ -21,4 +21,10 @@ public class Pyramid {
         pyramid[x][y] = c;
     }
     
+    @Override
+    public String toString(){
+        String chaine = "";
+        for
+        return chaine;
+    }
 }

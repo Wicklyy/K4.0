@@ -90,6 +90,42 @@ public class Player{
         return pyramid;
     }
     
+    @Override
+    public String toString(){
+        String chaine = "";
+        chaine = pyramid + "\n";
+        for( Cube cube : side ){
+            switch (cube) {
+                case Noir:
+                    chaine += "Noir ";
+                    break;
+                case Bleu:
+                    chaine += "Bleu ";
+                    break;
+                case Blanc:
+                    chaine += "Blan ";
+                    break;
+                case Rouge:
+                    chaine += "Roug ";
+                    break;
+                case Jaune:
+                    chaine += "Jaun ";
+                    break;
+                case Vert:
+                    chaine += "Vert ";
+                    break;
+                case Neutre:
+                    chaine += "Neut ";
+                    break;
+                case Vide:
+                    chaine += "Vide ";
+                    break;
+                default:
+                    break;
+            }
+        }
 
+        return chaine;
+    }
 
 }
