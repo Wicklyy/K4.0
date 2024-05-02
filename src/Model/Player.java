@@ -14,6 +14,31 @@ public class Player{
     }
     public void addSide(Cube c){
         side.add(c);
+        switch (c) {
+            case Noir:
+                noir++;
+                break;
+            case Bleu:
+                bleu++;
+                break;
+            case Blanc:
+                blanc++;
+                break;
+            case Rouge:
+                rouge++;
+                break;
+            case Jaune:
+                jaune++;
+                break;
+            case Vert:
+                vert++;
+                break;
+            case Neutre:
+                neutre++;
+                break;
+            default:
+                break;
+        }
     }
 
     public boolean lost(){
@@ -84,6 +109,31 @@ public class Player{
 
     public void removeSide(int x){
         side.remove(x);
+        switch (side.get(x)) {
+            case Noir:
+                noir--;
+                break;
+            case Bleu:
+                bleu--;
+                break;
+            case Blanc:
+                blanc--;
+                break;
+            case Rouge:
+                rouge--;
+                break;
+            case Jaune:
+                jaune--;
+                break;
+            case Vert:
+                vert--;
+                break;
+            case Neutre:
+                neutre--;
+                break;
+            default:
+                break;
+        }
     }
 
     public Pyramid getPyramid(){
