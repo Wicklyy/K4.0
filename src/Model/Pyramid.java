@@ -20,5 +20,4 @@ public class Pyramid {
     public void set(int x, int y, Cube c){
         pyramid[x][y] = c;
     }
-    
 }
