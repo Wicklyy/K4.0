@@ -36,9 +36,11 @@ public class InterfaceGraphique implements Runnable, Observateur
 	public void stopTimer(){
 		t.stop();
 	}
+
 	public void startTimer(){
 		t.start();
 	}
+
     public void basculePleinEcran() {
 		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		GraphicsDevice device = env.getDefaultScreenDevice();
@@ -144,7 +146,7 @@ public class InterfaceGraphique implements Runnable, Observateur
 		// Ajouter des écouteurs d'actions aux boutons
 		FR.addActionListener(new AdaptateurLangues(controle));
 		EN.addActionListener(new AdaptateurLangues(controle));
-		// UnMute.addActionListener(new AdaptateurSon(controle));
+		UnMute.addActionListener(new AdaptateurSon(controle));
 
 		// Panneau en bas à gauche pour les drapeaux
 		JPanel bottomLeftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));

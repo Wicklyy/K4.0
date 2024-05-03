@@ -10,7 +10,8 @@ class K3
 {   
     public static void main(String [] args) {
         Jeu jeu = new Jeu(6, 7);
-        ControleurMediateur contMEd = new ControleurMediateur(jeu);
+        MusicPlayer musique = new MusicPlayer();
+        ControleurMediateur contMEd = new ControleurMediateur(jeu, musique);
         InterfaceGraphique.demarrer(jeu, contMEd);
     }
 }

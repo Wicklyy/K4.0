@@ -13,6 +13,16 @@ public class AdaptateurClavier extends KeyAdapter {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
+			case KeyEvent.VK_Q:
+				controle.commande("quit");
+				break;
+			case KeyEvent.VK_U:
+				controle.commande("Undo");
+				break;
+			case KeyEvent.VK_R:
+				controle.commande("Redo");
+				break;
+
 			case KeyEvent.VK_F11:
 				controle.commande("fullscreen");
 				break;

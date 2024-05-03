@@ -8,9 +8,12 @@ public class ControleurMediateur implements CollecteurEvenements
 	Jeu jeu;
 	InterfaceGraphique vue;
 	boolean toggleIA=false;
+	MusicPlayer musique;
 
-	public ControleurMediateur(Jeu j) {
+	public ControleurMediateur(Jeu j, MusicPlayer musique)
+	{
 		jeu = j;
+		this.musique = musique;
     }
 	
 	public void ImporterVue(InterfaceGraphique vue)
@@ -55,6 +58,11 @@ public class ControleurMediateur implements CollecteurEvenements
 			
 			case "Regles":
                 break;
+
+			case "Son":
+				System.out.println("Case son de ControleurMediateur");
+				musique.jouerMusique();
+				break;
 
 			default:
 				return false;

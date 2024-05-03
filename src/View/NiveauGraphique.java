@@ -1,13 +1,19 @@
 package View;
 
-import Model.Jeu;
-import Patterns.Observateur;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import Model.Jeu;
+import Patterns.Observateur;
 
 public class NiveauGraphique extends JComponent implements Observateur{
     int width_fenetre, height_fenetre, nb_ligne, nb_colonne, largeur_case, hauteur_case;
     JFrame frame;
+    Graphics2D drawable;
     Jeu jeu;
 
     NiveauGraphique(Jeu jeu)
@@ -55,6 +61,11 @@ public class NiveauGraphique extends JComponent implements Observateur{
 
     public void paintComponent(Graphics g)
     {
-	
+        System.out.println("PaintComponent de NiveauGraphique");
+        // Initialisation de la fenêtre graphique
+	    drawable = (Graphics2D) g;
+		width_fenetre = getSize().width;
+		height_fenetre = getSize().height;
+		drawable.clearRect(0, 0, width_fenetre, height_fenetre);
     }
 }
