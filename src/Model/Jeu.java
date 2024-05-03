@@ -65,8 +65,8 @@ public class Jeu {
     
     public ArrayList<Point> AccessibleCubesPlayer(){
         ArrayList<Point> list = new ArrayList<Point>();
-        for (int i=0; i<players[current_player].getsize(); i++){
-            for (int j=0; j<players[current_player].getsize(); j++){
+        for (int i=0; i<players[current_player].getSize(); i++){
+            for (int j=0; j<players[current_player].getSize(); j++){
                 if (accessible(i,j)){
                     Point p = new Point(i, j);
                     list.add(p);
