@@ -44,9 +44,13 @@ public class test{
                 if(entree[1].equals("milieu")){
                     System.out.println(jeu.principale);
                 }
-                else if(entree[1].equals("plateau")){
-                    System.out.println(jeu.principale);
-                }
+                
+            }
+            if(entree[0].equals("accessible")){
+                x = Integer.parseInt(entree[1]);
+                y = Integer.parseInt(entree[2]);
+                if(!jeu.accessible(x, y)){System.out.print("Not ");}
+                System.out.println("Accessible");
             }
             if(entree[0].equals("draw")){
                 if(entree.length == 1){

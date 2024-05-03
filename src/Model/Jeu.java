@@ -11,13 +11,13 @@ public class Jeu {
     PawnsBag bag;
     public int current_player;
 
-    public Jeu(int nb){
-        nbJoueur = nb;
+    public Jeu(int nb){             /*tout fonctionn bien */
+        nbJoueur = nb;              
         players = new Player[nb];
         bag = new PawnsBag();
         principale = new Pyramid(9);
         int y = 0;
-        for( Cube cube : bag.init_center()){
+        for( Cube cube : bag.init_center()){        /*petit soucis ici de temps en temps bug bizarre qui fait une index out of bound 9 pour aucune raison */
             principale.set(0, y, cube);
             y++;
         }
@@ -40,7 +40,7 @@ public class Jeu {
         current_player = r.nextInt(nb);
     }
 
-    //CALLED ONLY AFTER/IN VALIDITY CHECK !!!
+    //CALLED ONLY AFTER/IN VALIDITY CHECK !!!           /* fonctionne */
     public boolean check_penality(Cube cube, int x, int y) {
         return principale.get(x-1, y)==cube && principale.get(x-1, y+1)==cube;
     }
@@ -49,7 +49,7 @@ public class Jeu {
     // 0 -> NOT VALID
     // 1 -> VALID
     // 2 -> VALID WITH PENALITY
-    public int move_validity(Cube cube, int x, int y){
+    public int move_validity(Cube cube, int x, int y){          /* bonne validitee renvoyee */
         if (principale.get(x, y) == Cube.Vide){
             if (cube==Cube.Neutre || principale.get(x-1, y)==Cube.Neutre || principale.get(x-1, y+1)==Cube.Neutre || principale.get(x-1, y)==cube || principale.get(x-1, y+1)==cube){
                 if (check_penality(cube, x, y)){
@@ -70,7 +70,7 @@ public class Jeu {
     }
 
     public boolean accessible(Pyramid pyramid , int x, int y){
-        return pyramid.get(x+1, y)== Cube.Vide && (y==0 || pyramid.get(x+1, y-1)== Cube.Vide);
+        return pyramid.get(x+1, y) == Cube.Vide && (y==0 || pyramid.get(x+1, y-1)== Cube.Vide);
     }
     
     public ArrayList<Point> AccessibleCubesPlayer(){
