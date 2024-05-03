@@ -2,6 +2,7 @@ package Model;
 
 import java.util.Random;
 import java.awt.Point;
+import java.util.*;
 
 public class Jeu {
     Player[] players;
@@ -63,9 +64,9 @@ public class Jeu {
     }
     
     public ArrayList<Point> AccessibleCubesPlayer(){
-        ArrayList<Point> list = new ArrayList<Point>;
-        for (i=0; i<players[current_player].getsize(); i++){
-            for (j=0; j<players[current_player].getsize(); j++){
+        ArrayList<Point> list = new ArrayList<Point>();
+        for (int i=0; i<players[current_player].getsize(); i++){
+            for (int j=0; j<players[current_player].getsize(); j++){
                 if (accessible(i,j)){
                     Point p = new Point(i, j);
                     list.add(p);
@@ -73,7 +74,6 @@ public class Jeu {
             }
         }
         return list;
-
     }
 
 
