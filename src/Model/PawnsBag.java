@@ -67,4 +67,13 @@ public class PawnsBag {
         return cubes;
     }
 
+    public ArrayList<Cube> draw() {
+        ArrayList<Cube> cubes = new ArrayList<>();
+        Collections.shuffle(PawnsBag); // Mélanger le PawnsBag pour assurer l'aléatoire
+        for (int i = 0; i < 2; i++) {
+            cubes.add(PawnsBag.remove(0)); // Piocher un pion et le retirer du PawnsBag
+        }
+        return cubes;
+    }
+
 }

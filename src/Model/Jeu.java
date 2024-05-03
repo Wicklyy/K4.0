@@ -6,11 +6,18 @@ public class Jeu {
     Player[] players;
     int nbJoueur;
     Pyramid principale;
+    PawnsBag bag;
     int current_player;
 
-    public Jeu(int nb){
+    Jeu(int nb){
         nbJoueur = nb;
         players = new Player[nb];
+        bag = new PawnsBag();
+        int y = 0;
+        for( Cube cube : bag.init_center()){
+            principale.set(0, y, cube);
+            y++;
+        }
         for(int i = 0;i < nb; i++ ){
             players[i] = new Player(8-nb);
             if(nb == 4){
@@ -20,7 +27,7 @@ public class Jeu {
         Random r = new Random();
         current_player = r.nextInt(nb);
     }
-    
+
     //CALLED ONLY AFTER/IN VALIDITY CHECK !!!
     public boolean check_penality(Cube cube, int x, int y) {
         return principale.get(x-1, y)==cube && principale.get(x-1, y+1)==cube;
