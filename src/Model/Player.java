@@ -15,7 +15,7 @@ public class Player{
         size = i;
     }
 
-    public int getsize(){
+    public int getSize(){
         return size;
     }
     public void increment(Cube c){
