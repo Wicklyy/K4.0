@@ -42,7 +42,7 @@ public class Player{
     }
 
     public void decrement(Cube c){
-        switch (side.get(x)) {
+        switch (c) {
             case Noir:
                 noir--;
                 break;

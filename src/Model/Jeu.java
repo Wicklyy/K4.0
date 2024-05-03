@@ -15,7 +15,7 @@ public class Jeu {
         bag = new PawnsBag();
         int y = 0;
         for( Cube cube : bag.init_center()){
-            pyramid.set(0,y,cube);
+            principale.set(0, y, cube);
             y++;
         }
         for(int i = 0;i < nb; i++ ){
