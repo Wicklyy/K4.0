@@ -21,11 +21,19 @@ public class Jeu {
             principale.set(0, y, cube);
             y++;
         }
-        //System.out.println(y);
         for(int i = 0;i < nb; i++ ){
             players[i] = new Player(8-nb);
-            if(nb == 4){
+            if(nb!=4){
+                for(int j = 0; j < 4/nb; j++){
+                    players[i].addBag(Cube.Blanc);
+                    players[i].addBag(Cube.Neutre);
+                    
+                }
+                if(nb == 3){players[i].addBag(Cube.Neutre);}
+            }
+            else{
                 players[i].addSide(Cube.Blanc);
+                players[i].addBag(Cube.Neutre);
             }
         }
         Random r = new Random();
@@ -79,6 +87,10 @@ public class Jeu {
     }
     
     //Next player out of those still in the game
+    public int next_player(){
+        return next_player(current_player);
+    }
+
     public int next_player(int current_player){
         int next_player = (current_player+1)%nbJoueur;
         while ( players[next_player].lost() == true ){
@@ -88,10 +100,14 @@ public class Jeu {
     }
 
     public void avance(){
-        current_player = next_player(current_player);    
+        current_player = next_player();    
     }
 
     //Determine the previous player out of those still in the game
+    public int previous_player(){
+        return previous_player(current_player);
+    }
+
     public int previous_player(int current_player){
         int previous_player = (current_player + nbJoueur - 1) % nbJoueur;
         while(players[previous_player].lost() == true){
@@ -101,13 +117,13 @@ public class Jeu {
     }
     //Penality token from current player's pyramid
     public void takePenaltyCubeFromPyramid(int x,int y) {
-        players[previous_player(current_player)].addSide(players[current_player].get(x,y));
+        players[previous_player()].addSide(players[current_player].get(x,y));
         players[current_player].set(x,y,Cube.Vide);
     }
 
     //Penality token from current player's side
     public void takePenaltyCubeFromSide(int x) {
-        players[previous_player(current_player)].addSide(players[current_player].getSide(x));
+        players[previous_player()].addSide(players[current_player].getSide(x));
         players[current_player].removeSide(x);
     }
     
@@ -115,13 +131,16 @@ public class Jeu {
     // 1 -> VALID
     // 2 -> VALID WITH PENALITY
     public int add_central_pyramid(int x_central, int y_central, int x_player, int y_player){
+        if(accessible(x_player, y_player)){
         Cube cube = players[current_player].get(x_player, y_player);
         int valid = move_validity(cube, x_central, y_central);
         if(valid != 0){
             players[current_player].set(x_player, y_player, Cube.Vide);
             principale.set(x_central, y_central, cube);
+            avance();
         }
-        return valid;
+        return valid;}
+        return 0;
     }
 
 
@@ -162,6 +181,25 @@ public class Jeu {
 
     public void setPlayer(int x, int y, Cube cube){
         players[current_player].set(x, y, cube);
-        current_player += (current_player+1) % 2;
+        avance();
+    }
+
+    public boolean draw(){
+        if(!bag.empty()){
+        for(Cube c : bag.draw()){
+            players[current_player].addBag(c);
+        }
+        avance();
+        return true;
+    }
+        return false;
+    }
+
+    public void ajoute(int x, int y, int emplacement){
+        players[current_player].ajoute(x, y, emplacement);
+    }
+    
+    public String bag(){
+        return bag.toString();
     }
 }

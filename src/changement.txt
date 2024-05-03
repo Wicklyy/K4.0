@@ -1,0 +1,10 @@
+Il faut incrementer le joueur a chaque fois qu'on fait un coup
+
+previous_player() dans Jeu prend un int joueur pour rien meme chose pour next_player
+
+Il faut ajouter la pioche dans la classe player et ajouter la fonction draw
+ainsi que la fonction draw de la pioche global
+
+ajouter une fonction qui permet de mettre dans la pyramide un element du bag personelle
+
+add_central_pyramid modifier

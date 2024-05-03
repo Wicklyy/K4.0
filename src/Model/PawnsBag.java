@@ -17,6 +17,9 @@ public class PawnsBag {
         }
     }
 
+    public boolean empty(){
+        return PawnsBag.size() == 0;
+    }
     public boolean count_colors (ArrayList<Cube> cubes){
         boolean Rouge=false , Vert=false, Bleu=false, Noir=false, Jaune=false;
         for (Cube cube : cubes){
@@ -70,10 +73,18 @@ public class PawnsBag {
     public ArrayList<Cube> draw() {
         ArrayList<Cube> cubes = new ArrayList<>();
         Collections.shuffle(PawnsBag); // Mélanger le PawnsBag pour assurer l'aléatoire
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             cubes.add(PawnsBag.remove(0)); // Piocher un pion et le retirer du PawnsBag
         }
         return cubes;
+    }
+
+    public String toString(){
+        String chaine = "";
+        for(Cube cube : PawnsBag){
+            chaine += cube + " ";
+        }
+        return chaine;
     }
 
 }

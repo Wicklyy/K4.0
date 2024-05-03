@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Player{
     Pyramid pyramid;
-    ArrayList<Cube> side;
+    ArrayList<Cube> side, personalBag;
     int noir, bleu, blanc, rouge, jaune, vert, neutre;
     int size;
     boolean loss;
@@ -13,6 +13,7 @@ public class Player{
         pyramid = new Pyramid(i);
         size = i;
         side = new ArrayList<>();
+        personalBag = new ArrayList<>();
     }
     
     public int getSize(){
@@ -106,18 +107,40 @@ public class Player{
         return pyramid;
     }
 
+    /* FONCTION AJOUTER */
+    public void addBag(Cube cube){
+        personalBag.add(cube);
+    }
+    
+    public void ajoute(int x, int y, int emplacement){
+        if(!(get(x, y) == Cube.Vide)){
+            personalBag.add(get(x, y));
+        }
+        //System.out.println(personalBag.remove(emplacement));
+        set(x, y, personalBag.remove(emplacement));
+    }
     @Override
     public String toString(){
         String chaine = "Noir: "+ noir + "     Bleu: " + bleu + "     Blanc: "+ blanc + "     Rouge: " + rouge +"\nJaune: " + jaune +"     Vert: " + vert + "      Neutre: " + neutre + "\n";
+        chaine +="Bag: ";
+        int nb = 0;
+        for(Cube cube : personalBag){
+            chaine+= nb + ":" + cube + " ";
+            nb++;
+        }
         chaine +="\nSide: ";
+        nb = 0;
         for( Cube cube : side ){
-            chaine+=cube + " ";
+            chaine+= nb + ":" + cube + " ";
+            nb++;
         }
         chaine+="\nPyramide:\n" + pyramid;
 
         return chaine;
     }
 
+
+    
 
 
 }
