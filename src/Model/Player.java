@@ -6,13 +6,18 @@ public class Player{
     Pyramid pyramid;
     ArrayList<Cube> side;
     int noir, bleu, blanc, rouge, jaune, vert, neutre;
+    int size;
     boolean loss;
 
     Player(int i){
         pyramid = new Pyramid(i);
+        size = i;
         side = new ArrayList<>();
     }
-
+    
+    public int getSize(){
+        return size;
+    }
     public void increment(Cube c){
         switch (c) {
             case Noir:
@@ -103,12 +108,12 @@ public class Player{
 
     @Override
     public String toString(){
-        String chaine = "Noir: "+noir+"\tBleu: "+ bleu + "\tBlanc: "+ blanc + "\nRouge: " + rouge +"\tJaune: " + jaune +"\tVert: " + vert + "\tNeutre: " + neutre + "\n";
-        chaine += pyramid + "\nSide: ";
+        String chaine = "Noir: "+ noir + "     Bleu: " + bleu + "     Blanc: "+ blanc + "     Rouge: " + rouge +"\nJaune: " + jaune +"     Vert: " + vert + "      Neutre: " + neutre + "\n";
+        chaine +="\nSide: ";
         for( Cube cube : side ){
             chaine+=cube + " ";
         }
-        chaine+="\n" + pyramid;
+        chaine+="\nPyramide:\n" + pyramid;
 
         return chaine;
     }

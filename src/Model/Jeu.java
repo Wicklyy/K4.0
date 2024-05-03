@@ -1,23 +1,27 @@
 package Model;
 
 import java.util.Random;
+import java.util.ArrayList;
+import java.awt.Point;
 
 public class Jeu {
     Player[] players;
     int nbJoueur;
-    Pyramid principale;
+    public Pyramid principale;
     PawnsBag bag;
     int current_player;
 
-    Jeu(int nb){
+    public Jeu(int nb){
         nbJoueur = nb;
         players = new Player[nb];
         bag = new PawnsBag();
+        principale = new Pyramid(9);
         int y = 0;
         for( Cube cube : bag.init_center()){
             principale.set(0, y, cube);
             y++;
         }
+        //System.out.println(y);
         for(int i = 0;i < nb; i++ ){
             players[i] = new Player(8-nb);
             if(nb == 4){
@@ -59,6 +63,19 @@ public class Jeu {
 
     public boolean accessible(Pyramid pyramid , int x, int y){
         return pyramid.get(x+1, y)== Cube.Vide && (y==0 || pyramid.get(x+1, y-1)== Cube.Vide);
+    }
+    
+    public ArrayList<Point> AccessibleCubesPlayer(){
+        ArrayList<Point> list = new ArrayList<Point>();
+        for (int i=0; i<players[current_player].getSize(); i++){
+            for (int j=0; j<players[current_player].getSize(); j++){
+                if (accessible(i,j)){
+                    Point p = new Point(i, j);
+                    list.add(p);
+                }
+            }
+        }
+        return list;
     }
     
     //Next player out of those still in the game
@@ -130,5 +147,21 @@ public class Jeu {
             }
         }
         return (count_survivors==1);
+    }
+
+
+
+    /* NOUVELLE FONCTION AJOUTEEEEEE */
+    public Player getPlayer(int i){
+        return players[i];
+    }
+
+    public Player getPlayer(){
+        return getPlayer(current_player);
+    }
+
+    public void setPlayer(int x, int y, Cube cube){
+        players[current_player].set(x, y, cube);
+        current_player += (current_player+1) % 2;
     }
 }
