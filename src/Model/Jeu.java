@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.Random;
+import java.awt.Point;
 
 public class Jeu {
     Player[] players;
@@ -61,6 +62,21 @@ public class Jeu {
         return pyramid.get(x+1, y)== Cube.Vide && (y==0 || pyramid.get(x+1, y-1)== Cube.Vide);
     }
     
+    public ArrayList<Point> AccessibleCubesPlayer(){
+        ArrayList<Point> list = new ArrayList<Point>;
+        for (i=0; i<players[current_player].getsize(); i++){
+            for (j=0; j<players[current_player].getsize(); j++){
+                if (accessible(i,j)){
+                    Point p = new Point(i, j);
+                    list.add(p);
+                }
+            }
+        }
+        return list;
+
+    }
+
+
     //Next player out of those still in the game
     public int next_player(int current_player){
         int next_player = (current_player+1)%nbJoueur;
@@ -93,7 +109,7 @@ public class Jeu {
         players[previous_player(current_player)].addSide(players[current_player].getSide(x));
         players[current_player].removeSide(x);
     }
-    
+
     // 0 -> NOT VALID
     // 1 -> VALID
     // 2 -> VALID WITH PENALITY

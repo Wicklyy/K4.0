@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Player{
     Pyramid pyramid;
+    int size;
     ArrayList<Cube> side;
     int noir, bleu, blanc, rouge, jaune, vert, neutre;
     boolean loss;
@@ -11,8 +12,12 @@ public class Player{
     Player(int i){
         pyramid = new Pyramid(i);
         side = new ArrayList<>();
+        size = i;
     }
 
+    public int getsize(){
+        return size;
+    }
     public void increment(Cube c){
         switch (c) {
             case Noir:
@@ -83,7 +88,7 @@ public class Player{
 
     public Cube getSide(int x){
         return side.get(x);
-    } 
+    }
 
     public void set(int x, int y, Cube c){
         Cube cube = get(x, y);
@@ -100,7 +105,6 @@ public class Player{
     public Pyramid getPyramid(){
         return pyramid;
     }
-    
 
 
 }
