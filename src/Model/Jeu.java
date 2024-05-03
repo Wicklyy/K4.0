@@ -9,7 +9,7 @@ public class Jeu {
     int nbJoueur;
     public Pyramid principale;
     PawnsBag bag;
-    int current_player;
+    public int current_player;
 
     public Jeu(int nb){
         nbJoueur = nb;

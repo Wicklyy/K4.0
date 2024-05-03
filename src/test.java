@@ -14,6 +14,8 @@ public class test{
         String[] entree;
         while(true){
             entree = s.nextLine().split("\\s+");
+            System.out.println("pyramide du milieu:\n" + jeu.principale);
+            System.out.println("tour du joueur:" + (jeu.current_player+1));
             if(entree[0].equals("print")){
                 if(entree[1].equals("joueur")){
                     if(entree[2].equals("1")){
