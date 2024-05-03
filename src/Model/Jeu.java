@@ -1,7 +1,7 @@
-package src.Model;
+package Model;
 
 import java.util.Random;
-import src.Patterns.Observable;
+import Patterns.Observable;
 
 public class Jeu extends Observable{
     Boolean action,victoire;

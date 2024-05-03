@@ -1,10 +1,9 @@
-package src.View;
+package View;
 
+import Model.Jeu;
+import Patterns.Observateur;
 import javax.swing.*;
 import java.awt.*;
-
-import src.Model.Jeu;
-import src.Patterns.Observateur;
 
 public class NiveauGraphique extends JComponent implements Observateur{
     int width_fenetre, height_fenetre, nb_ligne, nb_colonne, largeur_case, hauteur_case;

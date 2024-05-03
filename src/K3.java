@@ -1,8 +1,10 @@
-package src;
+// javac -cp src -d out src/*.java src/*/*.java
+// java -cp out K3
 
-import src.Model.*;
-import src.View.*;
-import src.Controller.*;
+
+import Model.*;
+import View.*;
+import Controller.*;
 
 class K3
 {   

@@ -1,7 +1,7 @@
-package src.Controller;
+package Controller;
 
-import src.View.*;
-import src.Model.*;
+import View.*;
+import Model.*;
 
 public class ControleurMediateur implements CollecteurEvenements 
 {

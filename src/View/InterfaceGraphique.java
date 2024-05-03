@@ -1,14 +1,12 @@
-package src.View;
+package View;
 
+import Model.Jeu;
+import Patterns.Observateur;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
-
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
-import src.Model.Jeu;
-import src.Patterns.Observateur;
 
 public class InterfaceGraphique implements Runnable, Observateur
 {
@@ -20,7 +18,7 @@ public class InterfaceGraphique implements Runnable, Observateur
     boolean maximized;
 	Timer t;
 	JToggleButton IA;
-	JButton NewGame, Charger, Lan, Quit, Regles, FR, EN;
+	JButton NewGame, Charger, Lan, Quit, Regles, FR, EN, UnMute;
 
     InterfaceGraphique(Jeu jeu, CollecteurEvenements c)
     {
@@ -71,7 +69,8 @@ public class InterfaceGraphique implements Runnable, Observateur
 
 	public void Page_NewGame(Container container){
 		//Supprimer tous les composants de la fenêtre
-        for (Component component : container.getComponents()) {
+        for (Component component : container.getComponents())
+		{
             container.remove(component);
         }
         // Rafraîchir la fenêtre pour refléter les changements
@@ -122,50 +121,66 @@ public class InterfaceGraphique implements Runnable, Observateur
 
 		frame.add(centrePanel, BorderLayout.CENTER);
 
-		// Panneau en bas à gauche pour les drapeaux
-        JPanel bottomLeftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		// Charger les icônes d'images
-		bottomLeftPanel.setOpaque(false);
+		// On récupère les images
 		ImageIcon iconFR = new ImageIcon("res/Francev2.jpg");
 		ImageIcon iconEN = new ImageIcon("res/anglais.png");
+		ImageIcon iconUnMute = new ImageIcon("res/son.png");
 		
 		// Redimensionner les images à 20x20 pixels
 		Image resizedImageFR = iconFR.getImage().getScaledInstance(40, 30, Image.SCALE_SMOOTH);
 		Image resizedImageEN = iconEN.getImage().getScaledInstance(40, 30, Image.SCALE_SMOOTH);
+		Image resizedImageUnMute = iconUnMute.getImage().getScaledInstance(40, 30, Image.SCALE_SMOOTH);
 
 		// Créer les icônes redimensionnées
 		iconFR = new ImageIcon(resizedImageFR);
 		iconEN = new ImageIcon(resizedImageEN);
+		iconUnMute = new ImageIcon(resizedImageUnMute);
 
 		// Créer les boutons avec les icônes d'images
 		FR = new JButton(iconFR);
 		EN = new JButton(iconEN);
+		UnMute = new JButton(iconUnMute);
 		
 		// Ajouter des écouteurs d'actions aux boutons
 		FR.addActionListener(new AdaptateurLangues(controle));
-		EN.addActionListener(new AdaptateurLangues(controle)); 
+		EN.addActionListener(new AdaptateurLangues(controle));
+		// UnMute.addActionListener(new AdaptateurSon(controle));
 
+		// Panneau en bas à gauche pour les drapeaux
+		JPanel bottomLeftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		bottomLeftPanel.setOpaque(false);
 		// Ajouter les boutons au panneau
 		bottomLeftPanel.add(FR);
 		bottomLeftPanel.add(EN);
 
 		// Panneau en bas à droite pour le bouton "Règles"
-        JPanel bottomRightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));  
-		bottomRightPanel.setOpaque(false);      
+		JPanel bottomRightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));  
+		bottomRightPanel.setOpaque(false); 
 		Regles = creerButton("Règles");
 		Regles.addActionListener(new AdaptateurRegles(controle));
 		bottomRightPanel.add(Regles);
-    
 
 		// Combiner les panneaux en bas à gauche et à droite dans un seul panneau en bas
-        JPanel bottomPanel = new JPanel();
+		JPanel bottomPanel = new JPanel();
 		bottomPanel.setOpaque(false); 
-        bottomPanel.setLayout(new BorderLayout());
-        bottomPanel.add(bottomLeftPanel, BorderLayout.WEST);
-        bottomPanel.add(bottomRightPanel, BorderLayout.EAST);
+		bottomPanel.setLayout(new BorderLayout());
+		bottomPanel.add(bottomLeftPanel, BorderLayout.WEST);
+		bottomPanel.add(bottomRightPanel, BorderLayout.EAST);
 
+		//On positionnne le bouton du son dans la fenetre
         frame.add(bottomPanel, BorderLayout.SOUTH);
+				
+		// Panneau en haut à droite pour le son
+		JPanel topRightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		topRightPanel.add(UnMute,BorderLayout.EAST);
+		topRightPanel.setOpaque(false);
+		JPanel topPanel = new JPanel();
+		topPanel.setOpaque(false);
+		topPanel.setLayout(new BorderLayout());
+		topPanel.add(topRightPanel, BorderLayout.EAST);
+		frame.add(topPanel, BorderLayout.NORTH);
 
+		// Associe le son aux boutons
 		SourisAdapte sourisNewGame = new SourisAdapte(NewGame, "res/clic.wav");
 		SourisAdapte sourisCharger = new SourisAdapte(Charger, "res/clic.wav");
 		SourisAdapte sourisLan = new SourisAdapte(Lan, "res/clic.wav");
@@ -173,6 +188,7 @@ public class InterfaceGraphique implements Runnable, Observateur
 		SourisAdapte sourisRegles = new SourisAdapte(Regles, "res/clic.wav");
 		SourisAdapte sourisFr = new SourisAdapte(FR, "res/clic.wav");
 		SourisAdapte sourisEn = new SourisAdapte(EN, "res/clic.wav");
+		SourisAdapte sourisUnMute = new SourisAdapte(UnMute, "res/clic.wav");
 		
 		NewGame.addMouseListener(sourisNewGame);
 		Charger.addMouseListener(sourisCharger);
@@ -185,10 +201,16 @@ public class InterfaceGraphique implements Runnable, Observateur
 		EN.addMouseListener(sourisEn);
 		EN.setBorder(BorderFactory.createEmptyBorder());
 		EN.setContentAreaFilled(false);
+		UnMute.setBorder(BorderFactory.createEmptyBorder());
+		UnMute.setContentAreaFilled(false);
+		UnMute.addMouseListener(sourisUnMute);
 
-		NewGame.addActionListener(new ActionListener(){
+
+		NewGame.addActionListener(new ActionListener()
+		{
 			@Override
-			public void actionPerformed(ActionEvent e){
+			public void actionPerformed(ActionEvent e)
+			{
 				// Les trois lignes du dessous permettent d'ouvrir une nouvelle fenêtre
 				// frame.dispose();
 				// // Action exécutée lors du clic sur le bouton

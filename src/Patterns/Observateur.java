@@ -1,4 +1,4 @@
-package src.Patterns;
+package Patterns;
 
 public interface Observateur {
     void miseAJour();
