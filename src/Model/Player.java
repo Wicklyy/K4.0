@@ -98,8 +98,8 @@ public class Player{
     }
 
     public void removeSide(int x){
-        side.remove(x);
         decrement(side.get(x));
+        side.remove(x);
     }
 
     public Pyramid getPyramid(){
