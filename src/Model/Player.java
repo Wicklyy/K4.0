@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Player{
     Pyramid pyramid;
@@ -19,6 +20,7 @@ public class Player{
     public int getSize(){
         return size;
     }
+
     public void increment(Cube c){
         switch (c) {
             case Noir:
@@ -83,6 +85,7 @@ public class Player{
     public boolean lost(){
         return loss;
     }
+
     public Cube get(int x, int y){
         return pyramid.get(x, y);
     }
@@ -111,6 +114,18 @@ public class Player{
     public void addBag(Cube cube){
         personalBag.add(cube);
     }
+
+    public boolean bagEmpty(){
+        return personalBag.isEmpty();
+    }
+    
+    public int getBagSize(){
+        return personalBag.size();
+    }
+
+    public void melange(){
+        Collections.shuffle(personalBag);
+    }
     
     public void ajoute(int x, int y, int emplacement){
         if(!(get(x, y) == Cube.Vide)){
@@ -125,8 +140,9 @@ public class Player{
         chaine +="Bag: ";
         int nb = 0;
         for(Cube cube : personalBag){
-            chaine+= nb + ":" + cube + " ";
             nb++;
+            chaine+= nb + ":" + cube + " ";
+            
         }
         chaine +="\nSide: ";
         nb = 0;

@@ -6,15 +6,15 @@ import java.awt.Point;
 
 public class Jeu {
     Player[] players;
-    int nbJoueur;
+    public int nbJoueur;
     public Pyramid principale;
     PawnsBag bag;
-    public int current_player;
+    public int current_player, size;
 
     public Jeu(int nb){             /*tout fonctionn bien */
         nbJoueur = nb;              
         players = new Player[nb];
-        bag = new PawnsBag();
+        bag = new PawnsBag(nb);
         principale = new Pyramid(9);
         int y = 0;
         for( Cube cube : bag.init_center()){        /*petit soucis ici de temps en temps bug bizarre qui fait une index out of bound 9 pour aucune raison */
@@ -22,7 +22,8 @@ public class Jeu {
             y++;
         }
         for(int i = 0;i < nb; i++ ){
-            players[i] = new Player(8-nb);
+            size = 8-nb;
+            players[i] = new Player(size);
             if(nb!=4){
                 for(int j = 0; j < 4/nb; j++){
                     players[i].addBag(Cube.Blanc);
@@ -42,7 +43,7 @@ public class Jeu {
 
     //CALLED ONLY AFTER/IN VALIDITY CHECK !!!           /* fonctionne */
     public boolean check_penality(Cube cube, int x, int y) {
-        return principale.get(x-1, y)==cube && principale.get(x-1, y+1)==cube;
+        return x != y && principale.get(x-1, y) == principale.get(x-1, y+1);
     }
 
     //MOVE VALIDITY :
@@ -50,27 +51,26 @@ public class Jeu {
     // 1 -> VALID
     // 2 -> VALID WITH PENALITY
     public int move_validity(Cube cube, int x, int y){          /* bonne validitee renvoyee */
-        if (principale.get(x, y) == Cube.Vide){
-            if (cube==Cube.Neutre || principale.get(x-1, y)==Cube.Neutre || principale.get(x-1, y+1)==Cube.Neutre || principale.get(x-1, y)==cube || principale.get(x-1, y+1)==cube){
-                if (check_penality(cube, x, y)){
-                    return 2;
-                }
-                return 1;
-            } else {
-                return 0;
+        if ( sameColor(principale.get(x, y), Cube.Vide) && (sameColor(principale.get(x-1, y),cube) || ( y != (size - x) && sameColor(principale.get(x-1, y+1),cube)))){
+            if (check_penality(cube, x, y)){
+                return 2;
             }
-        } else {
-            return 0;
-        }
+            return 1;
+            }
+        else {return 0;}
     }
 
-    public boolean accessible(int x, int y){
+    public boolean sameColor(Cube c1,Cube c2){
+        return (c1 == c2) || (c1 == Cube.Neutre) || (c2 == Cube.Neutre);
+    }
+
+    public boolean accessible(int x, int y){                /* bon resultat */
         Pyramid pyramid = players[current_player].getPyramid();
         return accessible(pyramid , x, y);
     }
 
     public boolean accessible(Pyramid pyramid , int x, int y){
-        return pyramid.get(x+1, y) == Cube.Vide && (y==0 || pyramid.get(x+1, y-1)== Cube.Vide);
+        return (pyramid.get(x, y) != Cube.Vide) && ( x == size-1 && y == 0  ) || (pyramid.get(x+1, y) == Cube.Vide && (y==0 || pyramid.get(x+1, y-1)== Cube.Vide));
     }
     
     public ArrayList<Point> AccessibleCubesPlayer(){
@@ -87,7 +87,7 @@ public class Jeu {
     }
     
     //Next player out of those still in the game
-    public int next_player(){
+    public int next_player(){           
         return next_player(current_player);
     }
 
@@ -99,7 +99,7 @@ public class Jeu {
         return next_player;
     }
 
-    public void avance(){
+    public void avance(){           /* le bon joueur est envoyer */
         current_player = next_player();    
     }
 
@@ -137,7 +137,6 @@ public class Jeu {
         if(valid != 0){
             players[current_player].set(x_player, y_player, Cube.Vide);
             principale.set(x_central, y_central, cube);
-            avance();
         }
         return valid;}
         return 0;
@@ -185,13 +184,13 @@ public class Jeu {
     }
 
     public boolean draw(){
-        if(!bag.empty()){
-        for(Cube c : bag.draw()){
-            players[current_player].addBag(c);
+        if(bag.getSize() > 2){
+            for(Cube c : bag.draw()){
+                players[current_player].addBag(c);
+            }
+            avance();
+            return true;
         }
-        avance();
-        return true;
-    }
         return false;
     }
 
@@ -202,4 +201,5 @@ public class Jeu {
     public String bag(){
         return bag.toString();
     }
+
 }

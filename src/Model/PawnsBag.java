@@ -5,9 +5,12 @@ import java.util.Collections;
 
 public class PawnsBag {
     private ArrayList<Cube> PawnsBag;
+    boolean care;
 
-    public PawnsBag() {
+    public PawnsBag(int nb) {
         PawnsBag = new ArrayList<Cube>();
+        care = false;
+        if(nb == 2){care = true;}
         for (int i=0; i<9; i++){
             PawnsBag.add(Cube.Rouge);
             PawnsBag.add(Cube.Bleu);
@@ -73,18 +76,29 @@ public class PawnsBag {
     public ArrayList<Cube> draw() {
         ArrayList<Cube> cubes = new ArrayList<>();
         Collections.shuffle(PawnsBag); // Mélanger le PawnsBag pour assurer l'aléatoire
-        for (int i = 0; i < 3; i++) {
+        int todraw = 3;
+        //System.out.println(PawnsBag.size());
+        if(care && (PawnsBag.size() <= 6)){
+            todraw = 2;
+        }
+        for (int i = 0; i < todraw; i++) {
             cubes.add(PawnsBag.remove(0)); // Piocher un pion et le retirer du PawnsBag
         }
         return cubes;
     }
 
+
+    /* Fonction ajoutee */
     public String toString(){
         String chaine = "";
         for(Cube cube : PawnsBag){
             chaine += cube + " ";
         }
         return chaine;
+    }
+
+    public int getSize(){
+        return PawnsBag.size();
     }
 
 }

@@ -8,3 +8,15 @@ ainsi que la fonction draw de la pioche global
 ajouter une fonction qui permet de mettre dans la pyramide un element du bag personelle
 
 add_central_pyramid modifier
+
+ajout de la fonction empty dans PawnsBag
+
+modification de la fonction draw dans PawnsBag pour 2 joueur (deux cube sont mit de cote si 2 joueur)
+
+la fonction accessible modifier crash pour la position tout en haut de la pyramide
+
+coup valide revoie vrai si il y a qu'un seul cube en dessous ce qui est pas bon
+
+check penalty n'est pas bon dans le cas ou on pose un neutre sur deux de la meme couleur ne fonctionne pas
+
+accessible modifier, une case vide n'est pas accessible
