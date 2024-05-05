@@ -2,6 +2,7 @@ package Model;
 
 import java.util.Random;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.awt.Point;
 
 public class Jeu {
@@ -10,9 +11,11 @@ public class Jeu {
     public Pyramid principale;
     PawnsBag bag;
     public int current_player, size;
+    boolean End;
 
     public Jeu(int nb){             /*tout fonctionn bien */
-        nbJoueur = nb;              
+        nbJoueur = nb;
+        End = false;              
         players = new Player[nb];
         bag = new PawnsBag(nb);
         principale = new Pyramid(9);
@@ -43,7 +46,7 @@ public class Jeu {
 
     //CALLED ONLY AFTER/IN VALIDITY CHECK !!!           /* fonctionne */
     public boolean check_penality(Cube cube, int x, int y) {
-        return x != y && principale.get(x-1, y) == principale.get(x-1, y+1);
+        return principale.get(x-1, y) == principale.get(x-1, y+1);
     }
 
     //MOVE VALIDITY :
@@ -74,13 +77,13 @@ public class Jeu {
     }
 
     public boolean accessible(Pyramid pyramid , int x, int y){
-        return (pyramid.get(x, y) != Cube.Vide) && ( x == size-1 && y == 0  ) || (pyramid.get(x+1, y) == Cube.Vide && (y==0 || pyramid.get(x+1, y-1)== Cube.Vide));
+        return (pyramid.get(x, y) != Cube.Vide) && (( x == size-1 && y == 0  ) || (( y == size-x-1 || pyramid.get(x+1, y) == Cube.Vide) && (y == 0 || pyramid.get(x+1, y-1)== Cube.Vide)));
     }
     
-    public ArrayList<Point> AccessibleCubesPlayer(){
+    public ArrayList<Point> AccessibleCubesPlayer(){            /* Fonctionne mais crash?(tres rarement)*/
         ArrayList<Point> list = new ArrayList<Point>();
-        for (int i=0; i<players[current_player].getSize(); i++){
-            for (int j=0; j<players[current_player].getSize(); j++){
+        for (int i=players[current_player].getSize()-1; i>=0; i--){
+            for (int j=0; j<players[current_player].getSize()-i; j++){
                 if (accessible(i,j)){
                     Point p = new Point(i, j);
                     list.add(p);
@@ -91,7 +94,7 @@ public class Jeu {
     }
     
     //Next player out of those still in the game
-    public int next_player(){           
+    public int next_player(){               /* Fonctionne */
         return next_player(current_player);
     }
 
@@ -104,7 +107,7 @@ public class Jeu {
     }
 
     public void avance(){           /* le bon joueur est envoyer */
-        current_player = next_player();    
+        current_player = next_player();
     }
 
     //Determine the previous player out of those still in the game
@@ -120,13 +123,13 @@ public class Jeu {
         return previous_player;
     }
     //Penality token from current player's pyramid
-    public void takePenaltyCubeFromPyramid(int x,int y) {
+    public void takePenaltyCubeFromPyramid(int x,int y) {               /*Fonctionne */
         players[previous_player()].addSide(players[current_player].get(x,y));
         players[current_player].set(x,y,Cube.Vide);
     }
 
     //Penality token from current player's side
-    public void takePenaltyCubeFromSide(int x) {
+    public void takePenaltyCubeFromSide(int x) {            /* Fonctionne */
         players[previous_player()].addSide(players[current_player].getSide(x));
         players[current_player].removeSide(x);
     }
@@ -134,15 +137,16 @@ public class Jeu {
     // 0 -> NOT VALID
     // 1 -> VALID
     // 2 -> VALID WITH PENALITY
-    public int add_central_pyramid(int x_central, int y_central, int x_player, int y_player){
+    public int add_central_pyramid(int x_central, int y_central, int x_player, int y_player){   /*Fonctionne */
         if(accessible(x_player, y_player)){
-        Cube cube = players[current_player].get(x_player, y_player);
-        int valid = move_validity(cube, x_central, y_central);
-        if(valid != 0){
-            players[current_player].set(x_player, y_player, Cube.Vide);
-            principale.set(x_central, y_central, cube);
+            Cube cube = players[current_player].get(x_player, y_player);
+            int valid = move_validity(cube, x_central, y_central);
+            if(valid != 0){
+                players[current_player].set(x_player, y_player, Cube.Vide);
+                principale.set(x_central, y_central, cube);
+            }
+            return valid;
         }
-        return valid;}
         return 0;
     }
 
@@ -162,18 +166,55 @@ public class Jeu {
     
 
     public boolean End_Game(){
-        int count_survivors = 0;
-        for(int i = 0;i < nbJoueur; i++ ){
-            if (players[i].lost() == false){
-                count_survivors = count_survivors + 1;
-            }
-        }
-        return (count_survivors==1);
+        return End;
     }
 
 
 
     /* NOUVELLE FONCTION AJOUTEEEEEE */
+    public boolean check_loss(){
+        if(noPlay() || getPlayer().totalCube() == 0){
+            getPlayer().playerLost();
+            int next = next_player();
+            if(next == next_player(next)){End = true;}
+            return true;
+        }
+        return false;
+    }
+
+    public boolean noPlay(){
+        HashMap<Cube,Boolean> list = accessibleColors();
+        for(Point e : AccessibleCubesPlayer()){
+            Cube cube = getPlayer().get(e.x, e.y);
+            if(cube == Cube.Blanc || cube == Cube.Neutre || list.get(cube) != null){
+                return false;
+            }
+        }
+        for(Cube c : getPlayer().getSide()){
+            if(c == Cube.Blanc || c == Cube.Neutre || list.get(c) != null){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public HashMap<Cube,Boolean> accessibleColors(){
+        HashMap<Cube,Boolean> list = new HashMap<>();
+        for(int i = principale.getSize()-1; i >= 0; i--){
+            for(int j = 0; j < principale.getSize()-i; j++){
+                if(possible(i, j)){
+                    list.put(principale.get(i, j), true);
+                }
+            }
+        }
+        return list;
+    }
+
+    public boolean possible(int x, int y){
+        if( principale.get(x, y) != Cube.Vide && ((principale.get(x+1, y) == Cube.Vide) || ((y != principale.getSize() - 1 - x) && principale.get(x+1, y) == Cube.Vide)) ){return true;}
+        return false;
+    }
+
     public Player getPlayer(int i){
         return players[i];
     }

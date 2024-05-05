@@ -1,4 +1,3 @@
-Il faut incrementer le joueur a chaque fois qu'on fait un coup
 
 previous_player() dans Jeu prend un int joueur pour rien meme chose pour next_player
 
@@ -19,4 +18,16 @@ coup valide revoie vrai si il y a qu'un seul cube en dessous ce qui est pas bon
 
 check penalty n'est pas bon dans le cas ou on pose un neutre sur deux de la meme couleur ne fonctionne pas
 
-accessible modifier, une case vide n'est pas accessible
+accessible modifier, une case vide n'est pas accessible et en plus crash dans le cas ou on est dans l'extremitee droite
+
+AccessibleCubesPlayer ne fonctionnais pas (mauvaise coordonnee) corrigee
+
+Ajoute du cas ou on joue un cube blanc (peut etre poser n'importe ou)
+
+Remove side est mal faite dans Player
+
+Ajouter la fonction qui verrifie si le joueur a perdu
+
+Retirer la fonction end game plus simple de la factoriser avec la fonction prochain joueur (si le prochain joueur est le joueur courant avant prochain c'est la fin)
+
+ajout de la fonction getSide sans argument pour recuperer tout les cube de side

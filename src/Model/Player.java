@@ -93,6 +93,13 @@ public class Player{
     public Cube getSide(int x){
         return side.get(x);
     } 
+    public ArrayList<Cube> getSide(){
+        return side;
+    }
+
+    public int getSideSize(){
+        return side.size();
+    }
 
     public void set(int x, int y, Cube c){
         Cube cube = get(x, y);
@@ -102,8 +109,7 @@ public class Player{
     }
 
     public void removeSide(int x){
-        side.remove(x);
-        decrement(side.get(x));
+        decrement(side.remove(x));
     }
 
     public Pyramid getPyramid(){
@@ -126,7 +132,14 @@ public class Player{
     public void melange(){
         Collections.shuffle(personalBag);
     }
-    
+
+    public int totalCube(){
+        return noir + bleu + blanc + rouge + jaune + vert + neutre;
+    }
+    public void playerLost(){
+        loss = true;
+    }
+
     public void ajoute(int x, int y, int emplacement){
         if(!(get(x, y) == Cube.Vide)){
             personalBag.add(get(x, y));
@@ -140,9 +153,8 @@ public class Player{
         chaine +="Bag: ";
         int nb = 0;
         for(Cube cube : personalBag){
-            nb++;
             chaine+= nb + ":" + cube + " ";
-            
+            nb++;
         }
         chaine +="\nSide: ";
         nb = 0;
