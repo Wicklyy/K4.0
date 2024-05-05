@@ -51,13 +51,17 @@ public class Jeu {
     // 1 -> VALID
     // 2 -> VALID WITH PENALITY
     public int move_validity(Cube cube, int x, int y){          /* bonne validitee renvoyee */
-        if ( sameColor(principale.get(x, y), Cube.Vide) && (sameColor(principale.get(x-1, y),cube) || ( y != (size - x) && sameColor(principale.get(x-1, y+1),cube)))){
+        if ( sameColor(principale.get(x, y), Cube.Vide) && check_under(x,y) && (sameColor(principale.get(x-1, y),cube) || ( sameColor(principale.get(x-1, y+1),cube))) ){
             if (check_penality(cube, x, y)){
                 return 2;
             }
             return 1;
             }
         else {return 0;}
+    }
+
+    public boolean check_under(int x, int y){
+        return !sameColor(principale.get(x-1, y),Cube.Vide) && !sameColor(principale.get(x-1, y+1),Cube.Vide);
     }
 
     public boolean sameColor(Cube c1,Cube c2){
