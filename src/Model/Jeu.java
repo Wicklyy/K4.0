@@ -59,7 +59,7 @@ public class Jeu {
                 return 2;
             }
             return 1;
-            }
+        }
         else {return 0;}
     }
 
