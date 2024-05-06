@@ -14,21 +14,14 @@ public class SourisAdapte extends MouseAdapter {
     private JButton bouton;
     private Clip audioClip;
 
-    public SourisAdapte(JButton bouton, String audioFilePath) {
+    public SourisAdapte(JButton bouton, Clip audio) {
         this.bouton = bouton;
         // Sauvegarder l'état d'origine du bouton
         this.originalBackgroundColor = bouton.getBackground();
         this.originalForegroundColor = bouton.getForeground();
 
         // Charger le fichier audio
-        try {
-            File audioFile = new File(audioFilePath);
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
-            audioClip = AudioSystem.getClip();
-            audioClip.open(audioStream);
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            e.printStackTrace();
-        }
+        audioClip=audio;
     }
 
     @Override

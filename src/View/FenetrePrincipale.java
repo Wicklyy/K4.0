@@ -2,10 +2,17 @@ package View;
 
 import Model.Jeu;
 import Patterns.Observateur;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+
+import Global.FileLoader;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 
 public class FenetrePrincipale
@@ -45,9 +52,12 @@ public class FenetrePrincipale
 
     public void GenereMenu()
     {
-            // Charger l'image d'icône
-        ImageIcon icon = new ImageIcon("res/IconeV2.png");
-        frame.setIconImage(icon.getImage());
+        // Charger l'image d'icône
+        try{
+        frame.setIconImage(FileLoader.getImage("res/IconeV2.png").getImage());
+        }catch(IOException e){
+            System.exit(1);
+        }
 
         // Panneau central avec les boutons
         JPanel centrePanel = new JPanel();
@@ -61,17 +71,17 @@ public class FenetrePrincipale
         centrePanel.add(NewGame);
         centrePanel.add(Box.createVerticalStrut(10));
 
-        Charger = creerButton("Charger partie");
+        Charger = Bouton.creerButton("Charger partie");
         Charger.addActionListener(new AdaptateurCharger(controle));
         centrePanel.add(Charger);
         centrePanel.add(Box.createVerticalStrut(10));
 
-        Lan = creerButton("LAN");
+        Lan = Bouton.creerButton("LAN");
         Lan.addActionListener(new AdaptateurLan(controle));
         centrePanel.add(Lan);
         centrePanel.add(Box.createVerticalStrut(10));
 
-        Quit = creerButton("Quitter");
+        Quit = Bouton.creerButton("Quitter");
         Quit.addActionListener(new AdaptateurQuit(controle));
         centrePanel.add(Quit);
         centrePanel.add(Box.createVerticalStrut(10));
@@ -95,7 +105,7 @@ public class FenetrePrincipale
         iconFR = new ImageIcon(resizedImageFR);
         iconEN = new ImageIcon(resizedImageEN);
         iconUnMute = new ImageIcon(resizedImageUnMute);
-        iconMute = new ImageIcon(resizedImageMute);6
+        iconMute = new ImageIcon(resizedImageMute);
 
         // Créer les boutons avec les icônes d'images
         FR = new JButton(iconFR);
@@ -119,7 +129,7 @@ public class FenetrePrincipale
         // Panneau en bas à droite pour le bouton "Règles"
         JPanel bottomRightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));  
         bottomRightPanel.setOpaque(false); 
-        Regles = creerButton("Règles");
+        Regles =Bouton.creerButton("Règles");
         Regles.addActionListener(new AdaptateurRegles(controle));
         bottomRightPanel.add(Regles);
 
@@ -143,29 +153,36 @@ public class FenetrePrincipale
         frame.add(topPanel, BorderLayout.NORTH);
 
         // Associe le son aux boutons
-        SourisAdapte sourisNewGame = new SourisAdapte(NewGame, "res/clic.wav");
-        SourisAdapte sourisCharger = new SourisAdapte(Charger, "res/clic.wav");
-        SourisAdapte sourisLan = new SourisAdapte(Lan, "res/clic.wav");
-        SourisAdapte sourisQuit = new SourisAdapte(Quit, "res/clic.wav");
-        SourisAdapte sourisRegles = new SourisAdapte(Regles, "res/clic.wav");
-        SourisAdapte sourisFr = new SourisAdapte(FR, "res/clic.wav");
-        SourisAdapte sourisEn = new SourisAdapte(EN, "res/clic.wav");
-        SourisAdapte sourisUnMute = new SourisAdapte(UnMute, "res/clic.wav");
-        
+        try{
+        SourisAdapte sourisNewGame = new SourisAdapte(NewGame,FileLoader.getSound("res/clic.wav"));
+        SourisAdapte sourisCharger = new SourisAdapte(Charger, FileLoader.getSound("res/clic.wav"));
+        SourisAdapte sourisLan = new SourisAdapte(Lan,FileLoader.getSound("res/clic.wav"));
+        SourisAdapte sourisQuit = new SourisAdapte(Quit, FileLoader.getSound("res/clic.wav"));
+        SourisAdapte sourisRegles = new SourisAdapte(Regles, FileLoader.getSound("res/clic.wav"));
+        SourisAdapte sourisFr = new SourisAdapte(FR, FileLoader.getSound("res/clic.wav"));
+        SourisAdapte sourisEn = new SourisAdapte(EN, FileLoader.getSound("res/clic.wav"));
+        SourisAdapte sourisUnMute = new SourisAdapte(UnMute, FileLoader.getSound("res/clic.wav"));
         NewGame.addMouseListener(sourisNewGame);
         Charger.addMouseListener(sourisCharger);
         Lan.addMouseListener(sourisLan);
         Quit.addMouseListener(sourisQuit);
         Regles.addMouseListener(sourisRegles);
         FR.addMouseListener(sourisFr);
+        EN.addMouseListener(sourisEn);
+        UnMute.addMouseListener(sourisUnMute);
+        }catch (UnsupportedAudioFileException | IOException | LineUnavailableException e){
+            System.exit(1);
+        }
+        
+
         FR.setBorder(BorderFactory.createEmptyBorder());
         FR.setContentAreaFilled(false);
-        EN.addMouseListener(sourisEn);
+
         EN.setBorder(BorderFactory.createEmptyBorder());
         EN.setContentAreaFilled(false);
         UnMute.setBorder(BorderFactory.createEmptyBorder());
         UnMute.setContentAreaFilled(false);
-        UnMute.addMouseListener(sourisUnMute);
+
     
         NewGame.addActionListener(new ActionListener()
         {
