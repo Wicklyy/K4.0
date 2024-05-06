@@ -3,7 +3,7 @@ package Model;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class PawnsBag {
+public class PawnsBag implements Cloneable{
     private ArrayList<Cube> PawnsBag;
     boolean care;
 
@@ -19,6 +19,18 @@ public class PawnsBag {
             PawnsBag.add(Cube.Noir);
         }
     }
+
+    public PawnsBag clone() throws CloneNotSupportedException {
+        PawnsBag clone = (PawnsBag) super.clone();  // Clone the basic object structure
+
+        clone.PawnsBag = new ArrayList<>(PawnsBag.size());
+        for (Cube cube : PawnsBag) {
+          clone.PawnsBag.add(cube);  // Add existing cube references
+        }
+
+        return clone;
+    }
+
 
     public boolean empty(){
         return PawnsBag.size() == 0;

@@ -14,6 +14,17 @@ public class Pyramid {
         }
     }
 
+    public Pyramid clone() throws CloneNotSupportedException {
+        Pyramid clone = (Pyramid) super.clone();  // Clone the basic object structure
+
+        clone.pyramid = new Cube[size][size];
+        for (int i = 0; i < size; i++) {
+            System.arraycopy(pyramid[i], 0, clone.pyramid[i], 0, size);
+        }
+
+        return clone;
+    }
+
     public int getsize(){
         return size;
     }

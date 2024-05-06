@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.awt.Point;
 
-public class Jeu {
+public class Jeu implements Cloneable{
     Player[] players;
     public int nbJoueur;
     public Pyramid principale;
@@ -48,8 +48,20 @@ public class Jeu {
         current_player = r.nextInt(nb);
     }
 
-    //CALLED ONLY AFTER/IN VALIDITY CHECK !!!           /* fonctionne */
+    public Jeu clone() throws CloneNotSupportedException {
+        Jeu clone = (Jeu) super.clone();  // Clone the basic object structure
+        
+        clone.players = new Player[nbJoueur];
+        for (int i = 0; i < nbJoueur; i++) {
+            clone.players[i] = players[i].clone();
+        }
+        clone.principale = principale.clone();
+        clone.bag = bag.clone();
 
+        return clone;
+    }
+
+    //CALLED ONLY AFTER/IN VALIDITY CHECK !!!           /* fonctionne */
     public boolean check_penality(Cube cube, int x, int y) {
         return principale.get(x-1, y) == principale.get(x-1, y+1);
     }

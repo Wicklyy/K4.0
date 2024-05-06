@@ -3,7 +3,7 @@ package Model;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Player{
+public class Player implements Cloneable{
     Pyramid pyramid;
 
     ArrayList<Cube> side, personalBag;
@@ -17,6 +17,21 @@ public class Player{
         size = i;
         side = new ArrayList<>();
         personalBag = new ArrayList<>();
+    }
+
+    public Player clone() throws CloneNotSupportedException {
+        Player clone = (Player) super.clone();  // Clone the basic object structure
+
+        clone.pyramid = pyramid.clone();
+        clone.side = new ArrayList<>(side.size());
+        for (Cube cube : side) {
+          clone.side.add(cube);  // Add existing cube references
+        }
+        clone.personalBag = new ArrayList<>(personalBag.size());
+        for (Cube cube : personalBag) {
+          clone.personalBag.add(cube);  // Add existing cube references
+        }
+        return clone;
     }
     
     public int getSize(){
