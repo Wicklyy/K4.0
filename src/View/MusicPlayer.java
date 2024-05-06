@@ -1,13 +1,11 @@
 package View;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
-import java.io.File;
 import java.io.IOException;
+import Global.*;
 
 public class MusicPlayer extends JFrame 
 {
@@ -20,10 +18,7 @@ public class MusicPlayer extends JFrame
         try 
         {
             // Charger le fichier audio
-            File audioFile = new File(MUSIC_PATH);
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
-            audioClip = AudioSystem.getClip();
-            audioClip.open(audioStream);
+            audioClip=FileLoader.getSound(MUSIC_PATH);
         } 
         catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) 
         {

@@ -54,7 +54,7 @@ public class FenetrePrincipale
     {
         // Charger l'image d'icône
         try{
-        frame.setIconImage(FileLoader.getImage("res/IconeV2.png").getImage());
+        frame.setIconImage(FileLoader.getImage("res/IconeV2.png"));
         }catch(IOException e){
             System.exit(1);
         }
@@ -154,22 +154,22 @@ public class FenetrePrincipale
 
         // Associe le son aux boutons
         try{
-        SourisAdapte sourisNewGame = new SourisAdapte(NewGame,FileLoader.getSound("res/clic.wav"));
-        SourisAdapte sourisCharger = new SourisAdapte(Charger, FileLoader.getSound("res/clic.wav"));
-        SourisAdapte sourisLan = new SourisAdapte(Lan,FileLoader.getSound("res/clic.wav"));
-        SourisAdapte sourisQuit = new SourisAdapte(Quit, FileLoader.getSound("res/clic.wav"));
-        SourisAdapte sourisRegles = new SourisAdapte(Regles, FileLoader.getSound("res/clic.wav"));
-        SourisAdapte sourisFr = new SourisAdapte(FR, FileLoader.getSound("res/clic.wav"));
-        SourisAdapte sourisEn = new SourisAdapte(EN, FileLoader.getSound("res/clic.wav"));
-        SourisAdapte sourisUnMute = new SourisAdapte(UnMute, FileLoader.getSound("res/clic.wav"));
-        NewGame.addMouseListener(sourisNewGame);
-        Charger.addMouseListener(sourisCharger);
-        Lan.addMouseListener(sourisLan);
-        Quit.addMouseListener(sourisQuit);
-        Regles.addMouseListener(sourisRegles);
-        FR.addMouseListener(sourisFr);
-        EN.addMouseListener(sourisEn);
-        UnMute.addMouseListener(sourisUnMute);
+            SourisAdapte sourisNewGame = new SourisAdapte(NewGame,FileLoader.getSound("res/clic.wav"));
+            SourisAdapte sourisCharger = new SourisAdapte(Charger, FileLoader.getSound("res/clic.wav"));
+            SourisAdapte sourisLan = new SourisAdapte(Lan,FileLoader.getSound("res/clic.wav"));
+            SourisAdapte sourisQuit = new SourisAdapte(Quit, FileLoader.getSound("res/clic.wav"));
+            SourisAdapte sourisRegles = new SourisAdapte(Regles, FileLoader.getSound("res/clic.wav"));
+            SourisAdapte sourisFr = new SourisAdapte(FR, FileLoader.getSound("res/clic.wav"));
+            SourisAdapte sourisEn = new SourisAdapte(EN, FileLoader.getSound("res/clic.wav"));
+            SourisAdapte sourisUnMute = new SourisAdapte(UnMute, FileLoader.getSound("res/clic.wav"));
+            NewGame.addMouseListener(sourisNewGame);
+            Charger.addMouseListener(sourisCharger);
+            Lan.addMouseListener(sourisLan);
+            Quit.addMouseListener(sourisQuit);
+            Regles.addMouseListener(sourisRegles);
+            FR.addMouseListener(sourisFr);
+            EN.addMouseListener(sourisEn);
+            UnMute.addMouseListener(sourisUnMute);
         }catch (UnsupportedAudioFileException | IOException | LineUnavailableException e){
             System.exit(1);
         }
