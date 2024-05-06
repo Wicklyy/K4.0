@@ -14,6 +14,10 @@ public class Pyramid {
         }
     }
 
+    public int getsize(){
+        return size;
+    }
+
     public Cube get(int x, int y){
         return pyramid[x][y];
     }
@@ -80,4 +84,5 @@ public class Pyramid {
                     chaine+= cube +" ";
                     break;
             } */
+
 }

@@ -82,10 +82,12 @@ public class PawnsBag {
             todraw = 2;
         }
         for (int i = 0; i < todraw; i++) {
+
             cubes.add(PawnsBag.remove(0)); // Piocher un pion et le retirer du PawnsBag
         }
         return cubes;
     }
+
 
 
     /* Fonction ajoutee */
@@ -102,3 +104,4 @@ public class PawnsBag {
     }
 
 }
+

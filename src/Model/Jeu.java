@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.Random;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.awt.Point;
@@ -13,10 +14,13 @@ public class Jeu {
     public int current_player, size;
     boolean End;
 
+
+
     public Jeu(int nb){             /*tout fonctionn bien */
         nbJoueur = nb;
         End = false;              
         players = new Player[nb];
+
         bag = new PawnsBag(nb);
         principale = new Pyramid(9);
         int y = 0;
@@ -45,6 +49,7 @@ public class Jeu {
     }
 
     //CALLED ONLY AFTER/IN VALIDITY CHECK !!!           /* fonctionne */
+
     public boolean check_penality(Cube cube, int x, int y) {
         return principale.get(x-1, y) == principale.get(x-1, y+1);
     }
@@ -93,6 +98,20 @@ public class Jeu {
         return list;
     }
     
+    public ArrayList<Point> AccessibleCubesPlayer(){
+        ArrayList<Point> list = new ArrayList<Point>();
+        for (int i=0; i<players[current_player].getSize(); i++){
+            for (int j=0; j<players[current_player].getSize(); j++){
+                if (accessible(i,j)){
+                    Point p = new Point(i, j);
+                    list.add(p);
+                }
+            }
+        }
+        return list;
+    }
+
+
     //Next player out of those still in the game
     public int next_player(){               /* Fonctionne */
         return next_player(current_player);
@@ -133,7 +152,7 @@ public class Jeu {
         players[previous_player()].addSide(players[current_player].getSide(x));
         players[current_player].removeSide(x);
     }
-    
+
     // 0 -> NOT VALID
     // 1 -> VALID
     // 2 -> VALID WITH PENALITY

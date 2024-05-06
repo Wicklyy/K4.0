@@ -5,7 +5,9 @@ import java.util.Collections;
 
 public class Player{
     Pyramid pyramid;
+
     ArrayList<Cube> side, personalBag;
+
     int noir, bleu, blanc, rouge, jaune, vert, neutre;
     int size;
     boolean loss;
@@ -86,12 +88,14 @@ public class Player{
         return loss;
     }
 
+
     public Cube get(int x, int y){
         return pyramid.get(x, y);
     }
 
     public Cube getSide(int x){
         return side.get(x);
+
     } 
     public ArrayList<Cube> getSide(){
         return side;
@@ -99,6 +103,7 @@ public class Player{
 
     public int getSideSize(){
         return side.size();
+
     }
 
     public void set(int x, int y, Cube c){
@@ -115,6 +120,7 @@ public class Player{
     public Pyramid getPyramid(){
         return pyramid;
     }
+
 
     /* FONCTION AJOUTER */
     public void addBag(Cube cube){
@@ -169,6 +175,7 @@ public class Player{
 
 
     
+
 
 
 }
