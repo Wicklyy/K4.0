@@ -1,9 +1,12 @@
 package Model;
 
-public abstract class IA {
-    Plateau plateau;
+import java.util.*;
+import java.awt.Point;
 
-    public static IA nouvelle(Plateau p) {
+public abstract class IA {
+    Jeu jeu;
+
+    public static IA nouvelle(Jeu j) {
         IA resultat = null;
         String type = "Aleatoire";
 
@@ -22,41 +25,44 @@ public abstract class IA {
                 break;
         }
         if (resultat != null) {
-            resultat.plateau = p;
+            resultat.jeu = j;
         }
         return resultat;
     }
 
-    public int MinMaxIA(Plateau p,int depth, boolean player1){
+    public int MinMaxIA(Jeu j,int depth, boolean player1, int alpha, int beta){
         int value;
-        if(!p.exist(0,1) && !p.exist(1, 0)){
+        if(j.End_Game()){ //Condition de défaite de tous les autres joueurs en même temps à implémenter
+                                             //Besoin d'une fonctione auxiliaire qui permet lors de tests de si un joueur a perdu de l'exclure du calcul
+                                             //Et appeler l'IA avec les nouveaux paramètres.
             if(player1){
-                return -1;
+                return -1000;
             }else{
-                return 1;
+                return 1000;
             }
         }
         if (depth == 0){
             return 0;
         }
+        ArrayList<Point> cubes_access = j.AccessibleCubesPlayer();
         if(player1){
-            value = 0;
-            for (int i = 0; i < p.hauteur; i++){
-                for (int j = 0; j < p.longueur; j++){
-                    if(p.exist(i,j)){
-                        value = Math.max(value,MinMaxIA(p,depth-1,!player1));
-                    }
+            value = -1000;
+            for(Point cube : cubes_access){
+                value = Math.max(value,MinMaxIA(j,depth-1,!player1, alpha, beta));
+                if(alpha >= value){
+                    return value;
                 }
+                beta = Math.min(beta,value);
             }
         }
         else{
-            value = 0;
-            for (int i = 0; i < p.hauteur; i++){
-                for (int j = 0; j < p.longueur; j++){
-                    if(p.exist(i,j)){
-                        value = Math.min(value,MinMaxIA(p,depth-1,!player1));
-                    }
+            value = 1000;
+            for(Point cube : cubes_access){
+                value = Math.min(value,MinMaxIA(j,depth-1,!player1,alpha,beta));
+                if(beta <= value){
+                    return value;
                 }
+                alpha = Math.max(alpha,value);
             }
         }
         return value;
