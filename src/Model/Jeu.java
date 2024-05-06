@@ -97,7 +97,21 @@ public class Jeu {
         }
         return list;
     }
-    
+
+    //COORD POSITION POSSIBLES POUR UN CUBE DONNEE
+    public ArrayList<Point> CubeAccessibleDestinations(Cube cube){ 
+        ArrayList<Point> list = new ArrayList<Point>;
+        for (i=0;i<principale.getsize();i++){
+            for(j=0;j<principale.getsize();j++){
+                if (move_validity(cube,i,j)!=0){
+                    Point p = new Point(i,j);
+                    list.add(p);
+                }
+            }
+        }
+        return list;
+    }
+
     public ArrayList<Point> AccessibleCubesPlayer(){
         ArrayList<Point> list = new ArrayList<Point>();
         for (int i=0; i<players[current_player].getSize(); i++){
@@ -182,7 +196,7 @@ public class Jeu {
         }
         return valid;
     }
-    
+
 
     public boolean End_Game(){
         return End;
@@ -204,7 +218,7 @@ public class Jeu {
     public boolean noPlay(){
         return Accessible_Playable().size==0;
     }
-    
+
     public ArrayList<Point> Accessible_Playable(){
         HashMap<Cube,Boolean> list = accessibleColors();
         ArrayList<Point> Aksel = new ArrayList<Point>;
