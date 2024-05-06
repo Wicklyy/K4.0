@@ -1,15 +1,10 @@
 package View;
 
-import Model.Jeu;
-import Patterns.Observateur;
+import Global.FileLoader;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
-import javax.swing.border.LineBorder;
-
-import Global.FileLoader;
-
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -29,16 +24,6 @@ public class FenetrePrincipale
         GenereMenu();
     }
 
-    // public JButton creerButton(String text) {
-	// 	BoutonArrondi bouton = new BoutonArrondi(text, 20);
-	// 	Font police = new Font("Arial", Font.BOLD, 14);
-	// 	bouton.setFont(police);
-	// 	bouton.setBorder(new LineBorder(Color.BLACK, 2));
-	// 	bouton.setAlignmentX(Component.CENTER_ALIGNMENT);
-	// 	bouton.setFocusable(false);
-	// 	return bouton;
-	// }
-
     public void Page_NewGame(Container container){
 		//Supprimer tous les composants de la fenêtre
         for (Component component : container.getComponents())
@@ -53,9 +38,12 @@ public class FenetrePrincipale
     public void GenereMenu()
     {
         // Charger l'image d'icône
-        try{
-        frame.setIconImage(FileLoader.getImage("res/IconeV2.png").getImage());
-        }catch(IOException e){
+        try
+        {
+            frame.setIconImage(FileLoader.getImage("res/IconeV2.png").getImage());
+        }
+        catch(IOException e)
+        {
             System.exit(1);
         }
 
@@ -92,26 +80,20 @@ public class FenetrePrincipale
         // On récupère les images
         ImageIcon iconFR = new ImageIcon("res/Francev2.jpg");
         ImageIcon iconEN = new ImageIcon("res/anglais.png");
-        ImageIcon iconUnMute = new ImageIcon("res/mute.png");
-        ImageIcon iconMute = new ImageIcon("res/son.png");
         
         // Redimensionner les images à 20x20 pixels
         Image resizedImageFR = iconFR.getImage().getScaledInstance(40, 30, Image.SCALE_SMOOTH);
         Image resizedImageEN = iconEN.getImage().getScaledInstance(40, 30, Image.SCALE_SMOOTH);
-        Image resizedImageUnMute = iconUnMute.getImage().getScaledInstance(40, 30, Image.SCALE_SMOOTH);
-        Image resizedImageMute = iconMute.getImage().getScaledInstance(40, 30, Image.SCALE_SMOOTH);
 
         // Créer les icônes redimensionnées
         iconFR = new ImageIcon(resizedImageFR);
         iconEN = new ImageIcon(resizedImageEN);
-        iconUnMute = new ImageIcon(resizedImageUnMute);
-        iconMute = new ImageIcon(resizedImageMute);
 
         // Créer les boutons avec les icônes d'images
         FR = new JButton(iconFR);
         EN = new JButton(iconEN);
-        UnMute = new JButton(iconUnMute);
-        Mute = new JButton(iconMute);
+        UnMute = Bouton.BoutonUnMute();
+        Mute = Bouton.BoutonUnMute();
         
         // Ajouter des écouteurs d'actions aux boutons
         FR.addActionListener(new AdaptateurLangues(controle));
@@ -180,10 +162,11 @@ public class FenetrePrincipale
 
         EN.setBorder(BorderFactory.createEmptyBorder());
         EN.setContentAreaFilled(false);
+
         UnMute.setBorder(BorderFactory.createEmptyBorder());
         UnMute.setContentAreaFilled(false);
 
-    
+
         NewGame.addActionListener(new ActionListener()
         {
             @Override

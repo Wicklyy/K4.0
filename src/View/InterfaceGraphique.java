@@ -64,6 +64,7 @@ public class InterfaceGraphique implements Runnable, Observateur
         niv = new NiveauGraphique(jeu);
 
 		new FenetrePrincipale(frame,controle);
+		// new FenetreNouvellePartie(frame, controle);
 
 		// On ajoute la souris et le clavier
 		niv.addMouseListener(new AdaptateurSouris(controle, niv));
@@ -72,4 +73,8 @@ public class InterfaceGraphique implements Runnable, Observateur
 		frame.setVisible(true);
 		frame.requestFocusInWindow();
     }
+
+	public void addFrame(Menu getcurMenu) {
+		frame.add(getcurMenu);
+	}
 }

@@ -1,20 +1,32 @@
 package Controller;
 
 import View.*;
+
+import java.util.Vector;
 import Model.*;
 
 public class ControleurMediateur implements CollecteurEvenements 
 {
 	Jeu jeu;
 	InterfaceGraphique vue;
-	boolean toggleIA=false;
+	boolean toggleIA = false;
 	MusicPlayer musique;
-
+	Vector<Menu> menuListe = new Vector<>();
+	int indice_courant = 0;
+	
 	public ControleurMediateur(Jeu j, MusicPlayer musique)
 	{
 		jeu = j;
 		this.musique = musique;
     }
+	public void addMenu(Menu m){
+		menuListe.add(m);
+	}
+
+	private Menu getcurMenu()
+	{
+		return menuListe.get(indice_courant);
+	}
 	
 	public void ImporterVue(InterfaceGraphique vue)
 	{
@@ -68,5 +80,12 @@ public class ControleurMediateur implements CollecteurEvenements
 				return false;
 		}
 		return true;
+	}
+
+	public void changeVisible(int n_indice){
+		getcurMenu().setVisible(false);
+		indice_courant=n_indice;
+		vue.addFrame(getcurMenu());
+		getcurMenu().setVisible(true);
 	}
 }
