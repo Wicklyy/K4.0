@@ -6,6 +6,7 @@ import java.awt.Color;
 import javax.swing.JButton;
 import javax.sound.sampled.*;
 
+
 public class SourisAdapte extends MouseAdapter {
     private Color originalBackgroundColor;
     private Color originalForegroundColor;
