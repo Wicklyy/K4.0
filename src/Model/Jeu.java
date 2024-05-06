@@ -183,19 +183,28 @@ public class Jeu {
     }
 
     public boolean noPlay(){
+        return Accessible_Playable().size==0;
+    }
+    
+    public ArrayList<Point> Accessible_Playable(){
         HashMap<Cube,Boolean> list = accessibleColors();
+        ArrayList<Point> Aksel = new ArrayList<Point>;
+
         for(Point e : AccessibleCubesPlayer()){
             Cube cube = getPlayer().get(e.x, e.y);
             if(cube == Cube.Blanc || cube == Cube.Neutre || list.get(cube) != null){
-                return false;
+                Aksel.add(e);
             }
         }
+        int x = 0;
         for(Cube c : getPlayer().getSide()){
             if(c == Cube.Blanc || c == Cube.Neutre || list.get(c) != null){
-                return false;
+                Point p = new Point(x, -1);
+                Aksel.add(p);
             }
+            x++;
         }
-        return true;
+        return Aksel;
     }
 
     public HashMap<Cube,Boolean> accessibleColors(){
