@@ -3,11 +3,14 @@ package Model;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class PawnsBag {
+public class PawnsBag implements Cloneable{
     private ArrayList<Cube> PawnsBag;
+    boolean care;
 
-    public PawnsBag() {
+    public PawnsBag(int nb) {
         PawnsBag = new ArrayList<Cube>();
+        care = false;
+        if(nb == 2){care = true;}
         for (int i=0; i<9; i++){
             PawnsBag.add(Cube.Rouge);
             PawnsBag.add(Cube.Bleu);
@@ -17,6 +20,21 @@ public class PawnsBag {
         }
     }
 
+    public PawnsBag clone() throws CloneNotSupportedException {
+        PawnsBag clone = (PawnsBag) super.clone();  // Clone the basic object structure
+
+        clone.PawnsBag = new ArrayList<>(PawnsBag.size());
+        for (Cube cube : PawnsBag) {
+          clone.PawnsBag.add(cube);  // Add existing cube references
+        }
+
+        return clone;
+    }
+
+
+    public boolean empty(){
+        return PawnsBag.size() == 0;
+    }
     public boolean count_colors (ArrayList<Cube> cubes){
         boolean Rouge=false , Vert=false, Bleu=false, Noir=false, Jaune=false;
         for (Cube cube : cubes){
@@ -70,10 +88,31 @@ public class PawnsBag {
     public ArrayList<Cube> draw() {
         ArrayList<Cube> cubes = new ArrayList<>();
         Collections.shuffle(PawnsBag); // Mélanger le PawnsBag pour assurer l'aléatoire
-        for (int i = 0; i < 2; i++) {
+        int todraw = 3;
+        //System.out.println(PawnsBag.size());
+        if(care && (PawnsBag.size() <= 6)){
+            todraw = 2;
+        }
+        for (int i = 0; i < todraw; i++) {
+
             cubes.add(PawnsBag.remove(0)); // Piocher un pion et le retirer du PawnsBag
         }
         return cubes;
+    }
+
+
+
+    /* Fonction ajoutee */
+    public String toString(){
+        String chaine = "";
+        for(Cube cube : PawnsBag){
+            chaine += cube + " ";
+        }
+        return chaine;
+    }
+
+    public int getSize(){
+        return PawnsBag.size();
     }
 
 }

@@ -1,34 +1,37 @@
 package Model;
 import java.util.*;
 import java.io.*;
+import java.awt.Point;
 
 public class IAFacile extends IA {
 
     
 
-    public ArrayList<int[]> coupIA(Plateau p, boolean joueur1){
-        ArrayList<int[]> resultat_ok = new ArrayList<>();
-        ArrayList<int[]> resultat_ko = new ArrayList<>();
-        
-        for(int i=0; i<p.hauteur; i++){
-            for(int j=0; j<p.longueur; j++){
-                if(p.exist(i,j)){
-                    Plateau clone = p.clone();
-                    int[] pos = new int[2];
-                    pos[0] = i;
-                    pos[1] = j;
-                    int value= MinMaxIA(clone, 2, joueur1);
-                    if(value==0){
-                        resultat_ok.add(pos);
-                    }
-                    else if(value==1){
-                        resultat_ok.clear();
-                        resultat_ok.add(pos);
-                        return resultat_ok;
-                    }
-                    else{
-                        resultat_ko.add(pos);
-                    }
+    public ArrayList<ArrayList<Point>> coupIA(Jeu j, boolean joueur1){
+        ArrayList<ArrayList<Point>> resultat_ok = new ArrayList<>();
+        ArrayList<ArrayList<Point>> resultat_ko = new ArrayList<>();
+        int value_max= -100000;
+        ArrayList<Point> cubes_access = j.Accessible_Playable();
+        for(Point depart : cubes_access){
+            ArrayList<Point> coups_jouables = j.CubeAccessibleDestinations(j.getPlayer().get((int) depart.getX(),(int) depart.getY()));
+            for(Point arrivee : coups_jouables){
+                ArrayList<Point> pos = new ArrayList<>();
+                pos.add(depart);
+                pos.add(arrivee);
+                Jeu clone = new Jeu(2);
+                clone = j.clone();
+                int value= MinMaxIA(clone, 2, 0, -10000, +10000, 0);
+                value_max = Math.max(value,value_max);
+                if(value==value_max){
+                    resultat_ok.add(pos);
+                }
+                else if(value==1000){
+                    resultat_ok.clear();
+                    resultat_ok.add(pos);
+                    return resultat_ok;
+                }
+                else{
+                    resultat_ko.add(pos);
                 }
             }
         }

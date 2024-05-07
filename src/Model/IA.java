@@ -30,39 +30,55 @@ public abstract class IA {
         return resultat;
     }
 
-    public int MinMaxIA(Jeu j,int depth, boolean player1, int alpha, int beta){
+    public int MinMaxIA(Jeu j,int depth, int player_max, int alpha, int beta, int IA){
         int value;
+        boolean bon_joueur = player_max == j.getCurrent();
         if(j.End_Game()){ //Condition de défaite de tous les autres joueurs en même temps à implémenter
                                              //Besoin d'une fonctione auxiliaire qui permet lors de tests de si un joueur a perdu de l'exclure du calcul
                                              //Et appeler l'IA avec les nouveaux paramètres.
-            if(player1){
+            if(j.check_loss()){
                 return -1000;
             }else{
                 return 1000;
             }
         }
         if (depth == 0){
-            return 0;
-        }
-        ArrayList<Point> cubes_access = j.AccessibleCubesPlayer();
-        if(player1){
-            value = -1000;
-            for(Point cube : cubes_access){
-                value = Math.max(value,MinMaxIA(j,depth-1,!player1, alpha, beta));
-                if(alpha >= value){
-                    return value;
+            if(IA == 0){
+                if(bon_joueur){
+                    return j.getPlayer().TotCubesHand() - j.getPlayer(j.next_player()).TotCubesHand();
                 }
-                beta = Math.min(beta,value);
+                else{
+                    return j.getPlayer(j.next_player()).TotCubesHand() - j.getPlayer().TotCubesHand();
+                }
+            }
+        }
+        ArrayList<Point> cubes_access = j.Accessible_Playable();
+        if(bon_joueur){
+            value = -1000;
+            for(Point depart : cubes_access){
+                ArrayList<Point> coups_jouables = j.CubeAccessibleDestinations(j.getPlayer().get((int) depart.getX(),(int) depart.getY()));
+                for(Point arrivee : coups_jouables){
+                    j.add_central_pyramid((int) arrivee.getX(), (int) arrivee.getY(), (int) depart.getX(),(int) depart.getY());
+                    value = Math.max(value,MinMaxIA(j,depth-1,player_max, alpha, beta, IA));
+                    if(alpha >= value){
+                        return value;
+                    }
+                    beta = Math.min(beta,value);
+                }
             }
         }
         else{
             value = 1000;
-            for(Point cube : cubes_access){
-                value = Math.min(value,MinMaxIA(j,depth-1,!player1,alpha,beta));
-                if(beta <= value){
-                    return value;
+            for(Point depart : cubes_access){
+                ArrayList<Point> coups_jouables = j.CubeAccessibleDestinations(j.getPlayer().get((int) depart.getX(),(int) depart.getY()));
+                for(Point arrivee : coups_jouables){
+                    j.add_central_pyramid((int) arrivee.getX(), (int) arrivee.getY(), (int) depart.getX(),(int) depart.getY());
+                    value = Math.min(value,MinMaxIA(j,depth-1,player_max, alpha, beta, IA));
+                    if(beta <= value){
+                        return value;
+                    }
+                    alpha = Math.max(alpha,value);
                 }
-                alpha = Math.max(alpha,value);
             }
         }
         return value;
