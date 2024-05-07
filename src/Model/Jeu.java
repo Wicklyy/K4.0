@@ -203,7 +203,7 @@ public class Jeu implements Cloneable{
     }
     //Ammount of cubes in the current player's hand
     public int TotCubesHand (){
-        return getPlayer().TotCubesHand();
+        return getPlayer().totalCube();
     }
 
     //Ammount of a colour in the current player's hand
@@ -270,6 +270,14 @@ public class Jeu implements Cloneable{
 
     public Player getPlayer(){
         return getPlayer(current_player);
+    }
+
+    public int[] compte_personal_bag(){
+        return getPlayer().compte_personal_bag();
+    }
+
+    public ArrayList<Cube> getPlayerBag(){
+        return getPlayer().personalBag;
     }
 
     public void setPlayer(int x, int y, Cube cube){
