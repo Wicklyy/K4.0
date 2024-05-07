@@ -18,7 +18,7 @@ public class Jeu implements Cloneable{
 
     public Jeu(int nb){             /*tout fonctionn bien */
         nbJoueur = nb;
-        End = false;              
+        End = false;
         players = new Player[nb];
 
         bag = new PawnsBag(nb);
@@ -35,7 +35,7 @@ public class Jeu implements Cloneable{
                 for(int j = 0; j < 4/nb; j++){
                     players[i].addBag(Cube.Blanc);
                     players[i].addBag(Cube.Neutre);
-                    
+
                 }
                 if(nb == 3){players[i].addBag(Cube.Neutre);}
             }
@@ -50,7 +50,7 @@ public class Jeu implements Cloneable{
 
     public Jeu clone() throws CloneNotSupportedException {
         Jeu clone = (Jeu) super.clone();  // Clone the basic object structure
-        
+
         clone.players = new Player[nbJoueur];
         for (int i = 0; i < nbJoueur; i++) {
             clone.players[i] = players[i].clone();
@@ -201,9 +201,9 @@ public class Jeu implements Cloneable{
     public boolean End_Game(){
         return End;
     }
-    //Ammount of cubes in the current player's hand
-    public int TotCubesHand (){
-        return getPlayer().totalCube();
+    //Ammount of cubes in a player's hand
+    public int TotCubesHand (int i){
+        return getPlayer(i).totalCube();
     }
 
     //Ammount of a colour in the current player's hand
