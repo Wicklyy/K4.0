@@ -112,24 +112,11 @@ public class Jeu implements Cloneable{
 
     //COORD POSITION POSSIBLES POUR UN CUBE DONNEE
     public ArrayList<Point> CubeAccessibleDestinations(Cube cube){ 
-        ArrayList<Point> list = new ArrayList<Point>;
-        for (i=0;i<principale.getsize();i++){
-            for(j=0;j<principale.getsize();j++){
+        ArrayList<Point> list = new ArrayList<Point>();
+        for (int i=0;i<principale.getsize();i++){
+            for(int j=0;j<principale.getsize();j++){
                 if (move_validity(cube,i,j)!=0){
                     Point p = new Point(i,j);
-                    list.add(p);
-                }
-            }
-        }
-        return list;
-    }
-
-    public ArrayList<Point> AccessibleCubesPlayer(){
-        ArrayList<Point> list = new ArrayList<Point>();
-        for (int i=0; i<players[current_player].getSize(); i++){
-            for (int j=0; j<players[current_player].getSize(); j++){
-                if (accessible(i,j)){
-                    Point p = new Point(i, j);
                     list.add(p);
                 }
             }
@@ -228,12 +215,12 @@ public class Jeu implements Cloneable{
     }
 
     public boolean noPlay(){
-        return Accessible_Playable().size==0;
+        return Accessible_Playable().size()==0;
     }
 
     public ArrayList<Point> Accessible_Playable(){
         HashMap<Cube,Boolean> list = accessibleColors();
-        ArrayList<Point> Aksel = new ArrayList<Point>;
+        ArrayList<Point> Aksel = new ArrayList<Point>();
 
         for(Point e : AccessibleCubesPlayer()){
             Cube cube = getPlayer().get(e.x, e.y);
