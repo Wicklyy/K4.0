@@ -97,19 +97,6 @@ public class Jeu {
         }
         return list;
     }
-    
-    public ArrayList<Point> AccessibleCubesPlayer(){
-        ArrayList<Point> list = new ArrayList<Point>();
-        for (int i=0; i<players[current_player].getSize(); i++){
-            for (int j=0; j<players[current_player].getSize(); j++){
-                if (accessible(i,j)){
-                    Point p = new Point(i, j);
-                    list.add(p);
-                }
-            }
-        }
-        return list;
-    }
 
 
     //Next player out of those still in the game
@@ -202,12 +189,12 @@ public class Jeu {
     }
 
     public boolean noPlay(){
-        return Accessible_Playable().size==0;
+        return Accessible_Playable().size()==0;
     }
     
     public ArrayList<Point> Accessible_Playable(){
         HashMap<Cube,Boolean> list = accessibleColors();
-        ArrayList<Point> Aksel = new ArrayList<Point>;
+        ArrayList<Point> Aksel = new ArrayList<Point>();
 
         for(Point e : AccessibleCubesPlayer()){
             Cube cube = getPlayer().get(e.x, e.y);
