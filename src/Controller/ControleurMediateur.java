@@ -75,7 +75,16 @@ public class ControleurMediateur implements CollecteurEvenements
 				System.out.println("Case son de ControleurMediateur");
 				musique.jouerMusique();
 				break;
-
+			case "MenuP":
+				changeVisible(0);
+				break;
+			case "MenuLocal":
+				changeVisible(1);
+				break;
+			case "MenuOnline":
+				//changeVisible(2);
+				//TODO: decommenter ci dessus quand fenetre online dispo
+				break;
 			default:
 				return false;
 		}

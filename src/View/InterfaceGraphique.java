@@ -26,6 +26,7 @@ public class InterfaceGraphique implements Runnable, Observateur
     {
         InterfaceGraphique vue = new InterfaceGraphique(j, c);
         c.ImporterVue(vue);
+
 		SwingUtilities.invokeLater(vue);
 	}
 
@@ -63,15 +64,23 @@ public class InterfaceGraphique implements Runnable, Observateur
        	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         niv = new NiveauGraphique(jeu);
 
-		new FenetrePrincipale(frame,controle);
 		// new FenetreNouvellePartie(frame, controle);
+
+		//Generation de toutes les fenetres
+		MenuPrincipal Mp=new MenuPrincipal(controle);
+		frame.add(Mp);
+		Mp.setVisible(true);
+
+		MenuNouvellePartie Mnp=new MenuNouvellePartie(controle);
 
 		// On ajoute la souris et le clavier
 		niv.addMouseListener(new AdaptateurSouris(controle, niv));
 		frame.addKeyListener(new AdaptateurClavier(controle));
 
+
 		frame.setVisible(true);
 		frame.requestFocusInWindow();
+		System.out.println(frame.getComponentCount());
     }
 
 	public void addFrame(Menu getcurMenu) {

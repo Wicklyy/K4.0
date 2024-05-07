@@ -7,7 +7,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-
+@Deprecated
 public class FenetreNouvellePartie
 {
     JFrame frame;
@@ -24,6 +24,7 @@ public class FenetreNouvellePartie
 
     public void GenereMenu()
     {
+        
         // Panneau central avec les boutons
         JPanel centrePanel = new JPanel();
         centrePanel.setOpaque(false);
