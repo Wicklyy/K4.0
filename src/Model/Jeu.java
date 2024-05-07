@@ -111,12 +111,11 @@ public class Jeu implements Cloneable{
     }
 
     //COORD POSITION POSSIBLES POUR UN CUBE DONNEE
-    public ArrayList<Point> CubeAccessibleDestinations(int x, int y){ 
+    public ArrayList<Point> CubeAccessibleDestinations(Cube cube){
         ArrayList<Point> list = new ArrayList<Point>();
-        Cube cube = getPlayer().get(x,y);
-        for (int i=0;i<principale.getsize();i++){
-            for(int j=0;j<principale.getsize();j++){
-                if (move_validity(cube,i,j)!=0){
+        for(int i = principale.getSize()-1; i >= 0; i--){
+            for(int j = 0; j < principale.getSize()-i; j++){
+                if(possible(i, j)){
                     Point p = new Point(i,j);
                     list.add(p);
                 }
@@ -124,7 +123,6 @@ public class Jeu implements Cloneable{
         }
         return list;
     }
-
 
     //Next player out of those still in the game
     public int next_player(){               /* Fonctionne */
