@@ -62,7 +62,7 @@ public class InterfaceGraphique implements Runnable, Observateur
 		frame.setSize(500, 300);
        	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		PhaseConstruction cons = new PhaseConstruction(frame, controle);
+		PhaseConstruction cons = new PhaseConstruction(frame, controle, jeu);
         niv = new NiveauGraphique(jeu, cons);
 
 		

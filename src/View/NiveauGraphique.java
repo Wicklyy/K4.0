@@ -60,6 +60,8 @@ public class NiveauGraphique extends JComponent implements Observateur{
     public void paintComponent(Graphics g)
     {
         System.out.println("PaintComponent de NiveauGraphique");
+       
+       
         // Initialisation de la fenêtre graphique
 	    drawable = (Graphics2D) g;
 		width_fenetre = getSize().width;
@@ -67,6 +69,6 @@ public class NiveauGraphique extends JComponent implements Observateur{
 		drawable.clearRect(0, 0, width_fenetre, height_fenetre);
         
         //drawable.drawLine(0, 0, 50, 50);
-        cons.fonction_globale(jeu, drawable, width_fenetre, height_fenetre);
+        cons.fonction_globale(jeu, g, width_fenetre, height_fenetre);
     }
 }

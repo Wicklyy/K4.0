@@ -34,6 +34,38 @@ public class Player implements Cloneable{
         return clone;
     }
     
+    public int[] compte_personnal_bag(){
+        int nb[] = new int[7];
+        for(Cube cube : personalBag){
+            switch (cube) {
+                case Noir:
+                    nb[0]++;
+                    break;
+                case Neutre:
+                    nb[1]++;
+                    break;
+                case Blanc:
+                    nb[2]++;
+                    break;
+                case Vert:
+                    nb[3]++;
+                    break;
+                case Jaune:
+                    nb[4]++;
+                    break;
+                case Rouge:
+                    nb[5]++;
+                    break;
+                case Bleu:
+                    nb[6]++;
+                    break;
+                default:
+                    break;
+            }
+        }
+        return nb;
+    }
+
     public int getSize(){
         return size;
     }

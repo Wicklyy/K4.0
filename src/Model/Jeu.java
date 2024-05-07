@@ -44,8 +44,13 @@ public class Jeu implements Cloneable{
                 players[i].addBag(Cube.Neutre);
             }
         }
-        Random r = new Random();
-        current_player = r.nextInt(nb);
+        // Random r = new Random();
+        // current_player = r.nextInt(nb);
+        current_player = 0;
+    }
+
+    public int[] compte_personnal_bag(){
+        return getPlayer().compte_personnal_bag();
     }
 
     public Jeu clone() throws CloneNotSupportedException {
@@ -78,6 +83,10 @@ public class Jeu implements Cloneable{
             return 1;
         }
         else {return 0;}
+    }
+
+    public ArrayList<Cube> getPlayerBag(){
+        return getPlayer().personalBag;
     }
 
     public boolean check_under(int x, int y){
