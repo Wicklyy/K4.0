@@ -8,10 +8,10 @@ import java.awt.Point;
 
 public class Jeu {
     Player[] players;
-    public int nbJoueur;
-    public Pyramid principale;
+    int nbJoueur;
+    Pyramid principale;
     PawnsBag bag;
-    public int current_player, size;
+    int current_player, size;
     boolean End;
 
 
@@ -50,6 +50,9 @@ public class Jeu {
 
     //CALLED ONLY AFTER/IN VALIDITY CHECK !!!           /* fonctionne */
 
+    public int getCurrent(){
+        return current_player
+    }
     public boolean check_penality(Cube cube, int x, int y) {
         return principale.get(x-1, y) == principale.get(x-1, y+1);
     }
