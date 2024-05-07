@@ -201,8 +201,15 @@ public class Jeu implements Cloneable{
     public boolean End_Game(){
         return End;
     }
+    //Ammount of cubes in the current player's hand
+    public int TotCubesHand (){
+        return getPlayer().TotCubesHand();
+    }
 
-
+    //Ammount of a colour in the current player's hand
+    public int ColourAmmount (Cube cube){
+        return getPlayer().ColourAmmount(cube);
+    }
 
     /* NOUVELLE FONCTION AJOUTEEEEEE */
     public boolean check_loss(){

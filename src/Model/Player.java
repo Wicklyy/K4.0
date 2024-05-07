@@ -33,7 +33,33 @@ public class Player implements Cloneable{
         }
         return clone;
     }
-    
+
+    public int TotCubesHand (){
+        return ColourAmmount(Cube.Vide);
+    }
+
+    //CUBE VIDE => Total of all colours
+    public int ColourAmmount (Cube cube){
+        switch(cube){
+            case Noir :
+                return noir;
+            case Bleu :
+                return bleu;
+            case Blanc:
+                return blanc;
+            case Rouge:
+                return rouge;
+            case Jaune:
+                return jaune;
+            case Vert:
+                return vert;
+            case Neutre:
+                return neutre;
+            default :
+                return noir+bleu+blanc+rouge+jaune+vert+neutre;
+        }
+    }
+
     public int getSize(){
         return size;
     }
