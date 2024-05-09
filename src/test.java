@@ -4,9 +4,15 @@ import Reseau.*;
 public class test {
     public static void main(String[] args){
         try{
-            Server serv = new Server(4);
-            serv.initCon();
-            serv.showPort();
+            int nbClient = 4;
+            Server serv = new Server(nbClient);
+            int port = serv.initSockets();
+            serv.initConnection();
+            for(int i = 0; i < nbClient; i++){
+                Client client = new Client("localhost:"+ port);
+                client.port();
+            }
+            serv.wait();
             serv.close();
         }catch(Exception e){}
     }

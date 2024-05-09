@@ -9,9 +9,14 @@ public class AcceptConnection implements Runnable{
         this.ssocket = ssocket;
         this.socket = socket;
     }
+
     @Override
     public void run(){
-        try{socket = ssocket.accept();}
+        try{
+            //System.out.println(ssocket + " connection opened");
+            socket = ssocket.accept();
+            //System.out.println(socket + " connection established");
+        }
         catch(Exception e){e.getMessage();}
     }
 }

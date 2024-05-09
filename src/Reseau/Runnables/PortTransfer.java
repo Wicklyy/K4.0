@@ -7,7 +7,7 @@ public class PortTransfer implements Runnable{
     ServerSocket ssocket;
     int[] ports;
 
-    PortTransfer(ServerSocket ssocket,int[] ports){
+    public PortTransfer(ServerSocket ssocket,int[] ports){
         this.ssocket = ssocket;
         this.ports = ports;
     }
@@ -19,11 +19,10 @@ public class PortTransfer implements Runnable{
             try{
                 socket = ssocket.accept();
                 PrintWriter out = new PrintWriter(socket.getOutputStream(),true); 
-                out.write(ports[i]);
+                out.println(ports[i]);
                 socket.close();
             }
             catch(Exception e){e.getMessage();}
-            
         }
     }
 }

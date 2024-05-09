@@ -27,11 +27,12 @@ public class Server {
         this.nbClient = nbClient;
     }
 
-    public void initCon(){
+    public int initSockets(){
                 /* get available port for the main socket */
         try{
             connectionSsocket = new ServerSocket(0);
             connectionPort = connectionSsocket.getLocalPort();
+            
         } catch (IOException e) {e.getMessage();System.exit(2);}
     
         for (int i = 0; i < nbClient; i++){
@@ -40,14 +41,21 @@ public class Server {
                 portNumber[i] = ServerSockets[i].getLocalPort();
             } catch (IOException e) {e.getMessage();System.exit(2);}
         }
+        return connectionPort;
     }
 
-    public void connection(){
-        connectionThread = new Thread();
+    public void initConnection(){
+        connectionThread = new Thread(new PortTransfer(connectionSsocket,portNumber));
+        connectionThread.start();
 
         for(int i = 0; i < nbClient; i++){
             threads[i] = new Thread(new AcceptConnection(ServerSockets[i], Sockets[i]));
+            threads[i].start();
         }
+    }
+    public void Wait(){
+        try{connectionThread.wait();}
+        catch(Exception e){}
     }
 
     public int getPort(){
@@ -67,6 +75,7 @@ public class Server {
     }
 
     public void close(){
+        closeMain();
         for (ServerSocket s : ServerSockets){
             try{s.close();}
             catch(IOException e){e.getMessage();}
