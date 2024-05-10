@@ -1,4 +1,4 @@
 #!/bin/bash
 
-rm *.class */*.class */*/*.class
+rm *.class */*.class */*/*.class */*/*/*.class
 

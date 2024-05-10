@@ -2,7 +2,7 @@ package Reseau;
 
 import java.net.*;
 
-import Reseau.Runnables.*;
+import Reseau.Runnables.Connection.*;
 
 import java.io.*;
 
@@ -49,13 +49,26 @@ public class Server {
         connectionThread.start();
 
         for(int i = 0; i < nbClient; i++){
-            threads[i] = new Thread(new AcceptConnection(ServerSockets[i], Sockets[i]));
+            threads[i] = new Thread(new AcceptConnection(ServerSockets[i], Sockets,i));
             threads[i].start();
         }
     }
+
+    public void begin(){            /* We'll have to change the nbClient depending on if not everyone connected */
+        Task task = new Task(nbClient);
+        task.init(Sockets);
+    }
+
     public void Wait(){
         try{connectionThread.wait();}
         catch(Exception e){}
+    }
+    public void WaitAll(){
+        for(Thread thread : threads){
+            try{thread.join();}
+            catch(Exception e){}
+        }
+        System.out.println("all got connected");
     }
 
     public int getPort(){

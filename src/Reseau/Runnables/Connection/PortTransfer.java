@@ -1,4 +1,4 @@
-package Reseau.Runnables;
+package Reseau.Runnables.Connection;
 
 import java.io.PrintWriter;
 import java.net.*;
