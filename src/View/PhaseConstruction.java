@@ -26,6 +26,11 @@ public class PhaseConstruction
     Graphics2D drawable;
     Image neutre, bleu, vert, jaune, noir, blanc, rouge, vide;
     Jeu jeu;
+    int nb_couleurs[];
+
+    Point tab_pts[][];
+    int taille_cube_pyr;
+    
 
     public PhaseConstruction(JFrame frame, CollecteurEvenements controle, Jeu jeu){
         this.frame = frame;
@@ -59,6 +64,17 @@ public class PhaseConstruction
         while(jeu.draw())
         {
         }
+
+        nb_couleurs = jeu.compte_personnal_bag();
+        tab_pts = new Point[6][6]; //a adapter selon le nombre de joueurs
+    }
+
+    public Point[][] points_pyr(){
+        return tab_pts;
+    }
+
+    public int tailleCubePyramide(){
+        return taille_cube_pyr;
     }
 
     public void fonction_globale(Jeu jeu, Graphics g, int width_fenetre, int height_fenetre){
@@ -85,7 +101,7 @@ public class PhaseConstruction
 
         int fin_zone_gauche = (int)(0.95 * width_fenetre);
         
-        int nb_couleurs[] = jeu.compte_personnal_bag();
+        
         // Cube c;
         int nb;
         int max = max_nb(nb_couleurs);
@@ -184,16 +200,24 @@ public class PhaseConstruction
         int debut_zone_gauche = (taille_zone - taille_pyramide) / 4;
         int x_haut, y_haut;
         // int y=0;
+
+        taille_cube_pyr = taille_cube;
+        Point p;
         for (int x=0; x<6; x++){
             for (int y = 0; y<=x; y++){
                 // System.out.print(y + " ");
                 x_haut = debut_zone_haut + x*(taille_cube + taille_cube/10);
                 y_haut = debut_zone_gauche + x*(taille_cube + taille_cube/10)/2 + (taille_cube + taille_cube/10)*(6-y);
-                System.out.print(y_haut + " ");
+                // System.out.print(y_haut + " ");
+                p = new Point(y_haut, x_haut);
+                tab_pts[x][y] = p;
+                // System.out.println("point : " + p);
+
                 drawable.drawImage(vide, y_haut, x_haut, taille_cube, taille_cube, null);
             }
-            System.out.println("");
+            // System.out.println("");
         }
+        // System.out.println("tab : " + tab_pts);
     }
     /*
     public void dessiner_pyramide_joueur(Graphics g, Pyramid pyr, int x_gauche, int y_haut, int x_droite, int y_bas){

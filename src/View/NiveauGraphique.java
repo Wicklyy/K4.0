@@ -57,6 +57,14 @@ public class NiveauGraphique extends JComponent implements Observateur{
     }
 
 
+    public int tailleCubePyramide(){
+        return cons.tailleCubePyramide();
+    }
+
+    public Point[][] pointsPyr(){
+        return cons.points_pyr();
+    }
+
     public void paintComponent(Graphics g)
     {
         System.out.println("PaintComponent de NiveauGraphique");
