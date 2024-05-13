@@ -90,13 +90,11 @@ public class FenetrePrincipale
         // Créer les boutons avec les icônes d'images
         FR = new JButton(iconFR);
         EN = new JButton(iconEN);
-        UnMute = Bouton.BoutonUnMute();
-        Mute = Bouton.BoutonUnMute();
+        UnMute = Bouton.BoutonUnMute(controle);
         
         // Ajouter des écouteurs d'actions aux boutons
         FR.addActionListener(new AdaptateurLangues(controle));
         EN.addActionListener(new AdaptateurLangues(controle));
-        UnMute.addActionListener(new AdaptateurSon(controle));
         Mute.addActionListener(new AdaptateurSon(controle));
 
         // Panneau en bas à gauche pour les drapeaux
@@ -141,7 +139,6 @@ public class FenetrePrincipale
             SourisAdapte sourisRegles = new SourisAdapte(Regles, FileLoader.getSound("res/clic.wav"));
             SourisAdapte sourisFr = new SourisAdapte(FR, FileLoader.getSound("res/clic.wav"));
             SourisAdapte sourisEn = new SourisAdapte(EN, FileLoader.getSound("res/clic.wav"));
-            SourisAdapte sourisUnMute = new SourisAdapte(UnMute, FileLoader.getSound("res/clic.wav"));
             NewGame.addMouseListener(sourisNewGame);
             Charger.addMouseListener(sourisCharger);
             Lan.addMouseListener(sourisLan);
@@ -149,7 +146,6 @@ public class FenetrePrincipale
             Regles.addMouseListener(sourisRegles);
             FR.addMouseListener(sourisFr);
             EN.addMouseListener(sourisEn);
-            UnMute.addMouseListener(sourisUnMute);
         }catch (UnsupportedAudioFileException | IOException | LineUnavailableException e){
             System.exit(1);
         }
@@ -161,8 +157,7 @@ public class FenetrePrincipale
         EN.setBorder(BorderFactory.createEmptyBorder());
         EN.setContentAreaFilled(false);
 
-        UnMute.setBorder(BorderFactory.createEmptyBorder());
-        UnMute.setContentAreaFilled(false);
+
 
 
         NewGame.addActionListener(new ActionListener()

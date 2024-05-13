@@ -7,8 +7,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
 
 public class MenuNouvellePartie extends Menu
 {
@@ -51,53 +50,11 @@ public class MenuNouvellePartie extends Menu
 
             // On écrit le bouton du son en haut à droite
 
-            ImageIcon iconUnMute = new ImageIcon("res/mute64.png");
-            ImageIcon iconMute = new ImageIcon("res/son64.png");
-            UnMute = new JButton(iconUnMute);
-            UnMute.addActionListener(new ActionListener()
-            {
-                private boolean isMuted = true;
-                @Override
-                public void actionPerformed(ActionEvent e)
-                {
-                    if (isMuted)
-                    {
-                        UnMute.setIcon(iconMute); // Changer en icône "son"
-                    } 
-                    else
-                    {
-                        UnMute.setIcon(iconUnMute); // Changer en icône "mute"
-                    }
-            
-                    isMuted = !isMuted; // Inverser l'état
-                }
-            });
-            
+            ImageIcon iconUnMute = new ImageIcon();
+            UnMute = Bouton.BoutonUnMute(controle);
 
-            // ImageIcon iconUnMute = new ImageIcon("res/mute64.png");
-            // ImageIcon iconMute = new ImageIcon("res/son64.png");
-            
-            // JButton UnMute = new JButton(iconUnMute);
-            // UnMute.addActionListener(new ActionListener() 
-            // {
 
-            //     public void actionPerformed(ActionEvent pE) 
-            //     {
-            //         ImageIcon mImageIconButton = (ImageIcon) UnMute.getIcon();
-                    
-            //         if (mImageIconButton.getDescription().equals(iconUnMute.getDescription())) 
-            //         {
-            //             UnMute.setIcon(iconMute);
-            //         }
-            //         else if (mImageIconButton.getDescription().equals(iconMute.getDescription()))
-            //         {
-            //             UnMute.setIcon(iconUnMute);
-            //         }
-            //     }
-                
-            // });
 
-            UnMute.addActionListener(new AdaptateurSon(controle));
             JPanel topRightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
             topRightPanel.add(UnMute,BorderLayout.EAST);
             topRightPanel.setOpaque(false);
@@ -132,11 +89,10 @@ public class MenuNouvellePartie extends Menu
             content.add(bottomPanel, BorderLayout.NORTH);
 
             // On ajoute le son pour chaque bouton
-            SourisAdapte sourisUnMute = new SourisAdapte(UnMute, FileLoader.getSound("res/clic.wav"));
+
             SourisAdapte sourisRetour = new SourisAdapte(Retour, FileLoader.getSound("res/clic.wav"));
             SourisAdapte souris3Joueur = new SourisAdapte(joueurs3, FileLoader.getSound("res/clic.wav"));
             SourisAdapte souris4Joueur = new SourisAdapte(joueurs4, FileLoader.getSound("res/clic.wav"));
-            UnMute.addMouseListener(sourisUnMute);
             Retour.addMouseListener(sourisRetour);
             joueurs3.addMouseListener(souris3Joueur);
             joueurs4.addMouseListener(souris4Joueur);

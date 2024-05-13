@@ -52,14 +52,11 @@ public class MenuPrincipal extends Menu {
         // Créer les boutons avec les icônes d'images
         FR = new JButton(new ImageIcon(resizedImageFR));
         EN = new JButton( new ImageIcon(resizedImageEN));
-        UnMute = Bouton.BoutonUnMute();
-        Mute = Bouton.BoutonUnMute();
+        UnMute = Bouton.BoutonUnMute(controle);
         
         // Ajouter des écouteurs d'actions aux boutons
         FR.addActionListener(new AdaptateurLangues(controle));
         EN.addActionListener(new AdaptateurLangues(controle));
-        UnMute.addActionListener(new AdaptateurSon(controle));
-        Mute.addActionListener(new AdaptateurSon(controle));
 
         // Panneau en bas à gauche pour les drapeaux
         JPanel bottomLeftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -102,7 +99,6 @@ public class MenuPrincipal extends Menu {
         SourisAdapte sourisRegles = new SourisAdapte(Regles, FileLoader.getSound("res/clic.wav"));
         SourisAdapte sourisFr = new SourisAdapte(FR, FileLoader.getSound("res/clic.wav"));
         SourisAdapte sourisEn = new SourisAdapte(EN, FileLoader.getSound("res/clic.wav"));
-        SourisAdapte sourisUnMute = new SourisAdapte(UnMute, FileLoader.getSound("res/clic.wav"));
         NewGame.addMouseListener(sourisNewGame);
         Charger.addMouseListener(sourisCharger);
         Lan.addMouseListener(sourisLan);
@@ -110,7 +106,6 @@ public class MenuPrincipal extends Menu {
         Regles.addMouseListener(sourisRegles);
         FR.addMouseListener(sourisFr);
         EN.addMouseListener(sourisEn);
-        UnMute.addMouseListener(sourisUnMute);
         
 
         FR.setBorder(BorderFactory.createEmptyBorder());
@@ -119,8 +114,6 @@ public class MenuPrincipal extends Menu {
         EN.setBorder(BorderFactory.createEmptyBorder());
         EN.setContentAreaFilled(false);
 
-        UnMute.setBorder(BorderFactory.createEmptyBorder());
-        UnMute.setContentAreaFilled(false);
 
         NewGame.addActionListener(new NewGameActionListener(controle));
 
