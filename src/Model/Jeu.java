@@ -26,7 +26,7 @@ public class Jeu {
         int y = 0;
         ArrayList<Cube> listBag = bag.init_center();
         System.out.println(listBag);
-        for( Cube cube : listBag){        /*petit soucis ici de temps en temps bug bizarre qui fait une index out of bound 9 pour aucune raison */
+        for( Cube cube : listBag){
             System.out.println(y);
             principale.set(0, y, cube);
             y++;
