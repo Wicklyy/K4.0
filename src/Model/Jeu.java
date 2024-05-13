@@ -17,7 +17,7 @@ public class Jeu implements Cloneable{
         /*****************************/
         /* Fonction creation du jeu */
         /***************************/
-        
+
     public Jeu(int nb){             /* creation de l'objet jeu ainsi que les joueurs */
         nbJoueur = nb;
         End = false;
@@ -65,23 +65,18 @@ public class Jeu implements Cloneable{
         /************************************ */
         /* Fonction lier a une action de jeu */
         /********************************** */
-    
+
     /* ordre de jeu */
-    
+
     public void avance(){           /* le bon joueur est envoyer */
         current_player = next_player();
     }
 
-    public int next_player(){               /* Fonctionne */
-        return next_player(current_player);
-    }
 
-    /*************/
-    
     /** Coup **/
-        /** Debut de partie **/
+    /** Debut de partie **/
 
-    public boolean draw(){          /* recupere des cubes de la pioche principale et les ajoute au cube pour la construction */
+    public boolean draw(){
         if(bag.getSize() > 2){
             for(Cube c : bag.draw()){
                 players[current_player].addBag(c);
@@ -96,18 +91,21 @@ public class Jeu implements Cloneable{
         players[current_player].construction(x, y, cube);
     }
 
-        /** Jouer **/
-
+    /** Jouer **/
     public void setCubePlayer(int x, int y, Cube cube){     /* Ajoute le cube au coordonnee x y de la pyramide du joueur courant  */
         getPlayer().set(x, y, cube);
         avance();
     }
 
-    public int add_central(int x_central, int y_central, int x_player, int y_player){   /* joue un coup dans la pyramide central, si l'y du cube a jouer est egale a -1 le cube sera piochee du side */
-        if (y_player==-1){                                                              // renvoie:
-            return add_central_side(x_central, y_central, x_player);                    // 0 -> NOT VALID
-        } else {                                                                        // 1 -> VALID
-            return add_central_pyramid(x_central, y_central, x_player, y_player);       // 2 -> VALID WITH PENALITY
+    /* joue un coup dans la pyramide central, si l'y du cube a jouer est egale a -1 le cube sera piochee du side */
+    // 0 -> NOT VALID
+    // 1 -> VALID
+    // 2 -> VALID WITH PENALITY
+    public int add_central(int x_central, int y_central, int x_player, int y_player){
+        if (y_player==-1){
+            return add_central_side(x_central, y_central, x_player);
+        } else {
+            return add_central_pyramid(x_central, y_central, x_player, y_player);
         }
     }
 
@@ -182,7 +180,7 @@ public class Jeu implements Cloneable{
 
     /* Accessibilitee */
 
-    public boolean accessible(int x, int y){                
+    public boolean accessible(int x, int y){
         Pyramid pyramid = players[current_player].getPyramid();
         return accessible(pyramid , x, y);
     }
@@ -190,7 +188,7 @@ public class Jeu implements Cloneable{
     public boolean accessible(Pyramid pyramid , int x, int y){
         return (pyramid.get(x, y) != Cube.Vide) && (( x == size-1 && y == 0  ) || (( y == size-x-1 || pyramid.get(x+1, y) == Cube.Vide) && (y == 0 || pyramid.get(x+1, y-1)== Cube.Vide)));
     }
-    
+
     public boolean case_dessus_possible(int x, int y){          /* renvoie vrai si l'on peu poser un cube sur un cube de la pyramide central */
         if( (principale.get(x, y) != Cube.Vide) && ( !caseAdjacenteVide(x, y) ) && ( principale.get(x+1, y) == Cube.Vide || ( y != 0 && principale.get(x+1, y-1) == Cube.Vide ))) {return true;}
         return false;
@@ -202,7 +200,7 @@ public class Jeu implements Cloneable{
 
     /* Fin de partie */
     public boolean check_loss(){            /* Verifie si le joueur courrant n'a aucun coup possible, s'il ne peut rien jouer le joueur courant est le prochain joueur */
-        if(noPlay() || getPlayer().totalCube() == 0){       
+        if(noPlay() || getPlayer().totalCube() == 0){
             getPlayer().playerLost();
             int next = next_player();
             if(next == next_player(next)){End = true;}          /* si un joueur est eliminer et que le prochain est le meme que le prochain du prochain, le joueur est donc seul et est le vainqueur */
@@ -221,8 +219,12 @@ public class Jeu implements Cloneable{
 
     /* Recuperation de l'indice d'un joueur */
 
-    public int next_player(int current_player){     /* renvoie le l'indice du prochain joueur */
-        int next_player = (current_player+1)%nbJoueur;
+    public int next_player(){               /* Fonctionne */
+        return next_player(current_player);
+    }
+
+    public int next_player(int player){     /* renvoie le l'indice du prochain joueur */
+        int next_player = (player+1)%nbJoueur;
         while ( players[next_player].lost() == true ){
             next_player = (next_player+1)%nbJoueur;
         }
@@ -241,14 +243,14 @@ public class Jeu implements Cloneable{
         }
         return previous_player;
     }
-    
+
     /* Information pratique joueur courant */
 
     //Ammount of cubes in a player's hand
     public int TotCubesHand (int i){
         return getPlayer(i).totalCube();
     }
-    
+
     //Ammount of a colour in the current player's hand
     public int ColourAmmount (Cube cube){
         return getPlayer().ColourAmmount(cube);
@@ -257,8 +259,7 @@ public class Jeu implements Cloneable{
     public int[] compte_personal_bag(){
         return getPlayer().compte_personal_bag();
     }
-    
-    /* Coup possible */
+
 
     public ArrayList<Point> AccessibleCubesPlayer(){            /* Fonctionne mais crash?(tres rarement)*/
         ArrayList<Point> list = new ArrayList<Point>();
@@ -272,6 +273,7 @@ public class Jeu implements Cloneable{
         }
         return list;
     }
+
     //COORD POSITION POSSIBLES POUR UN CUBE DONNEE
     public ArrayList<Point> CubeAccessibleDestinations(int x, int y){
         ArrayList<Point> list = new ArrayList<Point>();
@@ -354,10 +356,14 @@ public class Jeu implements Cloneable{
     /* Recuperation de donnee */
     /*********************** */
 
+    public int get_player(){
+        return current_player;
+    }
+
     public Player getPlayer(int i){
         return players[i];
     }
-    
+
     public Player getPlayer(){
         return getPlayer(current_player);
     }
@@ -369,7 +375,7 @@ public class Jeu implements Cloneable{
     public ArrayList<Cube> getPlayerBag(int i){
         return getPlayer(i).personalBag;
     }
-    
+
     public Jeu clone() throws CloneNotSupportedException {
         Jeu clone = (Jeu) super.clone();  // Clone the basic object structure
 

@@ -20,6 +20,7 @@ public class Player implements Cloneable{
         personalBag = new ArrayList<>();
     }
 
+    //CLONING METHOD
     public Player clone() throws CloneNotSupportedException {
         Player clone = (Player) super.clone();  // Clone the basic object structure
 
@@ -35,11 +36,21 @@ public class Player implements Cloneable{
         return clone;
     }
 
-    public int totalCube (){
+     /*loss Setting/Checking */
+    public boolean lost(){
+        return loss;
+    }
+
+    public void playerLost(){
+        loss = true;
+    }
+
+    /*Cubes stats */
+    public int totalCube(){
+        //CUBE VIDE => Total of all colours
         return ColourAmmount(Cube.Vide);
     }
 
-    //CUBE VIDE => Total of all colours
     public int ColourAmmount (Cube cube){
         int total = 0;
         switch(cube){
@@ -63,10 +74,6 @@ public class Player implements Cloneable{
                 }
                 return total;
         }
-    }
-
-    public int getSize(){
-        return size;
     }
 
     public void increment(Cube c){
@@ -125,32 +132,37 @@ public class Player implements Cloneable{
         }
     }
 
-    public void addSide(Cube c){
-        side.add(c);
-        increment(c);
-    }
 
-    public boolean lost(){
-        return loss;
-    }
-
-
-    public Cube get(int x, int y){
-        return pyramid.get(x, y);
+    /*Side access methods */
+    public ArrayList<Cube> getSide(){
+        return side;
     }
 
     public Cube getSide(int x){
         return side.get(x);
 
-    } 
-    public ArrayList<Cube> getSide(){
-        return side;
     }
 
+    public void addSide(Cube c){
+        side.add(c);
+        increment(c);
+    }
+
+    public void removeSide(int x){
+        decrement(side.remove(x));
+    }
 
     public int getSideSize(){
         return side.size();
+    }
 
+    /*Pyramid access methods */
+    public Pyramid getPyramid(){
+        return pyramid;
+    }
+
+    public Cube get(int x, int y){
+        return pyramid.get(x, y);
     }
 
     public void set(int x, int y, Cube c){
@@ -160,21 +172,13 @@ public class Player implements Cloneable{
         increment(c);
     }
 
-    public void removeSide(int x){
-        decrement(side.remove(x));
-    }
-
-    public Pyramid getPyramid(){
-        return pyramid;
+    public int getSize(){
+        return size;
     }
 
 
     /* FONCTION AJOUTER */
-    public void addBag(Cube cube){
-        increment(cube);
-        personalBag.add(cube);
-    }
-
+    /*Pers Bag access methods */
     public boolean bagEmpty(){
         return personalBag.isEmpty();
     }
@@ -187,22 +191,21 @@ public class Player implements Cloneable{
         return totalCube;
     }
 
-    public void melange(){
-        Collections.shuffle(personalBag);
+    public void addBag(Cube cube){
+        increment(cube);
+        personalBag.add(cube);
     }
 
-    public void playerLost(){
-        loss = true;
-    }
-
+    /*Construct method -> Puts a cube in a position after checking its content:       */
+   /*If cube already existing in position -> Puts it back in the bag and replaces it */
     public void construction(int x, int y,Cube cube){
         if(!(get(x, y) == Cube.Vide)){
             personalBag.add(get(x, y));
         }
-        //System.out.println(personalBag.remove(emplacement));
         personalBag.remove(cube);
         pyramid.set(x,y,cube);
     }
+
 
     @Override
     public String toString(){
@@ -223,10 +226,4 @@ public class Player implements Cloneable{
 
         return chaine;
     }
-
-
-    
-
-
-
 }
