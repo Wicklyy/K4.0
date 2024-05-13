@@ -51,7 +51,7 @@ public class test{
         int x = 0,y = 0,z = 0,w = 0,validity = 0;
 
         String[] entree;
-        System.out.println("help pour afficher le menue");
+        System.out.println("help pour afficher le menu");
         while(true){
             if(jeu.End_Game()){
                 System.out.println("Game Done winner is player: " + (jeu.current_player + 1) );

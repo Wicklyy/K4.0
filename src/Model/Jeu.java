@@ -8,10 +8,10 @@ import java.awt.Point;
 
 public class Jeu {
     Player[] players;
-    int nbJoueur;
-    Pyramid principale;
+    public int nbJoueur;
+    public Pyramid principale;
     PawnsBag bag;
-    int current_player, size;
+    public int current_player, size;
     boolean End;
 
 
@@ -24,7 +24,10 @@ public class Jeu {
         bag = new PawnsBag(nb);
         principale = new Pyramid(9);
         int y = 0;
-        for( Cube cube : bag.init_center()){        /*petit soucis ici de temps en temps bug bizarre qui fait une index out of bound 9 pour aucune raison */
+        ArrayList<Cube> listBag = bag.init_center();
+        System.out.println(listBag);
+        for( Cube cube : listBag){        /*petit soucis ici de temps en temps bug bizarre qui fait une index out of bound 9 pour aucune raison */
+            System.out.println(y);
             principale.set(0, y, cube);
             y++;
         }
@@ -50,8 +53,8 @@ public class Jeu {
 
     //CALLED ONLY AFTER/IN VALIDITY CHECK !!!           /* fonctionne */
 
-    public int getCurrent(){
-        return current_player
+    public int get_player(){
+        return current_player;
     }
     public boolean check_penality(Cube cube, int x, int y) {
         return principale.get(x-1, y) == principale.get(x-1, y+1);
