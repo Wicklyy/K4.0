@@ -7,7 +7,7 @@ public class Player implements Cloneable{
     Pyramid pyramid;
 
     ArrayList<Cube> side, personalBag;
-
+    int[] totalCube;
     int noir, bleu, blanc, rouge, jaune, vert, neutre;
     int size;
     boolean loss;
@@ -15,6 +15,7 @@ public class Player implements Cloneable{
     Player(int i){
         pyramid = new Pyramid(i);
         size = i;
+        totalCube = new int[7];
         side = new ArrayList<>();
         personalBag = new ArrayList<>();
     }
@@ -40,23 +41,27 @@ public class Player implements Cloneable{
 
     //CUBE VIDE => Total of all colours
     public int ColourAmmount (Cube cube){
+        int total = 0;
         switch(cube){
-            case Noir :
-                return noir;
-            case Bleu :
-                return bleu;
-            case Blanc:
-                return blanc;
-            case Rouge:
-                return rouge;
-            case Jaune:
-                return jaune;
-            case Vert:
-                return vert;
+            case Noir:
+                return totalCube[0];
             case Neutre:
-                return neutre;
-            default :
-                return noir+bleu+blanc+rouge+jaune+vert+neutre;
+                return totalCube[1];
+            case Blanc:
+                return totalCube[2];
+            case Vert:
+                return totalCube[3];
+            case Jaune:
+                return totalCube[4];
+            case Rouge:
+                return totalCube[5];
+            case Bleu:
+                return totalCube[6];
+            default:
+                for(int i = 0; i < 7; i++){
+                    total+=totalCube[i];
+                }
+                return total;
         }
     }
 
@@ -67,25 +72,25 @@ public class Player implements Cloneable{
     public void increment(Cube c){
         switch (c) {
             case Noir:
-                noir++;
-                break;
-            case Bleu:
-                bleu++;
-                break;
-            case Blanc:
-                blanc++;
-                break;
-            case Rouge:
-                rouge++;
-                break;
-            case Jaune:
-                jaune++;
-                break;
-            case Vert:
-                vert++;
+                totalCube[0]++;
                 break;
             case Neutre:
-                neutre++;
+                totalCube[1]++;
+                break;
+            case Blanc:
+                totalCube[2]++;
+                break;
+            case Vert:
+                totalCube[3]++;
+                break;
+            case Jaune:
+                totalCube[4]++;
+                break;
+            case Rouge:
+                totalCube[5]++;
+                break;
+            case Bleu:
+                totalCube[6]++;
                 break;
             default:
                 break;
@@ -95,25 +100,25 @@ public class Player implements Cloneable{
     public void decrement(Cube c){
         switch (c) {
             case Noir:
-                noir--;
-                break;
-            case Bleu:
-                bleu--;
-                break;
-            case Blanc:
-                blanc--;
-                break;
-            case Rouge:
-                rouge--;
-                break;
-            case Jaune:
-                jaune--;
-                break;
-            case Vert:
-                vert--;
+                totalCube[0]--;
                 break;
             case Neutre:
-                neutre--;
+                totalCube[1]--;
+                break;
+            case Blanc:
+                totalCube[2]--;
+                break;
+            case Vert:
+                totalCube[3]--;
+                break;
+            case Jaune:
+                totalCube[4]--;
+                break;
+            case Rouge:
+                totalCube[5]--;
+                break;
+            case Bleu:
+                totalCube[6]--;
                 break;
             default:
                 break;
@@ -179,35 +184,7 @@ public class Player implements Cloneable{
     }
 
     public int[] compte_personnal_bag(){
-        int nb[] = new int[7];
-        for(Cube cube : personalBag){
-            switch (cube) {
-                case Noir:
-                    nb[0]++;
-                    break;
-                case Neutre:
-                    nb[1]++;
-                    break;
-                case Blanc:
-                    nb[2]++;
-                    break;
-                case Vert:
-                    nb[3]++;
-                    break;
-                case Jaune:
-                    nb[4]++;
-                    break;
-                case Rouge:
-                    nb[5]++;
-                    break;
-                case Bleu:
-                    nb[6]++;
-                    break;
-                default:
-                    break;
-            }
-        }
-        return nb;
+        return totalCube;
     }
 
     public void melange(){
