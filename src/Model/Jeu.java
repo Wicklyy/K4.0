@@ -23,11 +23,7 @@ public class Jeu implements Cloneable{
 
         bag = new PawnsBag(nb);
         principale = new Pyramid(9);
-        int y = 0;
-        for( Cube cube : bag.init_center()){        /*petit soucis ici de temps en temps bug bizarre qui fait une index out of bound 9 pour aucune raison */
-            principale.set(0, y, cube);
-            y++;
-        }
+
         for(int i = 0;i < nb; i++ ){
             size = 8-nb;
             players[i] = new Player(size);
@@ -35,7 +31,6 @@ public class Jeu implements Cloneable{
                 for(int j = 0; j < 4/nb; j++){
                     players[i].addBag(Cube.Blanc);
                     players[i].addBag(Cube.Neutre);
-
                 }
                 if(nb == 3){players[i].addBag(Cube.Neutre);}
             }
@@ -48,18 +43,23 @@ public class Jeu implements Cloneable{
         current_player = r.nextInt(nb);
     }
 
-    public Jeu clone() throws CloneNotSupportedException {
-        Jeu clone = (Jeu) super.clone();  // Clone the basic object structure
 
-        clone.players = new Player[nbJoueur];
-        for (int i = 0; i < nbJoueur; i++) {
-            clone.players[i] = players[i].clone();
+    public void initPrincipale(){
+        int y = 0;
+        for( Cube cube : bag.init_center()){
+            principale.set(0, y, cube);
+            y++;
         }
-        clone.principale = principale.clone();
-        clone.bag = bag.clone();
-
-        return clone;
     }
+
+    public void initPrincipale(ArrayList<Cube> bag){
+        int y = 0;
+        for( Cube cube : bag ){
+            principale.set(0, y, cube);
+            y++;
+        }
+    }
+
 
     //CALLED ONLY AFTER/IN VALIDITY CHECK !!!           /* fonctionne */
     public boolean check_penality(Cube cube, int x, int y) {
@@ -113,10 +113,11 @@ public class Jeu implements Cloneable{
     //COORD POSITION POSSIBLES POUR UN CUBE DONNEE
     public ArrayList<Point> CubeAccessibleDestinations(int x, int y){
         ArrayList<Point> list = new ArrayList<Point>();
+        Cube cube ;
         if (y==-1){
-            Cube cube = getPlayer().getSide(x);
+            cube = getPlayer().getSide(x);
         }else{
-            Cube cube = getPlayer().get(x,y);
+            cube = getPlayer().get(x,y);
         }
 
         for(int i = principale.getSize()-1; i >= 0; i--){
@@ -176,9 +177,9 @@ public class Jeu implements Cloneable{
     // 2 -> VALID WITH PENALITY
     public int add_central(int x_central, int y_central, int x_player, int y_player){
         if (y_player==-1){
-            add_central_side(int x_central, int y_central, int x_player);
+            return add_central_side(x_central, y_central, x_player);
         } else {
-            add_central_pyramid(int x_central, int y_central, int x_player, int y_player);
+            return add_central_pyramid(x_central, y_central, x_player, y_player);
         }
     }
 
@@ -301,10 +302,9 @@ public class Jeu implements Cloneable{
 
     //retour first free or (-1,-1)
     public Point findFirstFreeElement() {
-        Pyramid getPlayer().getPyramid();
         for (int i = getPlayer().getSize()-1; i >= 0; i--) {
             for (int j = 0; j < getPlayer().getSize()-i; j++) {
-                if (get(i,j)==Cube.VIDE) {
+                if (getPlayer().get(i,j)==Cube.VIDE) {
                     return (new Point(i,j));
                 }
             }
@@ -328,12 +328,25 @@ public class Jeu implements Cloneable{
         return false;
     }
 
-    public void ajoute(int x, int y, int emplacement){
-        players[current_player].ajoute(x, y, emplacement);
+    public void construction(int x, int y, Cube cube){
+        players[current_player].construction(x, y, cube);
     }
     
     public String bag(){
         return bag.toString();
     }
 
+
+    public Jeu clone() throws CloneNotSupportedException {
+        Jeu clone = (Jeu) super.clone();  // Clone the basic object structure
+
+        clone.players = new Player[nbJoueur];
+        for (int i = 0; i < nbJoueur; i++) {
+            clone.players[i] = players[i].clone();
+        }
+        clone.principale = principale.clone();
+        clone.bag = bag.clone();
+
+        return clone;
+    }
 }

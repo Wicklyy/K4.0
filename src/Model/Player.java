@@ -217,12 +217,13 @@ public class Player implements Cloneable{
         loss = true;
     }
 
-    public void ajoute(int x, int y, int emplacement){
+    public void construction(int x, int y,Cube cube){
         if(!(get(x, y) == Cube.Vide)){
             personalBag.add(get(x, y));
         }
         //System.out.println(personalBag.remove(emplacement));
-        set(x, y, personalBag.remove(emplacement));
+        personalBag.remove(cube);
+        set(x, y, cube);
     }
 
     @Override
