@@ -169,6 +169,17 @@ public class Jeu implements Cloneable{
     // 0 -> NOT VALID
     // 1 -> VALID
     // 2 -> VALID WITH PENALITY
+    public int add_central(int x_central, int y_central, int x_player, int y_player){
+        if (y_player==-1){
+            add_central_side(int x_central, int y_central, int x_player);
+        } else {
+            add_central_pyramid(int x_central, int y_central, int x_player, int y_player);
+        }
+    }
+
+    // 0 -> NOT VALID
+    // 1 -> VALID
+    // 2 -> VALID WITH PENALITY
     public int add_central_pyramid(int x_central, int y_central, int x_player, int y_player){   /*Fonctionne */
         if(accessible(x_player, y_player)){
             Cube cube = players[current_player].get(x_player, y_player);
