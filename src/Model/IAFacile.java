@@ -43,7 +43,7 @@ public class IAFacile extends IA {
 
     @Override
     public void add_central_pyramid(){
-        ArrayList<ArrayList<int[]>> coups_possibles = coupIA(jeu, jeu.current_player);
+        ArrayList<ArrayList<Point>> coups_possibles = coupIA(jeu, jeu.current_player);
         Random random = new Random();
         ArrayList<Point> coup_a_jouer = coups_possibles.get(random.nextInt(coups_possibles.size()));
         jeu.add_central_pyramid((int) coup_a_jouer.get(1).getX(), (int) coup_a_jouer.get(1).getY(), (int) coup_a_jouer.get(0).getX(), (int) coup_a_jouer.get(0).getY());
