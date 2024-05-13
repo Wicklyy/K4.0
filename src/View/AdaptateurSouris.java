@@ -40,7 +40,31 @@ public class AdaptateurSouris extends MouseAdapter
 			//controle.clicSourisPyr(e.getX(),  e.getY());
 		}
 		else if(e.getX() >= nivGraph.Largeur_Fenetre()*3/4){
-			controle.clicSourisPioche(e.getX(),  e.getY());
+			int taille_cube = nivGraph.tailleCubePioche();
+			Point pts[][] = nivGraph.pointsPioche();
+			int l, c;
+			int couleurs[] = nivGraph.couleurs();
+			Point p;
+			// for (int i=0; i<7; i++){
+			// 	System.out.println(couleurs[i]);
+			// }
+			for(int i=0; i<7; i++){
+				for(int j=0; j<couleurs[i]; j++){
+					// System.out.println(i + " "+ j);
+					if(e.getX() >= pts[i][j].getX() && e.getX() <= pts[i][j].getX() + taille_cube){
+						// System.out.println("if");
+						if(e.getY() >= pts[i][j].getY() && e.getY() <= pts[i][j].getY() + taille_cube){
+							l = i;
+							// nivGraph.modifierLignePioche(l);
+							c = couleurs[i] - j - 1;
+							p = new Point(l, couleurs[i] - j - 1);
+							nivGraph.modifierLignePioche(p);
+							controle.clicSourisPioche(l,  c);
+						}
+					}
+				}
+			}
+			// controle.clicSourisPioche(e.getX(),  e.getY());
 		}
 		// controle.clicSouris(e.getY() / nivGraph.Hauteur_case(),  e.getX() / nivGraph.Largeur_case());
 		

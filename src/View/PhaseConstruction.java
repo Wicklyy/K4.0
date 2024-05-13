@@ -24,12 +24,17 @@ public class PhaseConstruction
     JButton Aide;
     CollecteurEvenements controle;
     Graphics2D drawable;
-    Image neutre, bleu, vert, jaune, noir, blanc, rouge, vide;
+    Image neutre, bleu, vert, jaune, noir, blanc, rouge, vide, carre_noir_vide;
     Jeu jeu;
     int nb_couleurs[];
 
     Point tab_pts[][];
     int taille_cube_pyr;
+    // ArrayList<Point> tab_cote[];
+    Point tab_cote[][];
+    int taille_cube_pioche;
+
+    Point cube_pioche;
     
 
     public PhaseConstruction(JFrame frame, CollecteurEvenements controle, Jeu jeu){
@@ -52,6 +57,8 @@ public class PhaseConstruction
 			rouge = ImageIO.read(in);
             in = new FileInputStream("res/carre_vide.png");
 			vide = ImageIO.read(in);
+            in = new FileInputStream("res/carre_noir_vide.png");
+			carre_noir_vide = ImageIO.read(in);
 
 		} catch (FileNotFoundException e) {
 			System.err.println("ERREUR : impossible de trouver le fichier du pousseur");
@@ -67,6 +74,8 @@ public class PhaseConstruction
 
         nb_couleurs = jeu.compte_personnal_bag();
         tab_pts = new Point[6][6]; //a adapter selon le nombre de joueurs
+        tab_cote = new Point[7][9]; //tout le temps (7 couleurs et 9 de chaque)
+        cube_pioche = new Point(-1, -1);
     }
 
     public Point[][] points_pyr(){
@@ -75,6 +84,22 @@ public class PhaseConstruction
 
     public int tailleCubePyramide(){
         return taille_cube_pyr;
+    }
+
+    public Point[][] points_pioche(){
+        return tab_cote;
+    }
+
+    public int tailleCubePioche(){
+        return taille_cube_pioche;
+    }
+
+    public int[] couleurs(){
+        return nb_couleurs;
+    }
+
+    public void modifierLignePioche(Point p){
+        cube_pioche = new Point((int)p.getX(), (int)p.getY());
     }
 
     public void fonction_globale(Jeu jeu, Graphics g, int width_fenetre, int height_fenetre){
@@ -96,6 +121,7 @@ public class PhaseConstruction
     }
 
     public void dessiner_cubes_pioches(Graphics g, Jeu jeu, int width_fenetre, int height_fenetre){
+        System.out.println("case selectionnee : " + (int)cube_pioche.getX() + " " + (int)cube_pioche.getY());
         drawable = (Graphics2D) g;
         int debut_zone_haut = height_fenetre / 10;
 
@@ -105,39 +131,49 @@ public class PhaseConstruction
         // Cube c;
         int nb;
         int max = max_nb(nb_couleurs);
-
+        // nb_couleurs[3] = 0;
         int taille_cube = 9*width_fenetre / (4*max*10);
+        taille_cube_pioche = taille_cube;
         // int taille_cube = Math.min(9*width_fenetre / (4*max*10), 9*height_fenetre / (7*10)); //(4*3)
         // int taille_cube = Math.min(9*width_fenetre / (4*max*10), height_fenetre*8/10);
         int y=0;
+        Point p;
+        int x_haut, y_haut;
         for (int i=0; i<7; i++){
             nb = nb_couleurs[i];
             if (nb > 0){
                 y++;
             }
             for(int x=0; x<nb; x++){
+                x_haut = fin_zone_gauche - x*(taille_cube + taille_cube/10);
+                y_haut = y*(taille_cube + taille_cube/10) + debut_zone_haut;
+                p = new Point(x_haut, y_haut);
+                // System.out.println("x : " + x);
+                // System.out.println("y : " + y);
+                tab_cote[i][x] = p;
+                
                 switch(i){
                     case 0:
-                        drawable.drawImage(noir, fin_zone_gauche - x*(taille_cube), y*(taille_cube) + debut_zone_haut, taille_cube*95/100, (int)taille_cube*95/100, null);
+                        drawable.drawImage(noir, x_haut, y_haut, taille_cube, taille_cube, null);
                         break;
                     case 1:
-                        drawable.drawImage(neutre, fin_zone_gauche - x*(taille_cube), y*(taille_cube) + debut_zone_haut, taille_cube*95/100, (int)taille_cube*95/100, null);                    
+                        drawable.drawImage(neutre, x_haut, y_haut, taille_cube, taille_cube, null);                    
                         break;
                     case 2:
-                        drawable.drawImage(blanc, fin_zone_gauche - x*(taille_cube), y*(taille_cube) + debut_zone_haut, taille_cube*95/100, (int)taille_cube*95/100, null);   
+                        drawable.drawImage(blanc, x_haut, y_haut, taille_cube, taille_cube, null);   
                         break;
                     case 3:
-                        drawable.drawImage(vert, fin_zone_gauche - x*(taille_cube), y*(taille_cube) + debut_zone_haut, taille_cube*95/100, (int)taille_cube*95/100, null);                      
+                        drawable.drawImage(vert, x_haut, y_haut, taille_cube, taille_cube, null);                      
                         break;
                     case 4:
-                        drawable.drawImage(jaune, fin_zone_gauche - x*(taille_cube), y*(taille_cube) + debut_zone_haut, taille_cube*95/100, (int)taille_cube*95/100, null);                     
+                        drawable.drawImage(jaune, x_haut, y_haut, taille_cube, taille_cube, null);                     
                         break;
                     case 5:
-                        drawable.drawImage(rouge, fin_zone_gauche - x*(taille_cube), y*(taille_cube) + debut_zone_haut, taille_cube*95/100, (int)taille_cube*95/100, null);                   
+                        drawable.drawImage(rouge, x_haut, y_haut, taille_cube, taille_cube, null);                   
                         break;
                     case 6:
                         //drawable.drawImage(bleu, fin_zone_gauche - x*(taille_cube+taille_cube/10), y*(taille_cube+taille_cube/10) + debut_zone_haut, taille_cube, taille_cube, null);                    
-                        drawable.drawImage(bleu, fin_zone_gauche - x*(taille_cube), y*(taille_cube) + debut_zone_haut, taille_cube*95/100, (int)taille_cube*95/100, null);                    
+                        drawable.drawImage(bleu, x_haut, y_haut, taille_cube, taille_cube, null);                    
                         break;
                 }
                 

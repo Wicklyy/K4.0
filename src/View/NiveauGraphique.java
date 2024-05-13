@@ -65,6 +65,23 @@ public class NiveauGraphique extends JComponent implements Observateur{
         return cons.points_pyr();
     }
 
+    public int tailleCubePioche(){
+        return cons.tailleCubePioche();
+    }
+
+    public Point[][] pointsPioche(){
+        return cons.points_pioche();
+    }
+
+    public int[] couleurs(){
+        return cons.couleurs();
+    }
+
+    public void modifierLignePioche(Point p){
+        cons.modifierLignePioche(p);
+        repaint();
+    }
+
     public void paintComponent(Graphics g)
     {
         System.out.println("PaintComponent de NiveauGraphique");
