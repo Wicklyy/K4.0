@@ -1,4 +1,4 @@
 #!/bin/bash
 
-ip ='localhost:'+$2
+ip=localhost:$1
 java ClientTest $ip
