@@ -166,6 +166,7 @@ public class Player implements Cloneable{
 
     /* FONCTION AJOUTER */
     public void addBag(Cube cube){
+        increment(cube);
         personalBag.add(cube);
     }
 
@@ -223,7 +224,7 @@ public class Player implements Cloneable{
         }
         //System.out.println(personalBag.remove(emplacement));
         personalBag.remove(cube);
-        set(x, y, cube);
+        pyramid.set(x,y,cube);
     }
 
     @Override
