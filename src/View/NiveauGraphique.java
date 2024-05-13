@@ -84,7 +84,7 @@ public class NiveauGraphique extends JComponent implements Observateur{
 
     public void paintComponent(Graphics g)
     {
-        System.out.println("PaintComponent de NiveauGraphique");
+        // System.out.println("PaintComponent de NiveauGraphique");
        
        
         // Initialisation de la fenêtre graphique

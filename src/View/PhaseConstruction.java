@@ -121,7 +121,7 @@ public class PhaseConstruction
     }
 
     public void dessiner_cubes_pioches(Graphics g, Jeu jeu, int width_fenetre, int height_fenetre){
-        System.out.println("case selectionnee : " + (int)cube_pioche.getX() + " " + (int)cube_pioche.getY());
+        
         drawable = (Graphics2D) g;
         int debut_zone_haut = height_fenetre / 10;
 
@@ -139,6 +139,12 @@ public class PhaseConstruction
         int y=0;
         Point p;
         int x_haut, y_haut;
+        int c_x = ((int)cube_pioche.getX());
+        int c_y = ((int)cube_pioche.getY());
+        int x_cube_vide = 0;
+        int y_cube_vide = 0;
+        System.out.println("case selectionnee : " + c_x + " " + c_y);
+        // drawable.drawImage(carre_noir_vide, fin_zone_gauche - ((int)cube_pioche.getX())*(taille_cube + taille_cube/10), ((int)cube_pioche.getY())*(taille_cube + taille_cube/10) + debut_zone_haut, taille_cube, taille_cube, null);
         for (int i=0; i<7; i++){
             nb = nb_couleurs[i];
             if (nb > 0){
@@ -151,6 +157,7 @@ public class PhaseConstruction
                 // System.out.println("x : " + x);
                 // System.out.println("y : " + y);
                 tab_cote[i][x] = p;
+                // System.out.println("case dessinee : " + x + " " + y);
                 
                 switch(i){
                     case 0:
@@ -176,9 +183,18 @@ public class PhaseConstruction
                         drawable.drawImage(bleu, x_haut, y_haut, taille_cube, taille_cube, null);                    
                         break;
                 }
+                if (x == c_y && i == c_x){
+                    // System.out.println(x);
+                    // System.out.println(nb_couleurs[i]);
+                    // System.out.println(nb_couleurs[i] -1 -x);
+                    x_cube_vide = fin_zone_gauche - (nb_couleurs[i] -1 -x)*(taille_cube + taille_cube/10);
+                    y_cube_vide = y_haut;
+                    
+                }
                 
             }   
         }
+        drawable.drawImage(carre_noir_vide, x_cube_vide, y_cube_vide, taille_cube, taille_cube, null);
         
     }
 
