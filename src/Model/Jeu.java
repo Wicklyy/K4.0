@@ -113,7 +113,12 @@ public class Jeu implements Cloneable{
     //COORD POSITION POSSIBLES POUR UN CUBE DONNEE
     public ArrayList<Point> CubeAccessibleDestinations(int x, int y){
         ArrayList<Point> list = new ArrayList<Point>();
-        Cube cube = getPlayer().get(x,y);
+        if (y==-1){
+            Cube cube = getPlayer().getSide(x);
+        }else{
+            Cube cube = getPlayer().get(x,y);
+        }
+
         for(int i = principale.getSize()-1; i >= 0; i--){
             for(int j = 0; j < principale.getSize()-i; j++){
                 if(move_validity(cube,i,j)!=0){
