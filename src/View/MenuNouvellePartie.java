@@ -72,6 +72,7 @@ public class MenuNouvellePartie extends Menu
                     isMuted = !isMuted; // Inverser l'état
                 }
             });
+            
 
             // ImageIcon iconUnMute = new ImageIcon("res/mute64.png");
             // ImageIcon iconMute = new ImageIcon("res/son64.png");
