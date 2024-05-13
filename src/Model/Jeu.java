@@ -295,6 +295,23 @@ public class Jeu implements Cloneable{
         return getPlayer().personalBag;
     }
 
+    public ArrayList<Cube> getPlayerBag(int i){
+        return getPlayer(i).personalBag;
+    }
+
+    //retour first free or (-1,-1)
+    public Point findFirstFreeElement() {
+        Pyramid getPlayer().getPyramid();
+        for (int i = getPlayer().getSize()-1; i >= 0; i--) {
+            for (int j = 0; j < getPlayer().getSize()-i; j++) {
+                if (get(i,j)==Cube.VIDE) {
+                    return (new Point(i,j));
+                }
+            }
+        }
+        return (new Point(-1,-1));
+    }
+
     public void setPlayer(int x, int y, Cube cube){
         players[current_player].set(x, y, cube);
         avance();

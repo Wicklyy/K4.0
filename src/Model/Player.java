@@ -142,6 +142,7 @@ public class Player implements Cloneable{
         return side;
     }
 
+
     public int getSideSize(){
         return side.size();
 
