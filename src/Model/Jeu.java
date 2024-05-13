@@ -111,11 +111,17 @@ public class Jeu implements Cloneable{
     }
 
     //COORD POSITION POSSIBLES POUR UN CUBE DONNEE
-    public ArrayList<Point> CubeAccessibleDestinations(Cube cube){
+    public ArrayList<Point> CubeAccessibleDestinations(int x, int y){
         ArrayList<Point> list = new ArrayList<Point>();
+        if (y==-1){
+            Cube cube = getPlayer().getSide(x);
+        }else{
+            Cube cube = getPlayer().get(x,y);
+        }
+
         for(int i = principale.getSize()-1; i >= 0; i--){
             for(int j = 0; j < principale.getSize()-i; j++){
-                if(possible(i, j)){
+                if(move_validity(cube,i,j)!=0){
                     Point p = new Point(i,j);
                     list.add(p);
                 }
@@ -163,6 +169,17 @@ public class Jeu implements Cloneable{
     public void takePenaltyCubeFromSide(int x) {            /* Fonctionne */
         players[previous_player()].addSide(players[current_player].getSide(x));
         players[current_player].removeSide(x);
+    }
+
+    // 0 -> NOT VALID
+    // 1 -> VALID
+    // 2 -> VALID WITH PENALITY
+    public int add_central(int x_central, int y_central, int x_player, int y_player){
+        if (y_player==-1){
+            return add_central_side(x_central, y_central, x_player);
+        } else {
+            return add_central_pyramid(x_central, y_central, x_player, y_player);
+        }
     }
 
     // 0 -> NOT VALID
@@ -276,6 +293,23 @@ public class Jeu implements Cloneable{
 
     public ArrayList<Cube> getPlayerBag(){
         return getPlayer().personalBag;
+    }
+
+    public ArrayList<Cube> getPlayerBag(int i){
+        return getPlayer(i).personalBag;
+    }
+
+    //retour first free or (-1,-1)
+    public Point findFirstFreeElement() {
+        Pyramid getPlayer().getPyramid();
+        for (int i = getPlayer().getSize()-1; i >= 0; i--) {
+            for (int j = 0; j < getPlayer().getSize()-i; j++) {
+                if (get(i,j)==Cube.VIDE) {
+                    return (new Point(i,j));
+                }
+            }
+        }
+        return (new Point(-1,-1));
     }
 
     public void setPlayer(int x, int y, Cube cube){

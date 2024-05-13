@@ -33,6 +33,7 @@ public abstract class IA {
     public int MinMaxIA(Jeu j,int depth, int player_max, int alpha, int beta, int IA){
         int value;
         boolean bon_joueur = player_max == j.getCurrent();
+        ArrayList<Point> cubes_access = j.Accessible_Playable(j.getCurrent(ArrayList<Point> cubes_access = j.Accessible_Playable(j.getCurrent());));
         if(j.End_Game()){ //Condition de défaite de tous les autres joueurs en même temps à implémenter
                                              //Besoin d'une fonctione auxiliaire qui permet lors de tests de si un joueur a perdu de l'exclure du calcul
                                              //Et appeler l'IA avec les nouveaux paramètres.
@@ -43,7 +44,7 @@ public abstract class IA {
             }
         }
         if (depth == 0){
-            if(IA == 0){current_player, current_
+            if(IA == 0){
                 if(bon_joueur){
                     return j.getPlayer().TotCubesHand() - j.getPlayer(j.next_player()).TotCubesHand();
                 }
@@ -51,8 +52,35 @@ public abstract class IA {
                     return j.getPlayer(j.next_player()).TotCubesHand() - j.getPlayer().TotCubesHand();
                 }
             }
+            if(IA == -1){ //IA specifique à la création de la pyramide
+                int total = 0;
+                for(Point compte : cubes_access){
+                    int current_possibilities = j.CubeAccessibleDestinations(j.getPlayer().get((int) compte.getX(),(int) compte.getY())).size();
+                    total+= current_possibilities;
+                }
+                return total;
+            }
+            if(IA==1){
+                int total_j1 = 0;
+                for(Point compte : cubes_access){
+                    int current_possibilities = j.CubeAccessibleDestinations(j.getPlayer().get((int) compte.getX(),(int) compte.getY())).size();
+                    total_j1+= current_possibilities;
+                }
+                int total_j2 = 0;
+                ArrayList<Point> cubes_access2 = j.Accessible_Playable(j.getCurrent(ArrayList<Point> cubes_access = j.Accessible_Playable(j.next_player());));
+                for(Point compte : cubes_access2) {
+                    int current_possibilities = j.CubeAccessibleDestinations(j.getPlayer().get((int) compte.getX(),(int) compte.getY())).size();
+                    total_j2+= current_possibilities;
+                }
+                int total = total_j1 * 0.2 + j.getPlayer().TotCubesHand()*0.8 - 0.8 * j.getPlayer(j.next_player()).TotCubesHand() - total_j2 * 0.2;
+                if(bon_joueur){
+                    return total; 
+                }
+                else{
+                    return -total;
+                }
+            }
         }
-        ArrayList<Point> cubes_access = j.Accessible_Playable();
         if(bon_joueur){
             value = -1000;
             for(Point depart : cubes_access){
@@ -84,7 +112,10 @@ public abstract class IA {
         return value;
     }
 
-    void add_central_pyramid() {
+    void add_central() {
+        throw new UnsupportedOperationException();
+    }
+    void ajoute(){
         throw new UnsupportedOperationException();
     }
 }

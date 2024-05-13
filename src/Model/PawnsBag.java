@@ -73,7 +73,8 @@ public class PawnsBag implements Cloneable{
     public ArrayList<Cube> init_center() {
         ArrayList<Cube> cubes = new ArrayList<>();
         while (! count_colors (cubes)){
-            for (int i = 0; i < cubes.size(); i++) {
+            int cubeSize = cubes.size();
+            for (int i = 0; i < cubeSize; i++) {
                 PawnsBag.add(cubes.remove(0)); // Remettre les pion in the PawnsBag to re shuflle
             }
 
