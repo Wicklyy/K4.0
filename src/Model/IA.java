@@ -43,7 +43,7 @@ public abstract class IA {
             }
         }
         if (depth == 0){
-            if(IA == 0){
+            if(IA == 0){current_player, current_
                 if(bon_joueur){
                     return j.getPlayer().TotCubesHand() - j.getPlayer(j.next_player()).TotCubesHand();
                 }
@@ -84,7 +84,7 @@ public abstract class IA {
         return value;
     }
 
-    void joue() {
+    void add_central_pyramid() {
         throw new UnsupportedOperationException();
     }
 }

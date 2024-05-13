@@ -7,7 +7,7 @@ public class IAFacile extends IA {
 
     
 
-    public ArrayList<ArrayList<Point>> coupIA(Jeu j, boolean joueur1){
+    public ArrayList<ArrayList<Point>> coupIA(Jeu j, int joueur1){
         ArrayList<ArrayList<Point>> resultat_ok = new ArrayList<>();
         ArrayList<ArrayList<Point>> resultat_ko = new ArrayList<>();
         int value_max= -100000;
@@ -20,7 +20,7 @@ public class IAFacile extends IA {
                 pos.add(arrivee);
                 Jeu clone = new Jeu(2);
                 clone = j.clone();
-                int value= MinMaxIA(clone, 2, 0, -10000, +10000, 0);
+                int value= MinMaxIA(clone, 2, joueur1, -10000, +10000, 0);
                 value_max = Math.max(value,value_max);
                 if(value==value_max){
                     resultat_ok.add(pos);
@@ -42,10 +42,10 @@ public class IAFacile extends IA {
     }
 
     @Override
-    public void joue(){
-        ArrayList<int[]> coups_possibles = coupIA(plateau, true);
+    public void add_central_pyramid(){
+        ArrayList<ArrayList<int[]>> coups_possibles = coupIA(jeu, jeu.current_player);
         Random random = new Random();
-        int[] coup_a_jouer = coups_possibles.get(random.nextInt(coups_possibles.size()));
-        plateau.joue(coup_a_jouer[0],coup_a_jouer[1]);
+        ArrayList<Point> coup_a_jouer = coups_possibles.get(random.nextInt(coups_possibles.size()));
+        jeu.add_central_pyramid((int) coup_a_jouer.get(1).getX(), (int) coup_a_jouer.get(1).getY(), (int) coup_a_jouer.get(0).getX(), (int) coup_a_jouer.get(0).getY());
     }
 }
