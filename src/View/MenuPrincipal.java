@@ -43,8 +43,6 @@ public class MenuPrincipal extends Menu {
         centrePanel.add(Box.createVerticalGlue());
 
         content.add(centrePanel, BorderLayout.CENTER);
-
-
         
         // On récupère les images
         // Redimensionner les images à 20x20 pixels
@@ -124,14 +122,15 @@ public class MenuPrincipal extends Menu {
         UnMute.setBorder(BorderFactory.createEmptyBorder());
         UnMute.setContentAreaFilled(false);
 
-
         NewGame.addActionListener(new NewGameActionListener(controle));
+
         content.setVisible(true);
         content.setOpaque(false);
         setOpaque(false);
         add(content);
         controle.addMenu(this);
-    }catch(UnsupportedAudioFileException | IOException | LineUnavailableException e){
+    }
+    catch(UnsupportedAudioFileException | IOException | LineUnavailableException e){
         System.exit(1);
     }
     }

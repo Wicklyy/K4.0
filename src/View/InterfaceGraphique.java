@@ -67,16 +67,15 @@ public class InterfaceGraphique implements Runnable, Observateur
 		// new FenetreNouvellePartie(frame, controle);
 
 		//Generation de toutes les fenetres
-		MenuPrincipal Mp=new MenuPrincipal(controle);
+		MenuPrincipal Mp = new MenuPrincipal(controle);
 		frame.add(Mp);
 		Mp.setVisible(true);
 
-		MenuNouvellePartie Mnp=new MenuNouvellePartie(controle);
+		MenuNouvellePartie Mnp = new MenuNouvellePartie(controle);
 
 		// On ajoute la souris et le clavier
 		niv.addMouseListener(new AdaptateurSouris(controle, niv));
 		frame.addKeyListener(new AdaptateurClavier(controle));
-
 
 		frame.setVisible(true);
 		frame.requestFocusInWindow();
