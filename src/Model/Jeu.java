@@ -1,10 +1,10 @@
 package Model;
 
 import java.util.Random;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.awt.Point;
+
 
 public class Jeu implements Cloneable{
     Player[] players;
@@ -18,14 +18,18 @@ public class Jeu implements Cloneable{
         /* Fonction creation du jeu */
         /***************************/
 
+        /*****************************/
+        /* Fonction creation du jeu */
+        /***************************/
+
     public Jeu(int nb){             /* creation de l'objet jeu ainsi que les joueurs */
+
         nbJoueur = nb;
         End = false;
         players = new Player[nb];
 
         bag = new PawnsBag(nb);
         principale = new Pyramid(9);
-
         for(int i = 0;i < nb; i++ ){
             size = 8-nb;
             players[i] = new Player(size);
@@ -164,6 +168,7 @@ public class Jeu implements Cloneable{
         return (c1 == c2) || (c1 == Cube.Neutre) || (c2 == Cube.Neutre);
     }
 
+
     //MOVE VALIDITY :
     // 0 -> NOT VALID
     // 1 -> VALID
@@ -178,9 +183,11 @@ public class Jeu implements Cloneable{
         else {return 0;}
     }
 
+
     /* Accessibilitee */
 
     public boolean accessible(int x, int y){
+
         Pyramid pyramid = players[current_player].getPyramid();
         return accessible(pyramid , x, y);
     }
@@ -188,6 +195,7 @@ public class Jeu implements Cloneable{
     public boolean accessible(Pyramid pyramid , int x, int y){
         return (pyramid.get(x, y) != Cube.Vide) && (( x == size-1 && y == 0  ) || (( y == size-x-1 || pyramid.get(x+1, y) == Cube.Vide) && (y == 0 || pyramid.get(x+1, y-1)== Cube.Vide)));
     }
+
 
     public boolean case_dessus_possible(int x, int y){          /* renvoie vrai si l'on peu poser un cube sur un cube de la pyramide central */
         if( (principale.get(x, y) != Cube.Vide) && ( !caseAdjacenteVide(x, y) ) && ( principale.get(x+1, y) == Cube.Vide || ( y != 0 && principale.get(x+1, y-1) == Cube.Vide ))) {return true;}
@@ -218,7 +226,6 @@ public class Jeu implements Cloneable{
         /************************************* */
 
     /* Recuperation de l'indice d'un joueur */
-
     public int next_player(){               /* Fonctionne */
         return next_player(current_player);
     }
@@ -230,13 +237,13 @@ public class Jeu implements Cloneable{
         }
         return next_player;
     }
-
     //Determine the previous player out of those still in the game
     public int previous_player(){
         return previous_player(current_player);
     }
 
     public int previous_player(int current_player){        /*renvoie l'indice du joueur precedent */
+
         int previous_player = (current_player + nbJoueur - 1) % nbJoueur;
         while(players[previous_player].lost() == true){
             previous_player = (previous_player + nbJoueur - 1) % nbJoueur;
@@ -246,6 +253,7 @@ public class Jeu implements Cloneable{
 
     /* Information pratique joueur courant */
 
+
     //Ammount of cubes in a player's hand
     public int TotCubesHand (int i){
         return getPlayer(i).totalCube();
@@ -254,6 +262,9 @@ public class Jeu implements Cloneable{
     //Ammount of a colour in the current player's hand
     public int ColourAmmount (Cube cube){
         return getPlayer().ColourAmmount(cube);
+    }
+    public int[] compte_personal_bag(){
+        return getPlayer().compte_personal_bag();
     }
 
 
@@ -324,6 +335,7 @@ public class Jeu implements Cloneable{
         return list;
     }
 
+
     
     
     public Point findFirstFreeElement() {   //return first free or (-1,-1)
@@ -354,6 +366,7 @@ public class Jeu implements Cloneable{
 
     public int get_player(){
         return current_player;
+
     }
 
     public Player getPlayer(int i){
@@ -386,3 +399,4 @@ public class Jeu implements Cloneable{
     }
 
 }
+

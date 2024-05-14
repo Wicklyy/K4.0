@@ -6,7 +6,9 @@ public class Player implements Cloneable{
     Pyramid pyramid;
 
     ArrayList<Cube> side, personalBag;
+
     int[] totalCube;
+
     int noir, bleu, blanc, rouge, jaune, vert, neutre;
     int size;
     boolean loss;
@@ -14,12 +16,14 @@ public class Player implements Cloneable{
     Player(int i){
         pyramid = new Pyramid(i);
         size = i;
+
         totalCube = new int[7];
+
         side = new ArrayList<>();
         personalBag = new ArrayList<>();
     }
-
     //CLONING METHOD
+
     public Player clone() throws CloneNotSupportedException {
         Player clone = (Player) super.clone();  // Clone the basic object structure
 
@@ -35,9 +39,6 @@ public class Player implements Cloneable{
         return clone;
     }
 
-    public ArrayList<Cube> getPersonalBag(){
-        return personalBag;
-    }
      /*loss Setting/Checking */
     public boolean lost(){
         return loss;
@@ -134,7 +135,8 @@ public class Player implements Cloneable{
         }
     }
 
-    public int[] compte_personnal_bag(){
+
+    public int[] compte_personal_bag(){
         int nb[] = new int[7];
         for(Cube cube : personalBag){
             switch (cube) {

@@ -14,7 +14,9 @@ public class Pyramid {
         }
     }
 
+
     //Cloning of a Pyramid object
+
     public Pyramid clone() throws CloneNotSupportedException {
         Pyramid clone = (Pyramid) super.clone();  // Clone the basic object structure
 
@@ -38,10 +40,14 @@ public class Pyramid {
     }
 
 
+
     //Put a cube of a color on the pyramid at x y
+
     public void set(int x, int y, Cube c){
         pyramid[x][y] = c;
     }
+
+
 
 
     public String tmp(int i){
@@ -85,3 +91,4 @@ public class Pyramid {
         return chaine;
     }
 }
+
