@@ -1,3 +1,3 @@
 #!/bin/bash
 
-rm */*.class *.class
+rm */*.class *.class */*/*/*.class

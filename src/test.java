@@ -4,7 +4,8 @@ import Model.*;
 
 import java.awt.Point;
 import java.util.HashMap;
-import java.util.Scanner;;
+import java.util.Scanner;
+import java.util.Collections;
 
 public class test{
     static int joueBlanc(Jeu jeu, int x, int y){
@@ -24,7 +25,7 @@ public class test{
 
     static void rempli(Jeu jeu){
         for (int i = 0; i < 6; i++){
-            jeu.ajoute(0, i, 0);
+            jeu.construction(0, i, jeu.getPlayer().getPersonalBag().get(0) );
         }
         System.out.println(jeu.getPlayer());
     }
@@ -33,25 +34,26 @@ public class test{
     }
 
     static void build(Player player){
-        player.melange();
+        Collections.shuffle(player.getPersonalBag());
         for(int i = player.getSize()-1; i >= 0; i--){
             for(int j = 0; j < player.getSize()-i; j++){
                 //System.out.println( i + " " + j + " " + "0" );
-                if(!player.bagEmpty()){player.ajoute(i, j, 0);}
+                if(!player.bagEmpty()){player.construction(j, i, player.getPersonalBag().get(0));}
             }
         }
     }
 
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
-        Jeu jeu = new Jeu(4);
+        Jeu jeu = new Jeu(Integer.parseInt(args[0]));
+        jeu.initPrincipale();
         boolean not = true,start = false;
 
         Player player;
         int x = 0,y = 0,z = 0,w = 0,validity = 0;
 
         String[] entree;
-        System.out.println("help pour afficher le menu");
+        System.out.println("help pour afficher le menue");
         while(true){
             if(jeu.End_Game()){
                 System.out.println("Game Done winner is player: " + (jeu.current_player + 1) );
@@ -100,7 +102,7 @@ public class test{
                 x = Integer.parseInt(entree[1]);
                 y = Integer.parseInt(entree[2]);
                 z = Integer.parseInt(entree[3]);
-                jeu.ajoute(x, y, z);
+                jeu.construction(x, y, jeu.getPlayer().getPersonalBag().get(z));
                 System.out.println(jeu.getPlayer());
 
             }
