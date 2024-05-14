@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.awt.Point;
 
+
 public class Jeu implements Cloneable{
     Player[] players;
     public int nbJoueur;
@@ -113,10 +114,11 @@ public class Jeu implements Cloneable{
     //COORD POSITION POSSIBLES POUR UN CUBE DONNEE
     public ArrayList<Point> CubeAccessibleDestinations(int x, int y){
         ArrayList<Point> list = new ArrayList<Point>();
+        Cube cube;
         if (y==-1){
-            Cube cube = getPlayer().getSide(x);
+            cube = getPlayer().getSide(x);
         }else{
-            Cube cube = getPlayer().get(x,y);
+            cube = getPlayer().get(x,y);
         }
 
         for(int i = principale.getSize()-1; i >= 0; i--){

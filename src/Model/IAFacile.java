@@ -93,7 +93,8 @@ public class IAFacile extends IA {
     public void ajoute(){
         ArrayList<int> coups_possibles = pyramideIA(jeu, jeu.current_player);
         Random random = new Random();
-        Point x_y_pyra = jeu.findFirstFreeElement();
+        Point x_y_pyra;
+        x_y_pyra = jeu.findFirstFreeElement();
         int cube_a_placer = coups_possibles.get(random.nextInt(coups_possibles.size()));
         jeu.ajoute((int) x_y_pyra.getX(), (int) x_y_pyra.getY(), cube_a_placer);
     }

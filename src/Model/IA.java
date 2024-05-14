@@ -33,7 +33,7 @@ public abstract class IA {
     public int MinMaxIA(Jeu j,int depth, int player_max, int alpha, int beta, int IA){
         int value;
         boolean bon_joueur = player_max == j.getCurrent();
-        ArrayList<Point> cubes_access = j.Accessible_Playable(j.getCurrent(ArrayList<Point> cubes_access = j.Accessible_Playable(j.getCurrent());));
+        ArrayList<Point> cubes_access = j.Accessible_Playable(j.getCurrent());
         if(j.End_Game()){ //Condition de défaite de tous les autres joueurs en même temps à implémenter
                                              //Besoin d'une fonctione auxiliaire qui permet lors de tests de si un joueur a perdu de l'exclure du calcul
                                              //Et appeler l'IA avec les nouveaux paramètres.
