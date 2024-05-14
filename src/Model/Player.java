@@ -7,7 +7,9 @@ public class Player implements Cloneable{
     Pyramid pyramid;
 
     ArrayList<Cube> side, personalBag;
+
     int[] totalCube;
+
     int noir, bleu, blanc, rouge, jaune, vert, neutre;
     int size;
     boolean loss;
@@ -15,12 +17,16 @@ public class Player implements Cloneable{
     Player(int i){
         pyramid = new Pyramid(i);
         size = i;
+
         totalCube = new int[7];
+
         side = new ArrayList<>();
         personalBag = new ArrayList<>();
     }
 
+
     //CLONING METHOD
+
     public Player clone() throws CloneNotSupportedException {
         Player clone = (Player) super.clone();  // Clone the basic object structure
 
@@ -35,6 +41,7 @@ public class Player implements Cloneable{
         }
         return clone;
     }
+
 
      /*loss Setting/Checking */
     public boolean lost(){
@@ -98,6 +105,7 @@ public class Player implements Cloneable{
                 break;
             case Bleu:
                 totalCube[6]++;
+
                 break;
             default:
                 break;
@@ -107,6 +115,7 @@ public class Player implements Cloneable{
     public void decrement(Cube c){
         switch (c) {
             case Noir:
+
                 totalCube[0]--;
                 break;
             case Neutre:
@@ -131,6 +140,7 @@ public class Player implements Cloneable{
                 break;
         }
     }
+
 
     public int[] compte_personal_bag(){
         int nb[] = new int[7];
@@ -194,6 +204,7 @@ public class Player implements Cloneable{
 
     public Cube get(int x, int y){
         return pyramid.get(x, y);
+
     }
 
     public void set(int x, int y, Cube c){
@@ -203,13 +214,17 @@ public class Player implements Cloneable{
         increment(c);
     }
 
+
     public int getSize(){
         return size;
+
     }
 
 
     /* FONCTION AJOUTER */
+
     /*Pers Bag access methods */
+
     public boolean bagEmpty(){
         return personalBag.isEmpty();
     }
@@ -217,6 +232,7 @@ public class Player implements Cloneable{
     public int getBagSize(){
         return personalBag.size();
     }
+
 
 
     public void addBag(Cube cube){
@@ -248,6 +264,7 @@ public class Player implements Cloneable{
     }
 
 
+
     @Override
     public String toString(){
         String chaine = "Noir: "+ noir + "     Bleu: " + bleu + "     Blanc: "+ blanc + "     Rouge: " + rouge +"\nJaune: " + jaune +"     Vert: " + vert + "      Neutre: " + neutre + "\n";
@@ -267,4 +284,6 @@ public class Player implements Cloneable{
 
         return chaine;
     }
+
 }
+

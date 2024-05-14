@@ -21,6 +21,7 @@ public class PawnsBag implements Cloneable{
     }
 
     //Cloning method
+
     public PawnsBag clone() throws CloneNotSupportedException {
         PawnsBag clone = (PawnsBag) super.clone();  // Clone the basic object structure
 
@@ -36,6 +37,7 @@ public class PawnsBag implements Cloneable{
     public boolean empty(){
         return PawnsBag.size() == 0;
     }
+
 
     //Checking 4 colors minimum in the generated base
     public boolean count_colors (ArrayList<Cube> cubes){
@@ -90,6 +92,7 @@ public class PawnsBag implements Cloneable{
         return cubes;
     }
 
+
     //Methode piocheuse
     public ArrayList<Cube> draw() {
         ArrayList<Cube> cubes = new ArrayList<>();
@@ -122,4 +125,5 @@ public class PawnsBag implements Cloneable{
     }
 
 }
+
 
