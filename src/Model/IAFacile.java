@@ -27,7 +27,7 @@ public class IAFacile extends IA {
                 }
                 else if(value>value_max){
                     resultat_ok.clear();
-                    resultat_ok.add(i);
+                    resultat_ok.add(pos);
                     value_max = value;
                 }
                 else if(value==1000){

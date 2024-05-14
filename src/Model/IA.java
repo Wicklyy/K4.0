@@ -44,7 +44,7 @@ public abstract class IA {
             }
         }
         if (depth == 0){
-            if(IA == 0){
+            if(IA == 0){ //IA Facile
                 if(bon_joueur){
                     return j.getPlayer().TotCubesHand() - j.getPlayer(j.next_player()).TotCubesHand();
                 }
@@ -60,7 +60,7 @@ public abstract class IA {
                 }
                 return total;
             }
-            if(IA==1){
+            if(IA==1){ //IA Medium
                 int total_j1 = 0;
                 for(Point compte : cubes_access){
                     int current_possibilities = j.CubeAccessibleDestinations(j.getPlayer().get((int) compte.getX(),(int) compte.getY())).size();
