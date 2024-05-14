@@ -143,15 +143,15 @@ public class Jeu implements Cloneable{
         players[previous_player()].addSide(players[current_player].getSide(x));
         players[current_player].removeSide(x);
     }
-    
+
     /*************/
-    
+
         /*************************** */
         /* Fonction de verification */
         /************************* */
-           
+
     /* Penalitee */
-    
+
     public boolean check_penality(Cube cube, int x, int y) {    /* a appelle qu'apres la fonction move_validity */
         return principale.get(x-1, y) == principale.get(x-1, y+1);
     }
