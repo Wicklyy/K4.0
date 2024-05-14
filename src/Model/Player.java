@@ -132,7 +132,7 @@ public class Player implements Cloneable{
         }
     }
 
-    public int[] compte_personnal_bag(){
+    public int[] compte_personal_bag(){
         int nb[] = new int[7];
         for(Cube cube : personalBag){
             switch (cube) {
@@ -218,9 +218,6 @@ public class Player implements Cloneable{
         return personalBag.size();
     }
 
-    public int[] compte_personnal_bag(){
-        return totalCube;
-    }
 
     public void addBag(Cube cube){
         increment(cube);
