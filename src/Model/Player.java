@@ -207,6 +207,18 @@ public class Player implements Cloneable{
     }
 
 
+    public void remise(int x, int y){
+        addBag(get(x,y));
+        set(x,y,Cube.Vide);
+    }
+
+    public void permutation(int x, int y, int x_p, int y_p){
+        Cube cube = get(x,y);
+        set(x,y,get(x_p,y_p));
+        set(x_p,y_p,cube);
+    }
+
+
     @Override
     public String toString(){
         String chaine = "Noir: "+ noir + "     Bleu: " + bleu + "     Blanc: "+ blanc + "     Rouge: " + rouge +"\nJaune: " + jaune +"     Vert: " + vert + "      Neutre: " + neutre + "\n";
