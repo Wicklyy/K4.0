@@ -36,7 +36,19 @@ public class ControleurMediateur implements CollecteurEvenements
     @Override
 	public void clicSouris(int x, int y)
     {
-        
+        System.out.println("x : "+x + ",y : "+y);
+	}
+
+	@Override
+	public void clicSourisPyr(int ligne, int col)
+    {
+        // System.out.println("case : ("+ligne+","+col+")");
+	}
+
+	@Override
+	public void clicSourisPioche(int ligne, int col)
+    {
+        // System.out.println("Pioche : ("+ligne+","+col+")");
 	}
 
 	@Override

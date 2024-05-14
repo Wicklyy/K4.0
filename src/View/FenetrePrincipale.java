@@ -159,7 +159,6 @@ public class FenetrePrincipale
 
 
 
-
         NewGame.addActionListener(new ActionListener()
         {
             @Override

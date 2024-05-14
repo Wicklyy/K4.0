@@ -1,7 +1,6 @@
 package View;
 
 import java.awt.BorderLayout;
-
 import javax.swing.JPanel;
 
 
@@ -12,7 +11,6 @@ public abstract class Menu extends JPanel {
             setVisible(true);
         }
     }
-
 
     public void changeVisibilite(){
         if (isVisible()){

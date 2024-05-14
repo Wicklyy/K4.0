@@ -7,9 +7,8 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
+@Deprecated
 public class FenetreNouvellePartie
 {
     JFrame frame;
@@ -57,52 +56,10 @@ public class FenetreNouvellePartie
         frame.add(centrePanel, BorderLayout.CENTER);
 
         // On écrit le bouton du son en haut à droite
-        ImageIcon iconUnMute = new ImageIcon("res/mute64.png");
-        ImageIcon iconMute = new ImageIcon("res/son64.png");
-        JButton UnMute = new JButton(iconUnMute);
-        UnMute.addActionListener(new ActionListener() 
-        {
-            private boolean isMuted = true;
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                if (isMuted)
-                {
-                    UnMute.setIcon(iconMute); // Changer en icône "son"
-                } 
-                else
-                {
-                    UnMute.setIcon(iconUnMute); // Changer en icône "mute"
-                }
-        
-                isMuted = !isMuted; // Inverser l'état
-            }
-        });
-
-        // ImageIcon iconUnMute = new ImageIcon("res/mute64.png");
-        // ImageIcon iconMute = new ImageIcon("res/son64.png");
-        
-        // JButton UnMute = new JButton(iconUnMute);
-        // UnMute.addActionListener(new ActionListener() 
-        // {
-
-        //     public void actionPerformed(ActionEvent pE) 
-        //     {
-        //         ImageIcon mImageIconButton = (ImageIcon) UnMute.getIcon();
-                
-        //         if (mImageIconButton.getDescription().equals(iconUnMute.getDescription())) 
-        //         {
-        //             UnMute.setIcon(iconMute);
-        //         }
-        //         else if (mImageIconButton.getDescription().equals(iconMute.getDescription()))
-        //         {
-        //             UnMute.setIcon(iconUnMute);
-        //         }
-        //     }
-            
-        // });
-
+        UnMute = Bouton.BoutonUnMute();
+        Mute = Bouton.BoutonUnMute();
         UnMute.addActionListener(new AdaptateurSon(controle));
+        Mute.addActionListener(new AdaptateurSon(controle));
         JPanel topRightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         topRightPanel.add(UnMute,BorderLayout.EAST);
         topRightPanel.setOpaque(false);
@@ -113,10 +70,12 @@ public class FenetreNouvellePartie
         frame.add(topPanel, BorderLayout.NORTH);
         UnMute.setBorder(BorderFactory.createEmptyBorder());
         UnMute.setContentAreaFilled(false);
+        Mute.setBorder(BorderFactory.createEmptyBorder());
+        Mute.setContentAreaFilled(false);
 
         //On s'occupe de mettre la fleche retour en haut à gauche
         Retour = Bouton.BoutonRetour();
-        // Retour.addActionListener(new AdaptateurSon(controle));
+        Retour.addActionListener(new AdaptateurSon(controle));
         JPanel topLefttPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         topLefttPanel.add(Retour,BorderLayout.EAST);
         topLefttPanel.setOpaque(false);
@@ -139,11 +98,13 @@ public class FenetreNouvellePartie
         try
         {
             SourisAdapte sourisUnMute = new SourisAdapte(UnMute, FileLoader.getSound("res/clic.wav"));
+            SourisAdapte sourisMute = new SourisAdapte(Mute, FileLoader.getSound("res/clic.wav"));
             SourisAdapte sourisRetour = new SourisAdapte(Retour, FileLoader.getSound("res/clic.wav"));
             SourisAdapte souris3Joueur = new SourisAdapte(joueurs3, FileLoader.getSound("res/clic.wav"));
             SourisAdapte souris4Joueur = new SourisAdapte(joueurs4, FileLoader.getSound("res/clic.wav"));
 
             UnMute.addMouseListener(sourisUnMute);
+            Mute.addMouseListener(sourisMute);
             Retour.addMouseListener(sourisRetour);
             joueurs3.addMouseListener(souris3Joueur);
             joueurs4.addMouseListener(souris4Joueur);
