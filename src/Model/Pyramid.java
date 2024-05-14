@@ -14,6 +14,9 @@ public class Pyramid {
         }
     }
 
+
+    //Cloning of a Pyramid object
+
     public Pyramid clone() throws CloneNotSupportedException {
         Pyramid clone = (Pyramid) super.clone();  // Clone the basic object structure
 
@@ -25,21 +28,30 @@ public class Pyramid {
         return clone;
     }
 
-    public int getsize(){
+
+    //Size Pyramid
+    public int getSize(){
         return size;
     }
+
+
+    //Get an element at x y position
 
     public Cube get(int x, int y){
         return pyramid[x][y];
     }
 
+
+
+    //Put a cube of a color on the pyramid at x y
+
     public void set(int x, int y, Cube c){
         pyramid[x][y] = c;
     }
 
-    public int getSize(){
-        return size;
-    }
+
+
+
     public String tmp(int i){
         String chaine = "";
         for(int j = 0; j < i; j++){
@@ -81,19 +93,5 @@ public class Pyramid {
         return chaine;
     }
 
-    /*switch (cube) {
-                case Noir:
-                case Bleu:
-                case Vert:
-                case Vide:
-                    chaine+=" ";
-                case Blanc:
-                case Rouge:
-                case Jaune:
-                    chaine+=" ";
-                default:
-                    chaine+= cube +" ";
-                    break;
-            } */
-
 }
+
