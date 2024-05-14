@@ -79,8 +79,50 @@ public class NiveauGraphique extends JComponent implements Observateur{
 
     public void modifierLignePioche(Point p){
         cons.modifierLignePioche(p);
+        cons.pioche = cons.pioche = true;
+        cons.set_cube_sel(true);
+        // cons.set_cube2_sel(false); ////////////
+        // cons.setClicCentre(true);
+        // cons.pioche = !cons.pioche;
         repaint();
     }
+
+    public void setPoint(Point p){
+        cons.setPoint(p);
+        cons.set_cube_sel(false);
+        // cons.set_cube1_sel(true);
+        // cons.pioche = !cons.pioche;
+        repaint();
+    }
+
+    public boolean peut_cliquer_pyramide(){
+        return cons.peut_cliquer_pyramide();
+    }
+
+    /*
+    public boolean cube1_selectionne(){
+        return cons.cube1_selectionne();
+    }
+
+    public void setCube1(Point p){
+        cons.setCube1(p);
+        cons.set_cube1_sel(false);
+        
+    }
+
+    public void setCube2(Point p){
+        cons.setCube2(p);
+        // cons.set_cube1_sel(false);
+        // cons.set_cube2_sel(true);
+    }
+    */
+
+    // public boolean getClicCentre(){
+    //     return cons.clic_centre;
+    // }
+    // public void setClicCentre(boolean clic){
+    //     cons.setClicCentre(clic);
+    // }
 
     public void paintComponent(Graphics g)
     {

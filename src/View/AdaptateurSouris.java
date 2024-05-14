@@ -20,15 +20,22 @@ public class AdaptateurSouris extends MouseAdapter
 	public void mousePressed(MouseEvent e)
 	{
 		if((e.getX() <= nivGraph.Largeur_Fenetre()*3/4) && e.getY() <= nivGraph.Hauteur_Fenetre()*7/10){
+			
+			if(!nivGraph.peut_cliquer_pyramide()){
+				return;
+			}
 			int taille_cube = nivGraph.tailleCubePyramide();
 			Point pts[][] = nivGraph.pointsPyr();
 			int l, c;
+			Point p;
 			for(int i=0; i<6; i++){
 				for(int j=0; j<=i; j++){
 					if(e.getX() >= pts[i][j].getX() && e.getX() <= pts[i][j].getX() + taille_cube){
 						if(e.getY() >= pts[i][j].getY() && e.getY() <= pts[i][j].getY() + taille_cube){
 							l = 5-i;
 							c = i-j;
+							p = new Point(l, c);
+							nivGraph.setPoint(p);
 							controle.clicSourisPyr(l, c);
 							// System.out.println("("+(5-i)+","+(i-j)+")");
 						}
