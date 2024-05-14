@@ -53,7 +53,7 @@ public class ControleurMediateur implements CollecteurEvenements
 				break;
 
 			case "NouvellePartie":
-				jeu.renitialiser(); 
+				//jeu.renitialiser(); 
 				break;
 
             case "Lan":
