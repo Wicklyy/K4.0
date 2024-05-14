@@ -220,9 +220,6 @@ public class Player implements Cloneable{
         return personalBag.size();
     }
 
-    /*public int[] compte_personnal_bag(){
-        return totalCube;
-    }*/
 
     public void addBag(Cube cube){
         increment(cube);
