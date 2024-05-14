@@ -47,6 +47,7 @@ public class PhaseConstruction
 
     // Point cube_echange1, cube_echange2;
     // boolean cube1_sel, cube2_sel;
+    int cpt;
     
 
     public PhaseConstruction(JFrame frame, CollecteurEvenements controle, Jeu jeu){
@@ -85,13 +86,13 @@ public class PhaseConstruction
         {
         }
 
-        
+        cpt = 0;
         tab_pts = new Point[6][6]; //a adapter selon le nombre de joueurs
         tab_cote = new Point[7][9]; //tout le temps (7 couleurs et 9 de chaque)
         cube_pioche = new Point(-1, -1);
         case_select = new Point(-1, -1);
         couleur_selectionnee = -1;
-        pioche = true;
+        pioche = false;
         cube_sel = false;
         // cube1_sel = false;
         // cube2_sel = false;
@@ -254,7 +255,10 @@ public class PhaseConstruction
                 
             }   
         }
+        
         if(pioche){
+            System.out.println("pioche " + cpt);
+            cpt++;
             drawable.drawImage(carre_noir_vide, x_cube_vide, y_cube_vide, taille_cube, taille_cube, null);
             pioche = false;
         }

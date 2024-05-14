@@ -80,6 +80,7 @@ public class NiveauGraphique extends JComponent implements Observateur{
     public void modifierLignePioche(Point p){
         cons.modifierLignePioche(p);
         cons.pioche = cons.pioche = true;
+        System.out.println("ligne piooooche");
         cons.set_cube_sel(true);
         // cons.set_cube2_sel(false); ////////////
         // cons.setClicCentre(true);
@@ -90,6 +91,8 @@ public class NiveauGraphique extends JComponent implements Observateur{
     public void setPoint(Point p){
         cons.setPoint(p);
         cons.set_cube_sel(false);
+        cons.pioche = cons.pioche = false;
+
         // cons.set_cube1_sel(true);
         // cons.pioche = !cons.pioche;
         repaint();
@@ -136,6 +139,7 @@ public class NiveauGraphique extends JComponent implements Observateur{
 		drawable.clearRect(0, 0, width_fenetre, height_fenetre);
         
         //drawable.drawLine(0, 0, 50, 50);
+        // cons.set_cube_sel(false);
         cons.fonction_globale(jeu, g, width_fenetre, height_fenetre);
     }
 }
