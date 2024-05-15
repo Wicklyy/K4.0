@@ -6,4 +6,5 @@ public interface CollecteurEvenements {
     void clicSourisPioche(int l, int c);
     boolean commande(String c);
     void ImporterVue(InterfaceGraphique vue); 
+    void addMenu(Menu m);
 }

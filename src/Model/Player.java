@@ -48,6 +48,9 @@ public class Player implements Cloneable{
         loss = true;
     }
 
+    public ArrayList<Cube> getPersonalBag(){
+        return personalBag;
+    }
     /*Cubes stats */
     public int totalCube(){
         //CUBE VIDE => Total of all colours
@@ -218,6 +221,7 @@ public class Player implements Cloneable{
         return personalBag.isEmpty();
     }
 
+    
     public int getBagSize(){
         return personalBag.size();
     }
