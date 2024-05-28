@@ -58,6 +58,13 @@ public class InterfaceGraphique implements Runnable, Observateur
     public void run()
     {
 		frame = new BackgroundPanel();
+	    
+	    	try {
+			frame.setIconImage(ImageIO.read(new File("src/View/icone.jpg")));
+		} catch (IOException exc) {
+			System.out.println("Erreur de chargement de l'icone");
+		}
+	    
 		// frame = new JFrame();
 		frame.setTitle("K3");
 		frame.setSize(500, 300);
