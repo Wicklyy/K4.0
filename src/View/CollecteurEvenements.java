@@ -24,4 +24,6 @@ public interface CollecteurEvenements {
 
     void setIADifficulty(int i);
 
+    void open(String fileName);
+
 }

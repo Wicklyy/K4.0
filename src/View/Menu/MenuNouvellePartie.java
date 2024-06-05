@@ -10,8 +10,6 @@ import Global.FileLoader;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 //import org.w3c.dom.events.MouseEvent;
 
 import java.awt.*;

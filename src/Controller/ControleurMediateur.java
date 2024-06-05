@@ -400,7 +400,10 @@ public class ControleurMediateur implements CollecteurEvenements {
 			case "Refaire":
 				vue.getMenuPhaseDeJeuJVIA().setLastCoup(false);
 				vue.getMenuPhaseDeJeu2().setLastCoup(false);
-				if(!(IAON && IA_thinking)){
+				if(IAON && !IA_thinking){
+					// if(jeu.refais() == 2){
+					// 	penalty = true;
+					// }
 					jeu.refais();
 					autorestart =new Timer(5000, new ActionListener() {
 						@Override
@@ -617,12 +620,14 @@ public class ControleurMediateur implements CollecteurEvenements {
 					try{iaCompute.join();}
 					catch(InterruptedException e){System.err.println(e);}
 					if ((res = ia.jouer_coup()) == 2){
+						vue.getMenuPhaseDeJeuJVIA().setLastCoup(true);
 						penalty = true;
 						PDJPyramideJoueur.SetPremierCoup(true);
 						// PDJPyramideJoueur.CacheGif();
 					}
 					else if (res == 1 || res == 3){
 						PDJPyramideJoueur.SetPremierCoup(true);
+						vue.getMenuPhaseDeJeuJVIA().setLastCoup(true);
 						// jeu.check_loss();
 						if(jeu.getPlayer().lost()){
 							timer_sablier.stop();
@@ -717,5 +722,15 @@ public class ControleurMediateur implements CollecteurEvenements {
 		}
 		
 		timer_sablier.stop();
+	}
+
+	public void open(String fileName){
+		reset();
+		String[]filePath=fileName.split("/");
+		fileName=filePath[filePath.length-1];
+		System.err.println(fileName);
+		vue.setBackgroundPicture("res/Fond bleu avec cubes transparents.png");
+		vue.changeVisible(3);
+		jeu.reset("saves/"+fileName);
 	}
 }

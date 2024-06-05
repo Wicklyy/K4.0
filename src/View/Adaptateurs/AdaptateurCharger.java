@@ -3,6 +3,9 @@ import View.CollecteurEvenements;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+
+import javax.swing.JFileChooser;
 
 public class AdaptateurCharger implements ActionListener {
 	CollecteurEvenements control;
@@ -13,6 +16,19 @@ public class AdaptateurCharger implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		control.commande("Charger");
+		    JFileChooser chooser = new JFileChooser("saves/");
+            int status = chooser.showOpenDialog(null);
+            if (status == JFileChooser.APPROVE_OPTION) {
+                File file = chooser.getSelectedFile();
+                if (file == null) {
+                    return;
+                }
+
+                String fileName = chooser.getSelectedFile().getAbsolutePath();
+				System.err.println(fileName);
+				control.open(fileName);
+
+            }
+
 	}
 }

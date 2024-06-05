@@ -161,7 +161,7 @@ public class MenuPrincipal extends Menu {
         imagePanel.setLayout(new BoxLayout(imagePanel, BoxLayout.Y_AXIS));
 
         // Ajouter des images au panel
-        for (String imagePath : new String[]{"res/Tuto1.png", "res/Tuto2.png", "res/Tuto_blanc.png", "res/Tuto_cube.png", "res/Tuto_penalite.png", "res/Tuto2_penalite.png", "res/Tuto_bois.png", "res/Tuto_finPartie.png"}) {
+        for (String imagePath : new String[]{"res/TutoMenuPrincipal.png", "res/TutoNouvellePartie.png", "res/TutoPhaseConstruction.png", "res/TutoPhaseConstruction2.png", "res/TutoJeu.png", "res/TutoPenalite.png", "res/TutoPenalite2.png", "res/TutoPenalite2.png", "res/TutoBlanc.png", "res/TutoFinPartie.png"}) {
             ImageIcon imageIcon = new ImageIcon(imagePath);
             JLabel imageLabel = new JLabel(imageIcon);
             imagePanel.add(imageLabel);
@@ -169,7 +169,7 @@ public class MenuPrincipal extends Menu {
 
         // Ajouter une zone de défilement si nécessaire
         JScrollPane scrollPane = new JScrollPane(imagePanel);
-        scrollPane.setPreferredSize(new Dimension(1500, 1000));
+        scrollPane.setPreferredSize(new Dimension(1200, 809));
 
         // Bouton de fermeture
         JButton closeButton = new JButton("Fermer");

@@ -106,9 +106,11 @@ public class AdaptateurSourisPhaseJoueurVSia extends MouseAdapter {
                     PDJPyramideJoueur.SetCube_Select_Static(true);
                     pdj.SetX_Select(x);
                     pdj.SetY_Select(-1);
+                    if (!pdj.GetPenality()){
+                        Gerer_Curseur(x, -1, true);
+                    }
                     controle.clicJoueurSide(x);
 
-                    Gerer_Curseur(x, -1, true);
 
                     pdjCentrale.repaint();
                     pdj.repaint();

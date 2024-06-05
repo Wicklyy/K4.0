@@ -302,8 +302,7 @@ public class Jeu extends Observable implements Cloneable {
     public boolean draw() {
         if (bag.getSize() > 2) {
             for (Cube c : bag.draw()) {
-                if (current_player == 1) players[current_player].addBag(c);
-                else players[current_player].addBag(Cube.Blanc);
+                players[current_player].addBag(c);
             }
             avance();
             return true;

@@ -19,7 +19,7 @@ import Model.Jeu;
 import Patterns.Observateur;
 
 public class MenuPhaseDeJeu2 extends Menu implements Observateur {
-    JButton Aide, Regles, Annuler, Refaire, last_coup;
+    JButton Aide, Regles, Annuler, Refaire, last_coup, save;
     BoutonUnMute UnMute;
     PDJPyramideCentrale pdj;
     PDJPyramideJoueur joueur1,joueur2;
@@ -52,6 +52,13 @@ public class MenuPhaseDeJeu2 extends Menu implements Observateur {
             JPanel topLeftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
             topLeftPanel.add(Retour, BorderLayout.EAST);
             topLeftPanel.setOpaque(false);
+
+            save = Bouton.creerButton("Sauvegarder");
+            save.addActionListener(new AdaptateurSave(controle));
+            SourisAdapte sourissave = new SourisAdapte(save, FileLoader.getSound("res/clic.wav"));
+            save.addMouseListener(sourissave);
+            topLeftPanel.add(save, BorderLayout.CENTER);
+            
             topPanel.add(topLeftPanel, BorderLayout.WEST);
             Retour.setBorder(BorderFactory.createEmptyBorder());
             Retour.setContentAreaFilled(false);
@@ -59,8 +66,9 @@ public class MenuPhaseDeJeu2 extends Menu implements Observateur {
             JPanel topCenter = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
             // Bouton Annuler
-            Image resizedImageFR = FileLoader.getImage("res/Drapeau FR.png").getScaledInstance(40, 30, Image.SCALE_SMOOTH);
+            Image resizedImageFR = FileLoader.getImage("res/flecheAnnule.png").getScaledInstance(70, 50, Image.SCALE_SMOOTH);
             Annuler = new JButton(new ImageIcon(resizedImageFR));
+            Annuler.setToolTipText("Annuler");
             Annuler.setBorder(BorderFactory.createEmptyBorder());
             Annuler.setContentAreaFilled(false);
             //Annuler = Bouton.creerButton("Annuler");
@@ -70,15 +78,19 @@ public class MenuPhaseDeJeu2 extends Menu implements Observateur {
             topCenter.add(Annuler, BorderLayout.CENTER);
 
             // Bouton Refaire
-            Image resizedImageEN = FileLoader.getImage("res/Drapeau ANG.png").getScaledInstance(40, 30, Image.SCALE_SMOOTH);
+            Image resizedImageEN = FileLoader.getImage("res/flecheRefais.png").getScaledInstance(70, 50, Image.SCALE_SMOOTH);
             Refaire = new JButton(new ImageIcon(resizedImageEN));
             //Refaire = Bouton.creerButton("Refaire");
+            Refaire.setToolTipText("Refaire");
             Refaire.setBorder(BorderFactory.createEmptyBorder());
             Refaire.setContentAreaFilled(false);
             Refaire.addActionListener(new AdaptateurRefais(controle));
             Refaire.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             Refaire.setEnabled(false);
             topCenter.add(Refaire, BorderLayout.CENTER);
+            
+            topCenter.setOpaque(false);
+            topPanel.add(topCenter);
             
             topCenter.setOpaque(false);
             topPanel.add(topCenter);
@@ -223,16 +235,16 @@ public class MenuPhaseDeJeu2 extends Menu implements Observateur {
             case "FR":
                 Aide.setText("Suggestion");
                 Regles.setText("Règles");
-                //Annuler.setText("Annuler");
+                Annuler.setToolTipText("Annuler");
                 last_coup.setText("Dernier Coup");
-                //Refaire.setText("Refaire");
+                Refaire.setToolTipText("Refaire");
                 break;
             case "EN":
                 Aide.setText("Suggestion");
                 Regles.setText("Rules");
-                //Annuler.setText("Undo");
+                Annuler.setToolTipText("Undo");
                 last_coup.setText("Last Played");
-                //Refaire.setText("Redo");
+                Refaire.setToolTipText("Redo");
                 break;
             default:
                 break;
