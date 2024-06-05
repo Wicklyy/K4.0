@@ -24,6 +24,8 @@ public class PDJPyramideJoueur extends PDJPyramideAbstaite {
     int imageIndex = 0;
     Image[] images;
     Color playerColor;
+    boolean suggestion = false;
+    Point coup_suggere;
 
     boolean dessineMoins1 = false;
     static boolean premier_coup = false;
@@ -34,6 +36,7 @@ public class PDJPyramideJoueur extends PDJPyramideAbstaite {
         joueur = nj;
         setOpaque(false);
         cube_selec = false;
+        coup_suggere = new Point();
     }
 
     // Retourne le tableau qui contient les coordonnées des points de la pyramide du
@@ -128,6 +131,17 @@ public class PDJPyramideJoueur extends PDJPyramideAbstaite {
         return jeu.Accessible_Playable();
     }
 
+    public void setSuggestion(boolean bool){
+        suggestion = bool;
+        repaint();
+    }
+
+    public void setCoupSuggere(Point p){
+        System.out.println("joueur : x : "+p.x+", y : "+p.y);
+        coup_suggere = p;
+        repaint();
+    }
+
     public void paintComponent(Graphics g) {
 
         // System.out.println("PaintComponent de PDJPyramideJoueur");
@@ -140,6 +154,9 @@ public class PDJPyramideJoueur extends PDJPyramideAbstaite {
         {
             StructurePainter.dessiner_pyramide(g, height_fenetre, width_fenetre, jeu.getPlayer(joueur).getPyramid(),jeu.getPlayer(joueur).getSideSize() > 0, joueur);
             StructurePainter.dessiner_side(g, height_fenetre, width_fenetre, jeu.getPlayer(joueur).getSide());
+            if(suggestion){
+                StructurePainter.dessineSuggestionJoueur(g, coup_suggere.x, coup_suggere.y, height_fenetre, width_fenetre, jeu.getPlayer(joueur).getSideSize() > 0);
+            }
         }
         else
         {

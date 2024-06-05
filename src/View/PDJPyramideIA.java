@@ -43,6 +43,7 @@ public class PDJPyramideIA extends PDJPyramideAbstaite {
         }
         catch (Exception e) 
         {
+            System.err.println(e);
             System.exit(1);
         }
 

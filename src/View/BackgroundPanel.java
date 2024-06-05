@@ -26,6 +26,7 @@ public class BackgroundPanel extends JFrame {
             try {
                 backgroundImage = Global.FileLoader.getImage("res/MenuPrincipal.png");
             } catch (Exception e) {
+                System.err.println(e);
                 System.exit(1);
             }
         }
@@ -45,6 +46,7 @@ public class BackgroundPanel extends JFrame {
             try {
                 backgroundImage = Global.FileLoader.getImage(s);
             } catch (Exception e) {
+                System.err.println(e);
                 System.exit(1);
             }
             repaint();

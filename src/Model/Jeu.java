@@ -5,16 +5,16 @@ import java.util.Scanner;
 import java.util.Stack;
 import java.util.Vector;
 
+import Global.FileLoader;
 import Model.History.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.awt.Point;
 import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 
 import Patterns.Observable;
 
@@ -81,38 +81,34 @@ public class Jeu extends Observable implements Cloneable {
     }
 
     public void reset(String fileName) {
-        try {
-            Scanner s = new Scanner(new FileInputStream(fileName));
-            String[] chaine = s.nextLine().split(" ");
-            clone = false;
-            hist = new Historique();
-            nbJoueur = Integer.parseInt(chaine[0]);
-            bag = new PawnsBag(nbJoueur);
-            size = 8 - nbJoueur;
-            current_player = Integer.parseInt(chaine[1]);
-            principale = new Pyramid(s.nextLine());
-            players = new Player[nbJoueur];
-            String[] playerString = new String[4];
-            for (int i = 0; i < nbJoueur; i++) {
-                for (int j = 0; j < 4; j++) {
-                    playerString[j] = s.nextLine();
-                }
-                players[i] = new Player(playerString);
+        InputStream in = FileLoader.getSave(fileName);
+        Scanner s = new Scanner(in);
+        String[] chaine = s.nextLine().split(" ");
+        clone = false;
+        hist = new Historique();
+        nbJoueur = Integer.parseInt(chaine[0]);
+        bag = new PawnsBag(nbJoueur);
+        size = 8 - nbJoueur;
+        current_player = Integer.parseInt(chaine[1]);
+        principale = new Pyramid(s.nextLine());
+        players = new Player[nbJoueur];
+        String[] playerString = new String[4];
+        for (int i = 0; i < nbJoueur; i++) {
+            for (int j = 0; j < 4; j++) {
+                playerString[j] = s.nextLine();
             }
-            String histLine = "";
-            String part = "";
-            while (s.hasNext()) {
-                part = s.nextLine();
-                histLine += part + "\n";
-            }
-            hist = Historique.fromString(histLine);
-            End = false;
-            s.close();
-            metAJour();
-        } catch (FileNotFoundException e) {
-            System.err.println(e);
-            System.exit(2);
+            players[i] = new Player(playerString);
         }
+        String histLine = "";
+        String part = "";
+        while (s.hasNext()) {
+            part = s.nextLine();
+            histLine += part + "\n";
+        }
+        hist = Historique.fromString(histLine);
+        End = false;
+        s.close();
+        metAJour();
     }
 
     // Tirage de la base de la pyramide central
@@ -264,16 +260,20 @@ public class Jeu extends Observable implements Cloneable {
         }
     }
 
-    public void refais() {
+    public int refais() {
         Coup coup = hist.refais();
         if (coup != null) {
-            playAction(coup,true);
+            return playAction(coup,true);
+        }
+        else{
+            return -1;
         }
     }
 
     /** Coup **/
 
-    public void playAction(Coup c, boolean keepHistory){
+    public int playAction(Coup c, boolean keepHistory){
+        int out=0;
         Stack<Coup> save=new Stack<>();
         if(keepHistory){
             while(!hist.isEmptyRefaire()){
@@ -289,13 +289,14 @@ public class Jeu extends Observable implements Cloneable {
                 
             break;
             default:
-                jouer_coup(c.dest.x,c.dest.y,c.source.x,c.source.y);
+                out=jouer_coup(c.dest.x,c.dest.y,c.source.x,c.source.y);
             break;
         }
 
         while(!save.empty()){
             hist.getRefais().add(save.pop());
         }
+        return out;
     }
     /** Debut de partie **/
 
@@ -858,5 +859,15 @@ public class Jeu extends Observable implements Cloneable {
 
     public Point getDernierCoup(){
         return hist.getDernierCoup();
+    }
+
+    public String toString(){
+        String string = "";
+        string+=principale;
+        for(Player player : players){
+            string+= player;
+        }
+
+        return string;
     }
 }

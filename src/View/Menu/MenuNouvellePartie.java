@@ -62,6 +62,7 @@ public class MenuNouvellePartie extends Menu {
                             try{
                                 c=FileLoader.getSound("res/IA.wav");
                             }catch(Exception e){
+                                System.err.println(e);
                                 System.exit(1);
                             }
                             c.setFramePosition(0);
@@ -171,6 +172,7 @@ public class MenuNouvellePartie extends Menu {
             setOpaque(false);
             add(content);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            System.err.println(e);
             System.exit(1);
         }
     }

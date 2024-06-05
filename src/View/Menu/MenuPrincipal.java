@@ -147,6 +147,7 @@ public class MenuPrincipal extends Menu {
             add(content);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
         // } catch (IOException e) {
+            System.err.println(e);
             System.exit(1);
         }
     }

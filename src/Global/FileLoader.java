@@ -1,8 +1,8 @@
 package Global;
 
 import java.awt.Image;
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
@@ -22,33 +22,46 @@ public class FileLoader {
         if (openedSoundMap.containsKey(path)){
             return openedSoundMap.get(path);
         }else{
-            try {
-                File audioFile = new File(path);
-                AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+            return null;
+            /*try {
+                //AudioInputStream audioStream = AudioSystem.getAudioInputStream(FileLoader.class.getClassLoader().getResource(path));
+                AudioInputStream audioStream = AudioSystem.getAudioInputStream(FileLoader.class.getResourceAsStream(path));
                 Clip audioClip = AudioSystem.getClip();
+                audioClip = null;
                 audioClip.open(audioStream);
                 openedSoundMap.put(path, audioClip);
                 return audioClip;
+                
             } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
                 e.printStackTrace();
                 throw e;
-            }
+            }*/
         }
     }
 
-    public static Image getImage(String path) throws IOException{
-        if( openedImageMap.containsKey(path)){
+    public static InputStream getSave(String path){
+        return FileLoader.class.getResourceAsStream(path);
+    }
+    public static Image getImage(String path) {
+        if (openedImageMap.containsKey(path)) {
             return openedImageMap.get(path);
-        }else{
-            try{
-                File imageFile=new File(path);
-                Image out = new ImageIcon(ImageIO.read(imageFile)).getImage();
-                openedImageMap.put(path, out);
-                return out;
-            }catch (IOException e){
+        } else {
+            String chaine = "src/Global/"+path;
+            try (InputStream is = FileLoader.class.getResourceAsStream(path)) { // Try-with-resources
+                if (is != null) {
+                    Image out = ImageIO.read(is);
+                    openedImageMap.put(path, out);
+                    return out;
+                } else {
+                    System.err.println("Ressource introuvable : " + path);
+                    // Retournez une image par défaut ou signalez l'erreur
+                }
+            } catch (IOException e) {
+                System.err.println("Erreur lors du chargement de l'image : " + path);
                 e.printStackTrace();
-                throw e;
             }
         }
+        return null; // Ou une image par défaut
     }
+    
 }

@@ -346,7 +346,16 @@ public abstract class IA {
     }
     
     public void calcul(){
-        coupIA(jeu, indiceJoueur, difficulte);
+        ArrayList<ArrayList<Point>> coups_possibles = coupIA(jeu, indiceJoueur, difficulte);
+        if(coups_possibles.size() != 0){
+            Random random = new Random();
+            prochainCoup = coups_possibles.get(random.nextInt(coups_possibles.size()));
+        }
+        else prochainCoup = null;
+    }
+
+    public ArrayList<Point> prochainCoup(){
+        return prochainCoup;
     }
 
     

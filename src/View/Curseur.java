@@ -17,6 +17,7 @@ public class Curseur
         try{
             scaledBananaImage = FileLoader.getImage("res/curseur_main_ouverte.png").getScaledInstance(28,28, Image.SCALE_SMOOTH);
         }catch(Exception e){
+            System.err.println(e);
             System.exit(1);
         }
         // Convertir l'image redimensionnée de la banane en curseur

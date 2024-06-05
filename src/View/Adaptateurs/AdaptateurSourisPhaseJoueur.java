@@ -146,7 +146,7 @@ public class AdaptateurSourisPhaseJoueur extends MouseAdapter {
         }
         catch (Exception e) 
         {
-            e.printStackTrace();
+            System.err.println(e);
             System.exit(1);
         }
     }

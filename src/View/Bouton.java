@@ -39,6 +39,7 @@ public class Bouton {
 					Image.SCALE_SMOOTH);
 			}
 		} catch (Exception e) {
+			System.err.println(e);
 			System.exit(1);
 		}
 		out.setIcon(new ImageIcon(resizedImageRetour));

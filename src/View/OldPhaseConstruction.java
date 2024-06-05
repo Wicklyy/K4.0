@@ -9,10 +9,7 @@ import javax.swing.*;
 import Global.FileLoader;
 
 import java.awt.*;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.IOException;
-import javax.imageio.ImageIO;
 import java.io.FileNotFoundException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -48,33 +45,15 @@ public class OldPhaseConstruction {
         this.frame = frame;
         this.controle = controle;
         this.jeu = jeu;
-        try {
-            InputStream in = new FileInputStream("res/neutre2.png");
-            neutre = ImageIO.read(in);
-            in = new FileInputStream("res/bleu.png");
-            bleu = ImageIO.read(in);
-            in = new FileInputStream("res/vert.png");
-            vert = ImageIO.read(in);
-            in = new FileInputStream("res/jaune.png");
-            jaune = ImageIO.read(in);
-            in = new FileInputStream("res/violet.png");
-            noir = ImageIO.read(in);
-            in = new FileInputStream("res/ange.png");
-            blanc = ImageIO.read(in);
-            in = new FileInputStream("res/rouge.png");
-            rouge = ImageIO.read(in);
-            in = new FileInputStream("res/carre_vide.png");
-            vide = ImageIO.read(in);
-            in = new FileInputStream("res/carre_noir_vide.png");
-            carre_noir_vide = ImageIO.read(in);
-
-        } catch (FileNotFoundException e) {
-            System.err.println("ERREUR : impossible de trouver le fichier");
-            System.exit(2);
-        } catch (IOException e) {
-            System.err.println("ERREUR : impossible de charger l'image");
-            System.exit(3);
-        }
+            neutre = FileLoader.getImage("res/neutre2.png");
+            bleu = FileLoader.getImage("res/bleu.png");
+            vert = FileLoader.getImage("res/vert.png");
+            jaune = FileLoader.getImage("res/jaune.png");
+            noir = FileLoader.getImage("res/violet.png");
+            blanc = FileLoader.getImage("res/ange.png");
+            rouge = FileLoader.getImage("res/rouge.png");
+            vide = FileLoader.getImage("res/carre_vide.png");
+            carre_noir_vide = FileLoader.getImage("res/carre_noir_vide.png");
 
         while (jeu.draw()) {
         }
@@ -136,6 +115,7 @@ public class OldPhaseConstruction {
                 int retour = showConfirmDialog();
                 if (retour == 0) {
                     controle.commande("MenuP");
+                    
                 }
             }
         });
@@ -217,6 +197,7 @@ public class OldPhaseConstruction {
             Regles.addMouseListener(sourisRegles);
             IA.addMouseListener(sourisIA);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+                System.err.println(e);
                 System.exit(1);
         }
     }

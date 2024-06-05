@@ -104,13 +104,15 @@ public class MenuPhaseDeJeu2 extends Menu implements Observateur {
             // Bouton Aide
             Aide = Bouton.creerButton("Suggestion");
             // Aide.addActionListener(new AideAdaptateur(controle));
-            Aide.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    JOptionPane.showMessageDialog(content, "En cours d'implémentation :)", "En construction", JOptionPane.INFORMATION_MESSAGE);
+            // Aide.addActionListener(new ActionListener() {
+            //     @Override
+            //     public void actionPerformed(ActionEvent e) {
+            //         JOptionPane.showMessageDialog(content, "En cours d'implémentation :)", "En construction", JOptionPane.INFORMATION_MESSAGE);
 
-                }
-            });
+            //     }
+            // });
+            Aide.addActionListener(new AdaptateurSuggestion(controle));
+
             topPanel.add(Aide, BorderLayout.CENTER);
 
             Regles = Bouton.Rules(content);
@@ -201,6 +203,7 @@ public class MenuPhaseDeJeu2 extends Menu implements Observateur {
             add(content);
             validate();
         } catch (Exception e) {
+            System.err.println(e);
             System.exit(1);
         }
     }
@@ -225,6 +228,28 @@ public class MenuPhaseDeJeu2 extends Menu implements Observateur {
 
     public boolean getDernierCoup(){
         return pdj.getDernierCoup();      
+    }
+
+    public void setSuggestion(boolean bool){
+        if(pdj.GetJoueurCourant() == 0){
+            joueur1.setSuggestion(bool);
+            joueur2.setSuggestion(false);
+        }
+        else{
+            joueur1.setSuggestion(false);
+            joueur2.setSuggestion(bool);
+        }
+        pdj.setSuggestion(bool);
+    }
+
+    public void setCoupSuggere(Point joueur, Point pyramide_centrale){
+        if(pdj.GetJoueurCourant() == 0){
+            joueur1.setCoupSuggere(joueur);
+        }
+        else{
+            joueur2.setCoupSuggere(joueur);
+        }
+        pdj.setCoupSuggere(pyramide_centrale);
     }
    
 

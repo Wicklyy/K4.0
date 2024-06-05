@@ -2,6 +2,7 @@ package View.Menu;
 
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
+import java.awt.Point;
 
 public abstract class Menu extends JPanel {
     public Menu() {
@@ -38,6 +39,10 @@ public abstract class Menu extends JPanel {
     public void setDernierCoup(boolean bool){}
 
     public boolean getDernierCoup(){return false;}
+
+    public void setSuggestion(boolean bool){}
+
+    public void setCoupSuggere(Point joueur, Point pyramide_centrale){}
 
     public void updateSablier(boolean b){}
 

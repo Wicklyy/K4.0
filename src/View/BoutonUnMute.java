@@ -32,6 +32,7 @@ public class BoutonUnMute extends JButton{
 					Image.SCALE_SMOOTH);
 			}
 		} catch (Exception e) {
+			System.err.println(e);
 			System.exit(1);
 		}
 		iconUnMute  = new ImageIcon(resizedImageUnMute);

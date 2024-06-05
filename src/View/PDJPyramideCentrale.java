@@ -16,11 +16,15 @@ public class PDJPyramideCentrale extends JComponent implements Observateur {
     JPanel parent;
     boolean accessible = true;
     boolean dernier_coup = false;
+    boolean suggestion = false;
+    Point coup_suggere;
 
     public PDJPyramideCentrale(Jeu jeu, JPanel parent) {
         this.jeu = jeu;
         this.parent = parent;
         setOpaque(false);
+        coup_suggere = new Point();
+
         
     }
 
@@ -71,6 +75,17 @@ public class PDJPyramideCentrale extends JComponent implements Observateur {
         return dernier_coup;
     }
 
+    public void setSuggestion(boolean bool){
+        suggestion = bool;
+        repaint();
+    }
+
+    public void setCoupSuggere(Point p){
+        System.out.println("centrale : x : "+p.x+", y : "+p.y);
+        coup_suggere = p;
+        repaint();
+    }
+
     public void paintComponent(Graphics g) {
         //System.out.println("PaintComponent de PDJPyramideCentrale");
         drawable = (Graphics2D) g;
@@ -82,7 +97,10 @@ public class PDJPyramideCentrale extends JComponent implements Observateur {
         {
             StructurePainter.dessiner_dernier_coup(jeu, drawable, height_fenetre, width_fenetre, false);
         }
-        
+
+        if(suggestion){
+            StructurePainter.dessineSuggestionCentrale(g, coup_suggere.x, coup_suggere.y, height_fenetre, width_fenetre, false, jeu);
+        }        
 
         if (ControleurMediateur.GetClic() && (ControleurMediateur.GetColonne() == -1 || jeu.accessible(ControleurMediateur.GetLigne(), ControleurMediateur.GetColonne())))
         {
