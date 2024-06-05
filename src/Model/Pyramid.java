@@ -1,10 +1,14 @@
 package Model;
 
+import java.util.Vector;
+
+import Model.Iterateur.*;
+
 public class Pyramid {
     Cube[][] pyramid;
     int size;
 
-    Pyramid(int i){
+    public Pyramid(int i){
         pyramid = new Cube[i][i];
         size = i;
         for (int x=0; x<i; x++ ){
@@ -13,51 +17,81 @@ public class Pyramid {
             }
         }
     }
-
-
-    //Cloning of a Pyramid object
-
-    public Pyramid clone() throws CloneNotSupportedException {
-        Pyramid clone = (Pyramid) super.clone();  // Clone the basic object structure
-
-        clone.pyramid = new Cube[size][size];
-        for (int i = 0; i < size; i++) {
-            System.arraycopy(pyramid[i], 0, clone.pyramid[i], 0, size);
+    
+    Pyramid(String string){
+        String[] charge = string.split(" ");
+        size = Integer.parseInt(charge[0]);
+        int index = 1;
+        pyramid = new Cube[size][size];
+        for(int i = size-1; i >= 0; i--){
+            for(int j = 0; j <= size-1-i; j++){
+                pyramid[i][j] = Cube.conversion(charge[index++]);
+            }
         }
-        return clone;
     }
-
+    
+    public String sauvegarde(){
+        String sauvegarde = size + " ";
+        for(int i = size-1; i >= 0; i--){
+            for (int j = 0; j <= size-i-1; j++){
+                sauvegarde += Cube.conversionString(get(i, j));
+            }
+        }
+        sauvegarde += "\n";
+        return sauvegarde;
+    }
 
     //Size Pyramid
     public int getSize(){
         return size;
     }
 
+    public void extend(){
+        Cube cop_pyramid[][] = new Cube[size+2][size+2];
+        for (int i=0; i<size; i++){
+            for (int j=0; j<size; j++){
+                cop_pyramid[i][j+1] = pyramid[i][j];
+            }
+        }
+        pyramid = cop_pyramid;
+        size += 2;
+    }
 
     //Get an element at x y position
     public Cube get(int x, int y){
         return pyramid[x][y];
     }
 
-
-
     //Put a cube of a color on the pyramid at x y
-
     public void set(int x, int y, Cube c){
         pyramid[x][y] = c;
     }
+    
+    public void remove(int x,int y){
+        set(x,y,Cube.Vide);
+    }
 
 
+    public Iterateur iterateur(String start){
+        switch (start) {
+            case "UP":
+                return new IterateurUtoD(this);
+            case "DOWN":
+                return new IterateurDtoU(this);
+            default:
+                throw new NullPointerException();
+        }
+    }
 
 
-    public String tmp(int i){
+    public String centrer(int i){
         String chaine = "";
         for(int j = 0; j < i; j++){
             chaine += "   ";
         }
         return chaine;
     }
-    public String milieu(Cube c){
+    public String centrerCube(Cube c){
         String chaine = "";
         switch (c) {
             case Noir:
@@ -82,13 +116,34 @@ public class Pyramid {
     public String toString(){
         String chaine = "";
         for(int i = size-1; i >= 0; i--){
-            chaine += tmp(i);
+            chaine += centrer(i);
             for (int j = 0; j <= size - 1 - i; j++){
-                chaine += milieu(pyramid[i][j]) + " ";
+                chaine += centrerCube(pyramid[i][j]) + " ";
             }
             chaine+="\n";
         }
         return chaine;
     }
-}
 
+    //Fonction Clone 
+    public Pyramid clone() throws CloneNotSupportedException {
+        Pyramid clone = new Pyramid(size);  // Clone the basic object structure
+        Iterateur it = iterateur("UP"),itClone = clone.iterateur("UP");
+        while(it.hasNext()){
+            itClone.next();
+            itClone.modify(it.next());
+        }
+        return clone;
+    }
+
+    public Vector<Integer> hash(){
+        Vector<Integer> vect = new Vector<>(); 
+        Iterateur it = iterateur("UP");
+        
+        while(it.hasNext()){
+            vect.add(it.next().getInt());
+        }
+        return vect;
+    }
+    
+}

@@ -1,0 +1,192 @@
+package View.Adaptateurs;
+
+import View.CollecteurEvenements;
+import View.Curseur;
+import View.PDJPyramideCentrale;
+import View.PDJPyramideJoueur;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
+
+import Global.FileLoader;
+import Model.Cube;
+
+import java.awt.*;
+
+public class AdaptateurSourisPhaseJoueur extends MouseAdapter {
+    CollecteurEvenements controle;
+    int nbJoueur;
+    int taille_base_pyramide;
+    PDJPyramideJoueur pdj;
+    PDJPyramideJoueur pdj2;
+    PDJPyramideCentrale pdjCentrale;
+
+    public AdaptateurSourisPhaseJoueur(CollecteurEvenements c, PDJPyramideJoueur pdj, PDJPyramideJoueur pdj2, PDJPyramideCentrale pdjCentrale) {
+        controle = c;
+        this.pdj = pdj;
+        this.pdj2 = pdj2;
+        nbJoueur = pdj.NombreDeJoueur();
+        taille_base_pyramide = 8 - nbJoueur;
+        this.pdjCentrale = pdjCentrale;
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        pdj.SetDessineMoins1(false);
+        // pdj.setCursor(Cursor.getDefaultCursor());
+        pdj.setCursor(Curseur.Gerer_Curseur_main());
+        pdj.repaint();
+        // pdj2.setCursor(Cursor.getDefaultCursor());
+        pdj2.setCursor(Curseur.Gerer_Curseur_main());
+        pdj2.repaint();
+        // pdjCentrale.setCursor(Cursor.getDefaultCursor());
+        pdjCentrale.setCursor(Curseur.Gerer_Curseur_main());
+        pdjCentrale.GetAccessible(false);
+        pdjCentrale.repaint();
+
+        if (pdj.NumeroJoueur() != pdjCentrale.GetJoueurCourant()) {
+            
+            pdj2.SetDessineMoins1(false);
+            pdj.repaint();
+            pdj2.repaint();
+            return;
+        }
+
+        // On clique dans la pyramide
+        PDJPyramideJoueur.SetCube_Select_Static(false);
+        int taille_cube_joueur = pdj.TailleCubeJoueur();
+        Point points_pyramide_joueurs[][] = pdj.PointPyramideJoueurs(pdj.NumeroJoueur());
+        for (int x = 0; x < taille_base_pyramide; x++) {
+            for (int y = 0; y <= x; y++) {
+                if ((e.getY() >= points_pyramide_joueurs[x][y].getY())
+                        && (e.getY() <= (points_pyramide_joueurs[x][y].getY() + taille_cube_joueur))
+                        && (e.getX() >= points_pyramide_joueurs[x][y].getX())
+                        && (e.getX() <= (points_pyramide_joueurs[x][y].getX() + taille_cube_joueur))) {
+                    
+                    // ArrayList<Point> liste_accessible = pdj.GetAccessible();
+                    ArrayList<Point> liste_accessible;
+                    if(pdj.GetPenality()){
+                        liste_accessible = pdj.GetAccessible();
+                    }
+                    else{
+                        liste_accessible = pdj.accessiblesJouables();
+                    }
+                    for (Point p: liste_accessible)
+                    {
+                        if ((p.x == taille_base_pyramide - 1 - x) && (p.y==y))
+                        {
+                            // Un cube a été sélectionné on le highlight le contour        
+                            PDJPyramideJoueur.SetCube_Select_Static(true);
+                            pdj.SetX_Select(taille_base_pyramide - 1 - x);
+                            pdj.SetY_Select(y);
+
+                            // On informe le controleur médiateur
+                            controle.clicJoueurPyramide(taille_base_pyramide - 1 - x, y);
+
+                            Gerer_Curseur(x, y, false);
+
+                            pdjCentrale.repaint();
+                            pdj.repaint();
+                        }
+                    }       
+                }
+            }
+        }
+
+        // On clique dans le side
+        Point points_side[] = pdj.PointSide();
+        for(int x = 0; x < pdj.tailleSide(); x++){
+            if ((e.getY() >= points_side[x].getY())
+                        && (e.getY() <= (points_side[x].getY() + taille_cube_joueur))
+                        && (e.getX() >= points_side[x].getX())
+                        && (e.getX() <= (points_side[x].getX() + taille_cube_joueur))) { 
+                    PDJPyramideJoueur.SetCube_Select_Static(true);
+                    pdj.SetX_Select(x);
+                    pdj.SetY_Select(-1);
+                    if (!pdj.GetPenality()){
+                        Gerer_Curseur(x, -1, true);
+                    }
+                    controle.clicJoueurSide(x);
+
+
+                    pdjCentrale.repaint();
+                    pdj.repaint();
+            }
+        }
+    }
+
+    public void Gerer_Curseur(int x, int y, boolean side)
+    {
+        // 2) On supprime le cube de la pyramide
+        // 3) On supprime tous les highlight
+        // 4) Si dans la pyramide centrale, on clique sur un emplacement ACCESSIBLE on remet le curseur normal et on continue
+        // 5) Si dans la pyramide centrale, on clique sur un emplacement NON accessible remet le curseur normal, on remet le cube dans la pyramide du joueur et on remet les highlight accessible et on continue
+
+        try
+        {
+            System.out.println("Changment de curseur!");
+            // Charger l'image de la banane
+            String curseur = Cube_Chope(x, y, side);
+            if (curseur != "Erreur")
+            {
+                // Redimensionner l'image de la banane à 50x50 pixels
+                int taille_cube_pyramide_centrale = pdjCentrale.GetTailleCubePyramideCentrale();
+                Image scaledBananaImage =FileLoader.getImage(curseur).getScaledInstance(taille_cube_pyramide_centrale, taille_cube_pyramide_centrale, Image.SCALE_SMOOTH);
+                // Convertir l'image redimensionnée de la banane en curseur
+                Cursor bananaCursor = Toolkit.getDefaultToolkit().createCustomCursor(scaledBananaImage, new Point(taille_cube_pyramide_centrale/2,taille_cube_pyramide_centrale/2), "banana cursor");
+
+                pdj.setCursor(bananaCursor);
+                pdj2.setCursor(bananaCursor);
+                pdjCentrale.setCursor(bananaCursor);
+                pdjCentrale.GetAccessible(true);
+                pdj.SetDessineMoins1(true);
+            }
+        }
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
+
+    public String Cube_Chope(int x, int y, boolean side)
+    {
+       Cube cube = pdj.GetCubeChope(x, y, side);
+       switch (cube) {
+            case Noir:
+                // System.out.println("cube noir");
+                return "res/violet.png";
+
+            case Neutre:
+                // System.out.println("cube neutre");
+                return "res/neutre2.png";
+
+            case Blanc:
+                // System.out.println("cube blanc");
+                return "res/ange.png";
+
+            case Vert:
+                // System.out.println("cube vert");
+                return "res/vert.png";
+
+            case Jaune:
+                // System.out.println("cube jaune");
+                return "res/jaune.png";
+
+            case Rouge:
+                // System.out.println("cube rouge");
+                return "res/rouge.png";
+
+            case Bleu:
+                // System.out.println("cube bleu");
+                return "res/bleu.png";
+
+            default:
+                // System.out.println("default");
+                return "Erreur";
+        }
+
+    }
+}
