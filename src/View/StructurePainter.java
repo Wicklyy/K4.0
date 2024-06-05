@@ -54,9 +54,10 @@ public class StructurePainter {
 
         x_haut = height / 2 - (taille_cube / 2) * (taille_pyramide) + taille_cube * (taille_pyramide -1) - (espace * taille_pyramide) / 2;
         y_haut = width / 2 - (taille_cube / 2) * ((taille_pyramide-1) + 1) + taille_cube * -2 - (espace * (taille_pyramide -1)) / 2;
-        blanc_accessible.x = x_haut + espace * (taille_pyramide -1);
-        blanc_accessible.y = y_haut + espace * -2;
-
+        if(taille_pyramide==9){
+            blanc_accessible.x = x_haut + espace * (taille_pyramide -1);
+            blanc_accessible.y = y_haut + espace * -2;
+        }
         Cube cube;
         for (int x = taille_pyramide - 1; x >= 0; x--) {
             x_haut = height / 2 - (taille_cube / 2) * (taille_pyramide) + taille_cube * x
