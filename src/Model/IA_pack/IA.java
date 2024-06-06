@@ -53,7 +53,7 @@ public abstract class IA {
         }
         int value;
         boolean bon_joueur = player_max == j.get_player();
-        ArrayList<Point> cubes_access = j.Accessible_Playable_IA();
+        ArrayList<Point> cubes_access = j.Accessible_Playable();
 
         if (j.check_loss() || j.End_Game()) { // Condition de défaite de tous les autres joueurs en même temps à
                                               // implémenter
@@ -71,16 +71,16 @@ public abstract class IA {
             int total_j1 = 0;
             int total_j2 = 0;
             int total_access = cubes_access.size();
-            ArrayList<Point> cubes_access2 = j.Accessible_Playable_IA(j.next_player());
+            int total_access2;
+            ArrayList<Point> cubes_access2 = j.Accessible_Playable(j.next_player());
             if(IA!=0){
                 for (Point compte : cubes_access) { // Compte du nombre de coups jouable du j1
-                    int current_possibilities = j.CubeAccessibleDestinations((int) compte.getX(), (int) compte.getY())
-                            .size();
+                    int current_possibilities = j.destinationSansPen(compte);
                     total_j1 += current_possibilities;
                 }
                 for (Point compte : cubes_access2) { 
-                    int current_possibilities = j.CubeAccessibleDestinations(j.getPlayer(j.next_player()),
-                            (int) compte.getX(), (int) compte.getY()).size();
+                    int current_possibilities = j.destinationSansPen(j.getPlayer(j.next_player()),
+                            compte);
                     total_j2 += current_possibilities;
                 }
             }
@@ -93,9 +93,12 @@ public abstract class IA {
                         return saveValue(j,j.getPlayer(j.next_player()).totalCube() - j.getPlayer().totalCube());
                     }
                 case 1: // IA Medium
+
+                    total_access2 = cubes_access2.size();
+
+                    total = total_access + (int) (j.getPlayer().totalCube() * 1000)
+                    - (int) (j.getPlayer(j.next_player()).totalCube() * 1000) - total_access2;
                     
-                    total = (int) (total_j1) + (int) (j.getPlayer().totalCube() * 1000)
-                            - (int) (j.getPlayer(j.next_player()).totalCube() * 1000) - (int) (total_j2);
                     
                     if (bon_joueur) {
                         return saveValue(j,total);
@@ -103,11 +106,13 @@ public abstract class IA {
                         return saveValue(j,-total);
                     }
                 case 2: // IA Difficile
-                    int total_access2 = cubes_access2.size();
+                    
+                    total_access2 = cubes_access2.size();
+                    total = (int) (j.getPlayer().totalCube() * 10000) + total_access * 100 + total_j1
+                        - ((int) (j.getPlayer(j.next_player()).totalCube() * 10000)
+                                + (total_access2 * 100) + total_j2);
 
-                    total = (int) (total_j1) + (int) (j.getPlayer().totalCube() * 10000) + total_access * 100
-                            - ((int) (j.getPlayer(j.next_player()).totalCube() * 10000) + (int) (total_j2)
-                                    + (total_access2 * 100));
+                   
                     if (bon_joueur) {
                     return saveValue(j,total);
                     } else {
@@ -160,7 +165,7 @@ public abstract class IA {
     public ArrayList<ArrayList<Point>> coupIA(Jeu j, int joueur1, int difficulté) {
         ArrayList<ArrayList<Point>> resultat_ok = new ArrayList<>();
         int value_max = -1000000000/* (int) Double.NEGATIVE_INFINITY */;
-        ArrayList<Point> cubes_access = j.Accessible_Playable_IA();
+        ArrayList<Point> cubes_access = j.Accessible_Playable();
         for (Point depart : cubes_access) {
             ArrayList<Point> coups_jouables = j.CubeAccessibleDestinations((int) depart.getX(), (int) depart.getY());
             for (Point arrivee : coups_jouables) {
@@ -172,13 +177,13 @@ public abstract class IA {
                 int value = 0;
                 switch (difficulté) {
                     case 0:
-                        value = MinMaxIA(clone, 3, joueur1, -100000000, +100000000, 0);
+                        value = MinMaxIA(clone, 2, joueur1, -100000000, +100000000, 0);
                         break;
                     case 1:
-                        value = MinMaxIA(clone, 5, joueur1, -100000000, +100000000, 1);
+                        value = MinMaxIA(clone, 4, joueur1, -100000000, +100000000, 1);
                         break;
                     case 2:
-                        value = MinMaxIA(clone, 10, joueur1, -100000000, +100000000, 2);
+                        value = MinMaxIA(clone, 6, joueur1, -100000000, +100000000, 2);
                         break;
                 }
 
@@ -198,7 +203,7 @@ public abstract class IA {
         ArrayList<Point> resultat_ok = new ArrayList<>();   /* Potentiellement en faisant la difference entre le nombre de coup possible a jouer entre l'ia et le joueur */
         int max = -1;
         Point x_y_to_take = new Point();
-        ArrayList<Point> cubes_access = j.Accessible_Playable_IA();
+        ArrayList<Point> cubes_access = j.Accessible_Playable();
         for (Point cubes : cubes_access) {
             if(j.getPlayer().get(cubes.x,cubes.y) == Cube.Blanc) {              /* A corriger quel cube blanc a prendre */
                 resultat_ok.clear();
@@ -243,18 +248,16 @@ public abstract class IA {
         player.resetBag();
         
         BestPyramide ZeBest = new BestPyramide();
-        int difficulty = difficulte;
-        if(difficulty == 2) difficulty = 1;
-        Thread manager = new Thread(new ConstructionThreadManager(clone, ZeBest, list, difficulty, indiceJoueur));
+        Thread manager = new Thread(new ConstructionThreadManager(clone, ZeBest, list, indiceJoueur));
         manager.start();
 
         // phaseConstruction = jeu.endConstruction((indiceJoueur+1)%2);
 
         if (aide) {
             try {
-                Thread.sleep(3000);
+                Thread.sleep(5000);
                 while (true) {
-                    //Thread.sleep(100);
+                    Thread.sleep(100);
                     if (ZeBest.getPyramid() != null) {
                         ZeBest.finish();
                         break;
@@ -295,7 +298,14 @@ public abstract class IA {
     }
 
 
-    
+    public int jouer_coup() {
+        ArrayList<ArrayList<Point>> coups_possibles = coupIA(jeu, indiceJoueur, difficulte);
+        if(coups_possibles.size()!=0){Random random = new Random();
+        ArrayList<Point> coup_a_jouer = coups_possibles.get(random.nextInt(coups_possibles.size()));
+        return  jeu.jouer_coup((int) coup_a_jouer.get(1).getX(), (int) coup_a_jouer.get(1).getY(),
+                (int) coup_a_jouer.get(0).getX(), (int) coup_a_jouer.get(0).getY());            }
+        return 0;
+    }
 
     public void construction(){
         construction(false);
@@ -329,15 +339,6 @@ public abstract class IA {
     public Thread thread(){
         return constructionThread;
     }
-    
-    public int jouer_coup() {
-        ArrayList<ArrayList<Point>> coups_possibles = coupIA(jeu, indiceJoueur, difficulte);
-        Random random = new Random();
-        ArrayList<Point> coup_a_jouer = coups_possibles.get(random.nextInt(coups_possibles.size()));
-        return  jeu.jouer_coup((int) coup_a_jouer.get(1).getX(), (int) coup_a_jouer.get(1).getY(),
-                (int) coup_a_jouer.get(0).getX(), (int) coup_a_jouer.get(0).getY());            
-        
-    }
 
     public Thread compute(){
         Thread thread = new Thread(new Compute(this));
@@ -357,9 +358,6 @@ public abstract class IA {
     public ArrayList<Point> prochainCoup(){
         return prochainCoup;
     }
-
-    
-    
     // public void endConstruction(){
     // phaseConstruction = false;
     // }

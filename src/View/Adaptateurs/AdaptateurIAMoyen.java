@@ -15,7 +15,7 @@ public class AdaptateurIAMoyen implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		control.setIADifficulty(0);
+		control.setIADifficulty(1);
 		control.commande("JoueurVSIA");
 	}
 }
