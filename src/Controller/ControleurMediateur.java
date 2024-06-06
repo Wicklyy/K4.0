@@ -422,6 +422,7 @@ public class ControleurMediateur implements CollecteurEvenements {
 				if(IAON && !IA_thinking){
 					IAON=false;
 					jeu.annule();
+					penalty=jeu.getPenality();
 					autorestart =new Timer(5000, new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e){
@@ -435,6 +436,7 @@ public class ControleurMediateur implements CollecteurEvenements {
 					autorestart.start();
 				}else{
 					jeu.annule();
+					penalty=jeu.getPenality();
 				}
 				metAJourAnnule();
 				metAJourRefaire();
@@ -450,7 +452,7 @@ public class ControleurMediateur implements CollecteurEvenements {
 				
 				if(IAON && !IA_thinking){
 					if(jeu.refais() == 2){
-						penalty = true;
+						penalty=jeu.getPenality();
 					}
 					autorestart =new Timer(5000, new ActionListener() {
 						@Override
@@ -467,7 +469,7 @@ public class ControleurMediateur implements CollecteurEvenements {
 				}
 				else if(!IAON){
 					if(jeu.refais() == 2){
-						penalty = true;
+						penalty=jeu.getPenality();
 					}
 				}
 
@@ -802,11 +804,11 @@ public class ControleurMediateur implements CollecteurEvenements {
 
 	public void open(String fileName){
 		reset();
-		String[]filePath=fileName.split("/");
-		fileName=filePath[filePath.length-1];
-		System.err.println(fileName);
+		//String[]filePath=fileName.split("/");
+		//fileName=filePath[filePath.length-1];
+		//System.err.println(fileName);
 		vue.setBackgroundPicture("res/Fond bleu avec cubes transparents.png");
 		vue.changeVisible(3);
-		jeu.reset("saves/"+fileName);
+		jeu.reset(fileName);
 	}
 }

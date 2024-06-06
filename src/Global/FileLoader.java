@@ -1,8 +1,11 @@
 package Global;
 
 import java.awt.Image;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
@@ -40,7 +43,14 @@ public class FileLoader {
     }
 
     public static InputStream getSave(String path){
-        return FileLoader.class.getResourceAsStream(path);
+        File textfile=new File(path);
+        try{
+        return new FileInputStream(textfile);
+        }catch(Exception e){
+            return null;
+        }
+
+
     }
     public static Image getImage(String path) {
         if (openedImageMap.containsKey(path)) {
