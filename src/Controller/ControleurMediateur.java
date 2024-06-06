@@ -9,6 +9,8 @@ import java.time.format.DateTimeFormatter;
 
 import javax.swing.Timer;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
@@ -33,6 +35,7 @@ public class ControleurMediateur implements CollecteurEvenements {
 	int gagnant;
 	Cube cube, cube_selectionne;
 	Thread iaCompute,iaComputeJ;
+	File dossier, f;
 
 	int IA_id_player=1;
 	Timer autorestart;
@@ -250,6 +253,7 @@ public class ControleurMediateur implements CollecteurEvenements {
 				if(jeu.get_player() == 1){
 					vue.updateSablier(true);
 					timer_sablier.start();
+					if(res != 2) commande("IAcompute");
 				}
                 vue.TimerIA(true);
             }
@@ -409,10 +413,11 @@ public class ControleurMediateur implements CollecteurEvenements {
 		switch (c) {
 			case "Annuler":
 				if (IAON){
-					vue.getMenuPhaseDeJeuJVIA().setLastCoup(false);
+					vue.getMenuPhaseDeJeuJVIA().setLastCoup(true);
+					
 				}
 				else{
-					vue.getMenuPhaseDeJeu2().setLastCoup(false);
+					vue.getMenuPhaseDeJeu2().setLastCoup(true);
 				}
 				if(IAON && !IA_thinking){
 					IAON=false;
@@ -437,10 +442,10 @@ public class ControleurMediateur implements CollecteurEvenements {
 
 			case "Refaire":
 				if(IAON){
-					vue.getMenuPhaseDeJeuJVIA().setLastCoup(false);
+					vue.getMenuPhaseDeJeuJVIA().setLastCoup(true);
 				}
 				else{
-					vue.getMenuPhaseDeJeu2().setLastCoup(false);
+					vue.getMenuPhaseDeJeu2().setLastCoup(true);
 				}
 				
 				if(IAON && !IA_thinking){
@@ -565,6 +570,15 @@ public class ControleurMediateur implements CollecteurEvenements {
 
 			case "JoueurVSJoueur":
 				IAON=false;
+				dossier = new File("saves"); 
+    			dossier.mkdir();
+				f = new File("saves/quicksave.txt");
+				try{
+					f.createNewFile();
+				}
+				catch(IOException e){
+					System.err.println("Le fichier quicksave.txt n'a pas pu être créé");
+				}
 				vue.getMenuPhaseDeJeu2().setLastCoup(false);
 			    vue.setBackgroundPicture("res/Fond bleu avec cubes transparents.png");
 				vue.changeVisible(2);
@@ -577,6 +591,15 @@ public class ControleurMediateur implements CollecteurEvenements {
 
 			case "JoueurVSIA":
 				IAON=true;
+				dossier = new File("saves"); 
+    			dossier.mkdir();
+				f = new File("saves/quicksave.txt");
+				try{
+					f.createNewFile();
+				}
+				catch(IOException e){
+					System.err.println("Le fichier quicksave.txt n'a pas pu être créé");
+				}
 				vue.getMenuPhaseDeJeuJVIA().setLastCoup(false);
 				vue.setBackgroundPicture("res/Fond bleu avec cubes transparents.png");
 				vue.changeVisible(2);
