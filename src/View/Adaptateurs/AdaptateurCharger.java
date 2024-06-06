@@ -16,7 +16,7 @@ public class AdaptateurCharger implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		    JFileChooser chooser = new JFileChooser("src/Global/saves/");
+		    JFileChooser chooser = new JFileChooser("saves/");
             int status = chooser.showOpenDialog(null);
             if (status == JFileChooser.APPROVE_OPTION) {
                 File file = chooser.getSelectedFile();

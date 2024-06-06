@@ -21,7 +21,7 @@ public class ControleurMediateur implements CollecteurEvenements {
 	boolean IA_thinking=false;
 	int d=0;
 	InterfaceGraphique vue;
-	String qs="src/Global/saves/quicksave.txt";
+	String qs="saves/quicksave.txt";
 	MusicPlayer musique;
 	int joueur_initial;
 	static boolean clic = false;

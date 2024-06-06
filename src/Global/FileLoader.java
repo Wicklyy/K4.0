@@ -46,7 +46,7 @@ public class FileLoader {
         if (openedImageMap.containsKey(path)) {
             return openedImageMap.get(path);
         } else {
-            String chaine = "src/Global/"+path;
+            // String chaine = path;
             try (InputStream is = FileLoader.class.getResourceAsStream(path)) { // Try-with-resources
                 if (is != null) {
                     Image out = ImageIO.read(is);
