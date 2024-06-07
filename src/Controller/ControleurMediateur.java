@@ -412,13 +412,8 @@ public class ControleurMediateur implements CollecteurEvenements {
 	public boolean commande(String c) {
 		switch (c) {
 			case "Annuler":
-				if (IAON){
-					vue.getMenuPhaseDeJeuJVIA().setLastCoup(true);
-					
-				}
-				else{
-					vue.getMenuPhaseDeJeu2().setLastCoup(true);
-				}
+				vue.getDisplayedMenu().setLastCoup(true);
+				vue.getDisplayedMenu().setDernierCoup(false);
 				if(IAON && !IA_thinking){
 					IAON=false;
 					jeu.annule();
@@ -440,16 +435,12 @@ public class ControleurMediateur implements CollecteurEvenements {
 				}
 				metAJourAnnule();
 				metAJourRefaire();
+				vue.getDisplayedMenu().setLastCoup(!jeu.annuleEmpty());
 				break;
 
 			case "Refaire":
-				if(IAON){
-					vue.getMenuPhaseDeJeuJVIA().setLastCoup(true);
-				}
-				else{
-					vue.getMenuPhaseDeJeu2().setLastCoup(true);
-				}
-				
+				vue.getDisplayedMenu().setDernierCoup(false);
+				vue.getDisplayedMenu().setLastCoup(true);
 				if(IAON && !IA_thinking){
 					if(jeu.refais() == 2){
 						penalty=jeu.getPenality();
@@ -669,7 +660,7 @@ public class ControleurMediateur implements CollecteurEvenements {
 				break;
 
 			case "Son":
-				musique.jouerMusique();
+				//musique.jouerMusique();
 				break;
 
 			case "MenuP":
@@ -810,5 +801,9 @@ public class ControleurMediateur implements CollecteurEvenements {
 		vue.setBackgroundPicture("res/Fond bleu avec cubes transparents.png");
 		vue.changeVisible(3);
 		jeu.reset(fileName);
+		vue.getDisplayedMenu().setAnnuler(!jeu.annuleEmpty());
+		vue.getDisplayedMenu().setRefaire(!jeu.refaisEmpty());
+		vue.getDisplayedMenu().setLastCoup(!jeu.annuleEmpty());
+		vue.getDisplayedMenu().setDernierCoup(false);
 	}
 }
