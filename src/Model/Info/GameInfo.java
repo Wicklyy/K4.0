@@ -12,4 +12,10 @@ public class GameInfo {
     public int getWinner(){
         return winner;
     }
+
+    public String toString(){
+        String string = "";
+        string+= "the winner is " + winner + " after " + played[0] + " play"; 
+        return string;
+    }
 }

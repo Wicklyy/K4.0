@@ -14,6 +14,7 @@ public class IAvsIAthread extends IAvsIA implements Runnable {
     
     public void run(){
         GameInfo infos = play();
+        //System.out.println(infos);
         stats.addGame(infos.getWinner() == 0);
     }
 }

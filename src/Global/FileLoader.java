@@ -47,6 +47,7 @@ public class FileLoader {
         try{
         return new FileInputStream(textfile);
         }catch(Exception e){
+            System.err.println( "File " + path + " not found");
             return null;
         }
 
