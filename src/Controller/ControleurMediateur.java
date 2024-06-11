@@ -660,7 +660,7 @@ public class ControleurMediateur implements CollecteurEvenements {
 				break;
 
 			case "Son":
-				//musique.jouerMusique();
+				musique.jouerMusique();
 				break;
 
 			case "MenuP":

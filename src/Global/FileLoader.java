@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
@@ -14,7 +13,6 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.ImageIcon;
 
 
 public class FileLoader {
@@ -25,12 +23,12 @@ public class FileLoader {
         if (openedSoundMap.containsKey(path)){
             return openedSoundMap.get(path);
         }else{
-            return null;
-            /*try {
+            
+            try {
                 //AudioInputStream audioStream = AudioSystem.getAudioInputStream(FileLoader.class.getClassLoader().getResource(path));
                 AudioInputStream audioStream = AudioSystem.getAudioInputStream(FileLoader.class.getResourceAsStream(path));
                 Clip audioClip = AudioSystem.getClip();
-                audioClip = null;
+                //audioClip = null;
                 audioClip.open(audioStream);
                 openedSoundMap.put(path, audioClip);
                 return audioClip;
@@ -38,7 +36,7 @@ public class FileLoader {
             } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
                 e.printStackTrace();
                 throw e;
-            }*/
+            }
         }
     }
 
