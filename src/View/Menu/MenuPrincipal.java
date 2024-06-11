@@ -163,7 +163,7 @@ public class MenuPrincipal extends Menu {
 
         // Ajouter des images au panel
         for (String imagePath : new String[]{"res/TutoMenuPrincipal.png", "res/TutoNouvellePartie.png", "res/TutoPhaseConstruction.png", "res/TutoPhaseConstruction2.png", "res/TutoJeu.png", "res/TutoPenalite.png", "res/TutoPenalite2.png", "res/TutoPenalite2.png", "res/TutoBlanc.png", "res/TutoFinPartie.png"}) {
-            ImageIcon imageIcon = new ImageIcon(imagePath);
+            ImageIcon imageIcon = new ImageIcon(FileLoader.getImage(imagePath));
             JLabel imageLabel = new JLabel(imageIcon);
             imagePanel.add(imageLabel);
         }
