@@ -1,7 +1,7 @@
 # TODO
 ### Setup:
 - [x] create maeven project
-- [ ] setup pom.xml
+- [x] setup pom.xml
 - [ ] set main branch as protected
 
 ### Concept
