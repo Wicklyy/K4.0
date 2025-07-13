@@ -1,3 +1,2 @@
-.vscode/
-
-k3/target
+k3/target/
+.vscode
