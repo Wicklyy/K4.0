@@ -2,8 +2,6 @@ name: Notify Discord
 
 on:
   push:
-    #branches:
-    #  - main  # or whatever branch you want
 
 jobs:
   notify:
@@ -12,9 +10,10 @@ jobs:
       - name: Send message to Discord
         uses: appleboy/discord-action@master
         with:
-          webhook_id: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
+          webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
           username: GitHub Actions
           message: |
-            🚀 A new push was made to the **${{ github.ref_name }}** branch!
+            🚀 A new push was made to **${{ github.ref_name }}** branch!
             📦 Commit: ${{ github.event.head_commit.message }}
             👤 Author: ${{ github.event.head_commit.author.name }}
