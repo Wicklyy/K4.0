@@ -8,13 +8,17 @@ import java.util.random.*;;
 
 public class Game {
     Pyramid mainPyramid;
-
+    RandomGenerator r= new Random();
     private int MAX_PLAYER_SIZE = 4;
     Vector<Player> playerList= new Vector<>();
     int currentPlayer=0; // ranges between 0 and playerCount
     gamePhase currentPhase=gamePhase.INIT;
 
     Vector<Cube> poolCubes;
+
+    public Game(){
+        init_pool();
+    }
     
     enum gamePhase{// read the diagram
         INIT,BUILD,MAIN,PENALTY,CHANGE
@@ -74,22 +78,29 @@ public class Game {
 
     }
 
-    private void build(){
-        init_pool();
-
-        Cube[] base = new Cube[9];
-        RandomGenerator r= new Random();
-        boolean cond=false;
-        do{
-            for (int i=0; i<9; i++){
+    public Cube[] drawCubes(int amount){
+        Cube[] draw= new Cube[amount];
+        for (int i=0; i<amount; i++){
                 int randomDraw=r.nextInt(0, poolCubes.size()); //draw cube from pool chosen randomly
-                base[i]=poolCubes.remove(randomDraw);
+                draw[i]=poolCubes.remove(randomDraw);
             }
+        return draw;
+    }
+
+    public void flushCubes(Cube[] list){
+        for(int i=0;i<list.length;i++){
+            poolCubes.add(list[i]);
+        }
+    }
+
+    public void build(){
+
+        boolean cond;
+        do{
+            Cube[] base = drawCubes(9);
             cond=!validBase(base);
             if (cond){//invalid base, reinitialize bag
-                for(Cube c: base){
-                    poolCubes.add(c);
-                }
+                flushCubes(base);
             }
         }while(cond);//restart base build if invalid base
 
