@@ -30,4 +30,13 @@ public class TestPyramid {
         pyramid.remove(2, 1);
         assertEquals(Color.VOID, pyramid.get(2, 1).getColor());
     }
+
+    @Test
+    public void testPop(){
+        Pyramid pyramid = new Pyramid(3);
+        pyramid.set(2, 1, new Cube(Color.BLUE));
+        Cube out=pyramid.pop(2, 1);
+        assertEquals("is set to void",Color.VOID, pyramid.get(2, 1).getColor());
+        assertEquals("cube value is returned",Color.BLUE,out.getColor());
+    }
 }

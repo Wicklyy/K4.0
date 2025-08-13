@@ -28,6 +28,12 @@ public class Pyramid {
         pyramid[x][y] = new Cube(Color.VOID);
     }
 
+    public Cube pop(int x, int y){
+        Cube out= pyramid[x][y];
+        remove(x, y);
+        return out;
+    }
+
     
     /* If pyramid full and first time calling methode, game continues */
     public boolean late_game(){
