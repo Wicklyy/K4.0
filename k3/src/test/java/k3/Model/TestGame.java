@@ -3,6 +3,8 @@ package k3.Model;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+
+import java.util.Arrays;
 import java.util.Random;
 
 
@@ -38,15 +40,41 @@ public class TestGame {
     public void testDrawCubes(){
         Game g=new Game();
         g.r=new Random(42);
+        int[] poolInitProp={ 9, 9, 9, 9, 9 };
+        assertArrayEquals(poolInitProp, bagProportions(g.poolCubes));
         Cube[] drawn=g.drawCubes(5);
-        Cube[] expected=new Cube[5];
-        expected[0]=new Cube(Color.RED);
-        expected[1]=new Cube(Color.RED);
-        expected[2]=new Cube(Color.BLUE);
-        expected[3]=new Cube(Color.GREEN);
-        expected[4]=new Cube(Color.GREEN); //value obtained with seed 42 on first draw
+        Cube[] expected={   new Cube(Color.RED),
+                            new Cube(Color.RED),
+                            new Cube(Color.BLUE),
+                            new Cube(Color.GREEN),
+                            new Cube(Color.GREEN)
+                        }; //value obtained with seed 42 on first draw
         assertArrayEquals(expected, drawn);
         assertEquals(40,g.poolCubes.size());//size diminishes by 5
+        int[]poolProp = bagProportions(g.poolCubes);
+        int[]drawnProp = bagProportions(Arrays.asList(drawn));
+        for (int i=0;i<poolProp.length;i++){//drawn cubes are actually drawn
+            poolProp[i]+=drawnProp[i];
+        }
+        assertArrayEquals(poolInitProp, poolProp);
+    }
+
+    public int[] bagProportions(Iterable<Cube> list){
+        int[] cpt=new int[5];
+        for(int i=0;i<cpt.length;i++){
+            cpt[i]=0;
+        }//init r,g,b,y,b
+        for (Cube c : list) {
+            switch (c.cube_color) {
+                case RED:cpt[0]++;break;
+                case GREEN:cpt[1]++;break;
+                case BLUE:cpt[2]++;break;
+                case YELLOW:cpt[3]++;break;
+                case BLACK:cpt[4]++;break;
+                default:break;
+            }
+        }
+        return cpt;
     }
 
 }

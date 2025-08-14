@@ -70,7 +70,7 @@ public class Game {
         int zero=0;// count amount of color equal to 0
         for (int i=0; i<5; i++){
             zero += (cpt[i]==0) ? 1:0;
-            if (zero==2){//at least 2 color not in the given base, return false
+            if (zero>=2){//at least 2 color not in the given base, return false
                 return false;
             }
         }

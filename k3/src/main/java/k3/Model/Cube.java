@@ -2,18 +2,18 @@ package k3.Model;
 
 
 public class Cube{
-    Color c;
+    Color cube_color;
 
     public Cube(Color color_id){
         try{
-            c = color_id;
+            cube_color = color_id;
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
     public String toString(){
-        switch (c.getInt()) {
+        switch (cube_color.getInt()) {
             case 0: return "VOID";
             case 1: return "BLACK";
             case 2: return "WHITE";
@@ -28,7 +28,7 @@ public class Cube{
     }
 
     public Color getColor() {
-        return c;
+        return cube_color;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class Cube{
         }
 
         final Cube other = (Cube) obj;
-        if ((this.c == null) ? (other.c != null) : !this.c.equals(other.c)) {
+        if ((this.cube_color == null) ? (other.cube_color != null) : !this.cube_color.equals(other.cube_color)) {
             return false;
         }
 
