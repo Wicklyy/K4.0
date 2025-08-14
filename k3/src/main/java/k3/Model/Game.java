@@ -103,7 +103,13 @@ public class Game {
     }
 
     public void build(){
+        mainPyramidBuild();
 
+        playersHandBuild();
+        //now await for players to finish building their pyramind
+    }
+
+    public void mainPyramidBuild(){
         boolean cond;
         Cube[] base;
         do{
@@ -113,7 +119,9 @@ public class Game {
                 flushCubes(base);
             }
         }while(cond);//restart base build if invalid base
+    }
 
+    public void playersHandBuild(){
         int colored=0;
         int white=0;
         int neutral=0;
@@ -151,6 +159,5 @@ public class Game {
             p.give(cubes(neutral,Color.NEUTRAL));
             p.ready=false;
         }
-        //now await for players to finish building their pyramind
     }
 }
