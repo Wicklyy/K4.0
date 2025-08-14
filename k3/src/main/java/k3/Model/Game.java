@@ -87,6 +87,15 @@ public class Game {
         return draw;
     }
 
+    public Cube[] cubes(int amount,Color c){
+        Cube[] out=new Cube[amount];
+        for(int i=0;i<amount;i++){
+            out[i]=new Cube(c);
+        }
+
+        return out;
+    }
+
     public void flushCubes(Cube[] list){
         for(int i=0;i<list.length;i++){
             poolCubes.add(list[i]);
@@ -96,13 +105,52 @@ public class Game {
     public void build(){
 
         boolean cond;
+        Cube[] base;
         do{
-            Cube[] base = drawCubes(9);
+            base = drawCubes(9);
             cond=!validBase(base);
             if (cond){//invalid base, reinitialize bag
                 flushCubes(base);
             }
         }while(cond);//restart base build if invalid base
 
+        int colored=0;
+        int white=0;
+        int neutral=0;
+        int playerCount=playerList.size();
+        assert playerCount>1 && playerCount<=MAX_PLAYER_SIZE :"Player amount incoherent";
+        switch (playerCount) {
+            case 2:
+                colored=17;
+                neutral=2;
+                white=2;
+                break;
+            case 3:
+                colored=12;
+                neutral=2;
+                white=1;
+                break;
+            case 4:
+                colored=9;
+                neutral=1;
+                white=1;
+                break;
+        }
+        int drawnAmount=0;
+        int toDraw;
+        while (drawnAmount<colored){
+            toDraw= (drawnAmount+3 < colored) ? 3 : (colored-drawnAmount) ;
+            for (Player p : playerList){
+                p.give(drawCubes(toDraw));//draw 3 by 3 like irl, not optimised but it's fun 
+            }
+            drawnAmount+=toDraw;
+        }
+
+        for(Player p: playerList){
+            p.give(cubes(white,Color.WHITE));
+            p.give(cubes(neutral,Color.NEUTRAL));
+            p.ready=false;
+        }
+        //now await for players to finish building their pyramind
     }
 }
