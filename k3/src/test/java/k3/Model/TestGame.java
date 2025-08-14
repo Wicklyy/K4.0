@@ -59,7 +59,7 @@ public class TestGame {
         assertArrayEquals(poolInitProp, poolProp);
     }
 
-    public int[] bagProportions(Iterable<Cube> list){
+    private int[] bagProportions(Iterable<Cube> list){
         int[] cpt=new int[5];
         for(int i=0;i<cpt.length;i++){
             cpt[i]=0;
@@ -77,4 +77,30 @@ public class TestGame {
         return cpt;
     }
 
+    @Test
+    public void testCubes(){
+        Game g=new Game();
+        Cube[] list=g.cubes(5, Color.WHITE);// creates [w,w,w,w,w] with cubes
+        Cube[] expected={   new Cube(Color.WHITE),
+                            new Cube(Color.WHITE),
+                            new Cube(Color.WHITE),
+                            new Cube(Color.WHITE),
+                            new Cube(Color.WHITE) 
+                        };//and manually
+        assertArrayEquals(expected, list);//should be equal
+        expected= new Cube[0];
+        assertArrayEquals( expected, g.cubes(0, Color.RED));//creates empty list if amount=0, independently on the color given
+    }
+
+    @Test
+    public void testFlushCubes(){
+        Game g= new Game();
+        int poolSize=g.poolCubes.size();
+        int addedAmount=10;
+        g.flushCubes(g.cubes(addedAmount, Color.WHITE));//add addedAmount of WHITE cubes to pool
+        assertEquals(poolSize+addedAmount, g.poolCubes.size());//check quantity
+        for (int i=poolSize; i<g.poolCubes.size();i++) {
+            assertEquals(new Cube(Color.WHITE),g.poolCubes.get(i));//check value
+        }
+    }
 }
