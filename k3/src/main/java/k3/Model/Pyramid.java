@@ -1,10 +1,15 @@
 package k3.Model;
-
+/**
+ * Pyramid class permits to represent a pyramid as a Cube structure
+ */
 public class Pyramid {
     Cube[][] pyramid;
     int size; 
     boolean extended;
-
+    /**
+     * Creates a Pyramid 
+     * @param size : the size for the base of the pyramid
+     */
     public Pyramid(int size){
         this.size = size;
         pyramid = new Cube[size][size];
@@ -18,16 +23,46 @@ public class Pyramid {
 
 
     /* setter and getter */
+
+    /**set method sets given cube at the given coordonate
+     * 
+     * @param x : floor
+     * @param y : rank
+     * @param c : cube to set
+     */
     public void set(int x, int y, Cube c){
         pyramid[x][y] = c;
     }
+
+    /**get method 
+     * 
+     * @param x : floor
+     * @param y : rank
+     * @return the Cube at the given coordonate
+     */
+
     public Cube get(int x, int y){
         return pyramid[x][y];
     }
+
+    /**remove method removes the cube at x,y coordinates
+     * 
+     * @param x : floor
+     * @param y : rank
+     * 
+     * @see pop()
+     */
     public void remove(int x, int y){
         pyramid[x][y] = new Cube(Color.VOID);
     }
 
+    /**pop method removes the cube at x,y coordinates and return its value
+     * 
+     * @param x : floor
+     * @param y : rank
+     * 
+     * @return the value of the cube removed
+     */
     public Cube pop(int x, int y){
         Cube out= pyramid[x][y];
         remove(x, y);

@@ -1,5 +1,9 @@
 package k3.Model;
-
+/** Color enum for Cube modelisation
+ * @see Cube
+ * @see getColor()
+ * @see getInt()
+ */
 enum Color{
     VOID(0),
     BLACK(1),
@@ -19,8 +23,16 @@ enum Color{
         return value;
     }
 
-    // switch is better than a for loop O(1)
+
+
+    /**getColor static method
+     * 
+     * @param value
+     * @return an instance of color with the value given
+     * @throws Exception if the value is not associated to any color
+     */
     public static Color getColor(int value) throws Exception{
+        // switch is better than a for loop O(1)
         switch (value) {
             case 0: return Color.VOID;
             case 1: return Color.BLACK;

@@ -1,9 +1,17 @@
 package k3.Model;
 
-
+    /** Cube class
+     * 
+     */
 public class Cube{
+
     Color cube_color;
 
+
+    /** Cube class constructor
+     * @param color_id Color of the cube
+     * @see Color
+     */
     public Cube(Color color_id){
         try{
             cube_color = color_id;
@@ -26,7 +34,11 @@ public class Cube{
                 return "UKNOWN";
         }
     }
-
+    /** getColor method 
+     * Indicates the cube's color
+     * @return the color of the cube
+     * @see Color
+     */
     public Color getColor() {
         return cube_color;
     }
